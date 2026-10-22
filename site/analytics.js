@@ -1,9 +1,9 @@
-// Bo7 analytics: Google Tag Manager + GA4, behind a cookie choice (Google Consent Mode v2).
-// Same tags as the old Squarespace site, so both Google Analytics properties carry on without a gap:
-//   GTM-NJRHF7LZ (its Google tag sends to G-93C3ZYZH84) and G-Z20JQXCC3R loaded directly.
+// Bo7 analytics: Google Analytics 4 (G-Z20JQXCC3R, "Bo7.ie" property in ryan@bo7.ie's Google account),
+// behind a cookie choice (Google Consent Mode v2).
+// The old site's Tag Manager container GTM-NJRHF7LZ was removed on 22 Oct 2026: no Bo7 account controls it,
+// so it let an outside party run code on bo7.ie and sent data to a property Bo7 can't see.
 // Until someone taps "Accept", consent stays denied: Google gets cookieless pings only, nothing is stored.
 (function () {
-  var GTM_ID = 'GTM-NJRHF7LZ';
   var GA_ID = 'G-Z20JQXCC3R';
   var KEY = 'bo7-cookie-choice'; // 'granted' | 'denied'
 
@@ -25,15 +25,12 @@
 
   gtag('js', new Date());
   gtag('config', GA_ID);
-  window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-  [ 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID,
-    'https://www.googletagmanager.com/gtag/js?id=' + GA_ID ].forEach(function (src) {
-    var s = document.createElement('script'); s.async = true; s.src = src;
-    document.head.appendChild(s);
-  });
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s);
 
   // ---------- Key actions ----------
-  // Event names show up in GA4 under Reports > Engagement > Events, and as dataLayer events in GTM.
+  // Event names show up in GA4 under Reports > Engagement > Events.
   function track(name, params) { gtag('event', name, params || {}); }
   window.bo7Track = track;
 

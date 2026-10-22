@@ -12,5 +12,5 @@ window.BO7_CONFIG = {
   // Where the "Bookings" button goes (your Glofox booking link). Leave empty to hide the button.
   bookingsUrl: '',
   // Cloudflare Turnstile site key (bot check before texting a code). Empty = off. See captcha.js for the switch-on order.
-  turnstileSiteKey: ''
+  turnstileSiteKey: '0x4AAAAAAFgvIdVmlqqh79rZ'
 };

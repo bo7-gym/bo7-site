@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#1B1914">
+<title>Bo7 Members</title>
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <span class="logo" role="img" aria-label="Bo7"></span>
+    <span class="sample" id="demo-badge" hidden title="Demo mode: data is saved in this browser only">Demo</span>
+  </header>
+
+  <p class="banner" id="offline" hidden>You're offline. Anything you log won't save until you're back online.</p>
+  <div class="loading" id="loading">Loading…</div>
+
+  <section class="setup" id="setup" hidden>
+    <p class="eyebrow">Members</p>
+    <h1>Back soon</h1>
+    <p class="lede">The members area isn't available right now. Please try again later, or ask at the front desk.</p>
+  </section>
+
+  <!-- Login -->
+  <section class="login" id="login" hidden aria-labelledby="login-h">
+    <div>
+      <p class="eyebrow">Members</p>
+      <h1 id="login-h">Welcome back</h1>
+      <p class="lede">Log in with the mobile number you gave Bo7 and your password. First time here? We'll text you a code.</p>
+    </div>
+    <form id="phone-form" novalidate>
+      <div class="field"><span>Mobile number</span>
+        <div class="phone"><input class="input cc" value="+353" aria-label="Country code" readonly><input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="85 123 4567" aria-label="Mobile number"></div>
+      </div>
+      <label class="field mt12"><span>Password</span>
+        <input class="input" id="password" type="password" autocomplete="current-password" placeholder="Your Bo7 password" aria-label="Password"></label>
+      <p class="err mt8" id="phone-err"></p>
+      <button class="btn primary block mt12" type="submit" id="pw-login">Log in</button>
+      <button class="btn block mt8" type="button" id="send">First time, or forgot your password? Text me a code</button>
+    </form>
+    <form id="code-form" hidden novalidate>
+      <div class="field"><span>Enter the 6-digit code sent to <b id="sent-to"></b></span>
+        <div class="code" id="code">
+          <input class="input" inputmode="numeric" maxlength="6" aria-label="Digit 1" autocomplete="one-time-code">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+        </div>
+      </div>
+      <p class="err mt8" id="code-err"></p>
+      <p class="hint mt8"><span id="demo-code-hint" hidden>Demo: any six digits work. </span><button class="link" type="button" id="resend">Send a new code</button></p>
+      <button class="btn primary block mt12" type="submit" id="verify">Log in</button>
+      <button class="btn block mt8" type="button" id="change-number">Use a different number</button>
+    </form>
+    <form id="setpw-form" hidden novalidate>
+      <div>
+        <h2>Create your password</h2>
+        <p class="hint">Next time, log in with your mobile and this password, with no code to wait for. At least 8 characters.</p>
+      </div>
+      <input class="visually-hidden" type="tel" autocomplete="username" id="setpw-user" tabindex="-1" aria-hidden="true">
+      <label class="field mt12"><span>New password</span>
+        <input class="input" id="setpw-1" type="password" autocomplete="new-password" minlength="8" maxlength="72" aria-label="New password"></label>
+      <label class="field mt12"><span>Type it again</span>
+        <input class="input" id="setpw-2" type="password" autocomplete="new-password" minlength="8" maxlength="72" aria-label="Type the password again"></label>
+      <p class="err mt8" id="setpw-err"></p>
+      <button class="btn primary block mt12" type="submit" id="setpw-save">Save password</button>
+      <button class="btn block mt8" type="button" id="setpw-skip">Not now</button>
+    </form>
+    <p class="hint">Only members can log in. Not a member yet? <a href="../" class="gold">Book a free consultation</a>.</p>
+  </section>
+
+  <!-- Home -->
+  <main id="home" hidden>
+    <p class="eyebrow" id="home-gym"></p>
+    <h1 id="hello"></h1>
+    <p class="lede" id="streak"></p>
+
+    <div class="section" id="home-week" hidden>
+      <div class="section-head"><h2>This week</h2><button class="link" type="button" data-tab="programme">Full programme</button></div>
+      <div class="week-card">
+        <span class="label" id="hw-label"></span>
+        <div class="when" id="hw-title"></div>
+        <div class="meta" id="hw-meta"></div>
+        <div><button class="btn primary small" type="button" id="hw-open">Open today's session</button></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stats">
+        <div class="stat"><b id="s-month">0</b><span id="s-month-l">sessions this month</span></div>
+        <div class="stat"><b id="s-total">0</b><span>sessions in total</span></div>
+        <div class="stat"><b id="s-pbs">0</b><span>workouts logged this month</span></div>
+      </div>
+      <div class="card next">
+        <div id="next-body"></div>
+        <a class="btn" id="bookings" target="_blank" rel="noopener" hidden>Bookings</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Announcements</h2></div>
+      <div class="card news" id="news"></div>
+    </div>
+
+    <div class="section">
+      <h2>Log something</h2>
+      <div class="quick">
+        <button type="button" data-open="pb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/></svg><b>New PB</b><span>A lift, a time, a rep count</span></button>
+        <button type="button" data-open="ms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><b>Milestone</b><span>First pull-up, a 5k, anything</span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Programme -->
+  <main id="programme" hidden>
+    <p class="eyebrow">Training programme</p>
+    <h1 id="pg-name">Programme</h1>
+    <p class="lede" id="pg-lede"></p>
+    <div id="pg-none" class="section" hidden><p class="empty">There's no programme published yet. Your coach will add the next block here.</p></div>
+    <div id="pg-body">
+      <div class="section">
+        <div class="weeks" id="pg-weeks" role="group" aria-label="Weeks"></div>
+        <div class="focus-note" id="pg-focus"></div>
+      </div>
+      <div class="section">
+        <div class="seg" id="pg-sessions" role="group" aria-label="Sessions"></div>
+        <div class="session-head">
+          <span class="label" id="pg-s-days"></span>
+          <h2 id="pg-s-title"></h2>
+        </div>
+        <div class="warm" id="pg-warm"></div>
+        <p class="hint" id="pg-format"></p>
+        <div class="card blocks" id="pg-blocks"></div>
+      </div>
+      <div class="section" id="pg-log" hidden>
+        <div class="card logger" id="pg-logger"></div>
+      </div>
+      <div class="section">
+        <div class="section-head"><h2>Your 5RMs</h2><button class="link" type="button" id="pg-board-open">Leaderboard</button></div>
+        <div class="card table-wrap" id="pg-5rm"></div>
+        <p class="hint">Start numbers are your 5RMs before Week 1. No number yet? Leave it blank and your coach will pick your weights with you.</p>
+      </div>
+      <div class="section">
+        <details class="glossary card" id="pg-guide"><summary>How to train this block</summary><dl id="pg-guide-list"></dl></details>
+      </div>
+    </div>
+  </main>
+
+  <!-- Progress -->
+  <main id="pbs" hidden>
+    <p class="eyebrow">Progress</p>
+    <h1>Your progress</h1>
+    <p class="lede">The superset exercises from your programme sessions, with your records and how each one is moving.</p>
+    <div class="section">
+      <div class="section-head"><h2>Main lifts and supersets</h2></div>
+      <p class="hint" id="ex-count"></p>
+      <div class="chips" id="ex-sessions" role="group" aria-label="Session" hidden></div>
+      <div class="card ex-list" id="ex-list"></div>
+    </div>
+    <div class="section">
+      <h2>Recent workouts</h2>
+      <div class="card wo-list" id="wo-list"></div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h2>Other bests</h2><button class="link" type="button" data-open="pb">Add a best</button></div>
+      <p class="hint">A 5k time, a plank, anything outside your workouts.</p>
+      <div class="card pb-list" id="pb-list"></div>
+    </div>
+  </main>
+
+  <!-- Milestones -->
+  <main id="milestones" hidden>
+    <p class="eyebrow">Milestones</p>
+    <h1>Your Bo7 so far</h1>
+    <p class="lede">Session milestones are added for you. Add your own for anything that mattered.</p>
+    <div class="section">
+      <button class="btn primary block" type="button" data-open="ms">Add a milestone</button>
+      <div class="card"><ul class="timeline" id="timeline"></ul></div>
+    </div>
+  </main>
+
+  <!-- Me -->
+  <main id="me" hidden>
+    <p class="eyebrow">Your details</p>
+    <h1>Me</h1>
+    <div class="section">
+      <div class="list">
+        <div><b>Name</b><span id="me-name"></span></div>
+        <div><b>Mobile</b><span id="me-phone"></span></div>
+        <div><b>Gym</b><span id="me-gym"></span></div>
+        <div><b>Coach</b><span id="me-coach"></span></div>
+        <div><b>Member since</b><span id="me-since"></span></div>
+        <div><b>Password</b><button class="link" type="button" id="me-password">Set a password</button></div>
+      </div>
+      <p class="hint">To change your details or membership, ask at the front desk or in the Bo7 app.</p>
+    </div>
+    <div class="section">
+      <h2>Messages from Bo7</h2>
+      <div class="list">
+        <label><b>WhatsApp from your coach</b><span class="switch"><input type="checkbox" data-pref="pref_whatsapp" aria-label="WhatsApp from your coach"><i></i></span></label>
+        <label><b>Emails about Bo7 news</b><span class="switch"><input type="checkbox" data-pref="pref_email" aria-label="Emails about Bo7 news"><i></i></span></label>
+        <label><b>Share my PBs with the coaches</b><span class="switch"><input type="checkbox" data-pref="pref_share_pbs" aria-label="Share my PBs with the coaches"><i></i></span></label>
+        <label><b>Show my test-week 5RMs on the leaderboard</b><span class="switch"><input type="checkbox" data-pref="pref_leaderboard" aria-label="Show my test-week 5RMs on the leaderboard"><i></i></span></label>
+      </div>
+    </div>
+    <div class="section">
+      <h2>Your data</h2>
+      <p class="hint">Download everything Bo7 holds about you. To have your account and data deleted, ask at the front desk.</p>
+      <button class="btn block" type="button" id="export">Download my data</button>
+    </div>
+    <div class="section"><button class="btn block" type="button" id="logout">Log out</button></div>
+  </main>
+</div>
+
+<button class="resume" type="button" id="wo-resume" hidden><span><b>Workout in progress</b> <span id="wo-resume-sub"></span></span><span class="resume-time" id="wo-resume-time"></span></button>
+
+<!-- Workout logger -->
+<section class="workout" id="workout" hidden aria-labelledby="wo-title">
+  <header class="wo-top">
+    <button class="x" type="button" id="wo-min" aria-label="Minimise workout">⌄</button>
+    <div class="wo-head"><span class="label" id="wo-sub"></span><h2 id="wo-title"></h2></div>
+    <span class="wo-timer" id="wo-timer" aria-label="Workout time">0:00</span>
+    <button class="btn primary small" type="button" id="wo-finish">Finish</button>
+  </header>
+  <div class="wo-body" id="wo-body"></div>
+  <div class="wo-rest" id="wo-rest" hidden role="status">
+    <span class="label">Rest</span><b id="wo-rest-time">1:30</b>
+    <button class="btn small" type="button" id="wo-rest-minus">−15</button>
+    <button class="btn small" type="button" id="wo-rest-plus">+15</button>
+    <button class="btn primary small" type="button" id="wo-rest-skip">Skip</button>
+  </div>
+</section>
+
+<nav class="tabbar" id="tabbar" hidden aria-label="Members area">
+  <div class="tabbar-in">
+    <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
+    <button type="button" data-tab="programme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2v4M16 2v4M4 10h16M8 14h3M8 17h6"/></svg>Programme</button>
+    <button type="button" data-tab="pbs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>Progress</button>
+    <button type="button" data-tab="milestones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>Milestones</button>
+    <button type="button" data-tab="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.2-6 8-6s7 2 8 6"/></svg>Me</button>
+  </div>
+</nav>
+
+<!-- Log a PB -->
+<div class="sheet" id="sheet-pb" hidden role="dialog" aria-modal="true" aria-labelledby="pb-h">
+  <form class="sheet-in" id="pb-form" novalidate>
+    <div class="sheet-head"><h2 id="pb-h">New PB</h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="field"><span>What</span><div class="chips" id="pb-what"></div></div>
+    <div class="field" id="pb-other-wrap" hidden><span>Name it</span><input class="input" id="pb-other" maxlength="60" placeholder="For example: farmer's carry"></div>
+    <div class="row2">
+      <label class="field"><span>Your best</span><input class="input" id="pb-val" inputmode="decimal" placeholder="0"></label>
+      <label class="field"><span>Unit</span><select class="input" id="pb-unit"><option>kg</option><option>reps</option><option>min:sec</option><option>metres</option></select></label>
+    </div>
+    <label class="check" id="pb-lower-wrap" hidden><input type="checkbox" id="pb-lower" checked> A lower time is better</label>
+    <label class="field"><span>When</span><input class="input" id="pb-date" type="date"></label>
+    <label class="check"><input type="checkbox" id="pb-share"> Share with the coaches</label>
+    <p class="err" id="pb-err"></p>
+    <button class="btn primary block" type="submit">Save PB</button>
+  </form>
+</div>
+
+<!-- One PB's history -->
+<div class="sheet" id="sheet-hist" hidden role="dialog" aria-modal="true" aria-labelledby="hist-h">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="hist-h"></h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="history" id="hist-list"></div>
+    <button class="btn primary block" type="button" id="hist-add">Log a new one</button>
+  </div>
+</div>
+
+<!-- Add a milestone -->
+<div class="sheet" id="sheet-ms" hidden role="dialog" aria-modal="true" aria-labelledby="ms-h">
+  <form class="sheet-in" id="ms-form" novalidate>
+    <div class="sheet-head"><h2 id="ms-h">Add a milestone</h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="field"><span>Ideas</span><div class="chips" id="ms-ideas"></div></div>
+    <label class="field"><span>What happened</span><input class="input" id="ms-text" maxlength="120" placeholder="For example: first unassisted pull-up"></label>
+    <label class="field"><span>When</span><input class="input" id="ms-date" type="date"></label>
+    <label class="check"><input type="checkbox" id="ms-share"> Share with the coaches</label>
+    <p class="err" id="ms-err"></p>
+    <button class="btn primary block" type="submit">Add milestone</button>
+  </form>
+</div>
+
+<!-- Finished workout -->
+<div class="sheet" id="sheet-done" hidden role="dialog" aria-modal="true" aria-labelledby="done-h">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="done-h">Workout saved</h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="result" id="done-stats"></div>
+    <div id="done-prs"></div>
+    <button class="btn primary block" type="button" data-close>Done</button>
+  </div>
+</div>
+
+<!-- One exercise: chart, records, history -->
+<div class="sheet" id="sheet-ex" hidden role="dialog" aria-modal="true" aria-labelledby="ex-h">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="ex-h"></h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="chips" id="ex-metric" role="group" aria-label="Chart">
+      <button type="button" class="chip" data-metric="e1rm" aria-pressed="true">Est. 1RM</button>
+      <button type="button" class="chip" data-metric="weight" aria-pressed="false">Heaviest</button>
+      <button type="button" class="chip" data-metric="total" aria-pressed="false">Volume</button>
+    </div>
+    <div class="chart" id="ex-chart"></div>
+    <div class="result" id="ex-records"></div>
+    <h3>History</h3>
+    <div class="history" id="ex-history"></div>
+  </div>
+</div>
+
+<!-- One past workout -->
+<div class="sheet" id="sheet-wo" hidden role="dialog" aria-modal="true" aria-labelledby="wod-h">
+  <div class="sheet-in">
+    <div class="sheet-head"><div><span class="label" id="wod-sub"></span><h2 id="wod-h"></h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div id="wod-body"></div>
+    <div class="toolbar"><button class="btn small" type="button" id="wod-edit">Edit</button><button class="btn small" type="button" id="wod-del">Delete workout</button></div>
+  </div>
+</div>
+
+<!-- Test-week leaderboard -->
+<div class="sheet" id="sheet-board" hidden role="dialog" aria-modal="true" aria-labelledby="board-h">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="board-h">Test-week leaderboard</h2><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <p class="hint" id="board-hint"></p>
+    <div class="table-wrap" id="board-table"></div>
+    <label class="check"><input type="checkbox" id="board-optin"> Show my 5RMs here</label>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="csv.js"></script>
+<script src="programme.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

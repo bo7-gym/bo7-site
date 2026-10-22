@@ -2,7 +2,7 @@
 (function () {
   // One form for both gyms: leads land in the Killiney Glofox branch and get routed by the team.
   const LEAD_URL = 'https://app.glofox.com/portal/#/branch/6659f3a6bc0507bc710421c5/lead-register';
-  const WA_URL = 'https://wa.me/353852413999?text=' + encodeURIComponent("Hi Bo7, I'd like to book a free consultation.");
+  const WA_URL = 'https://wa.me/353830220376?text=' + encodeURIComponent("Hi Bo7, I'd like to book a free consultation.");
   document.querySelectorAll('[data-wa]').forEach(a => a.href = WA_URL);
 
   // Booking overlay: every "Book" link opens it; #start stays as the no-JS fallback.

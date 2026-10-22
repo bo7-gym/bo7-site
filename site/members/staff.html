@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#1B1914">
+<title>Bo7 Staff</title>
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app wide">
+  <header class="top">
+    <span class="logo" role="img" aria-label="Bo7"></span>
+    <span class="sample" id="demo-badge" hidden title="Demo mode: nothing is saved">Demo</span>
+  </header>
+  <p class="banner" id="offline" hidden>You're offline.</p>
+  <div class="loading" id="loading">Loading…</div>
+
+  <section class="setup" id="setup" hidden>
+    <p class="eyebrow">Staff</p>
+    <h1>Not set up yet</h1>
+    <p class="lede">Add the Supabase details to config.js. See the README.</p>
+  </section>
+
+  <!-- Login -->
+  <section class="login" id="login" hidden aria-labelledby="login-h">
+    <div>
+      <p class="eyebrow">Staff</p>
+      <h1 id="login-h">Bo7 staff</h1>
+      <p class="lede">Log in with your mobile number. We'll text you a code.</p>
+    </div>
+    <form id="phone-form" novalidate>
+      <label class="field"><span>Mobile number</span><input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="085 123 4567"></label>
+      <p class="err mt8" id="phone-err"></p>
+      <button class="btn primary block mt12" type="submit" id="send">Text me a code</button>
+    </form>
+    <form id="code-form" hidden novalidate>
+      <label class="field"><span>6-digit code</span><input class="input" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>
+      <p class="err mt8" id="code-err"></p>
+      <button class="btn primary block mt12" type="submit" id="verify">Log in</button>
+    </form>
+  </section>
+
+  <!-- Overview -->
+  <main id="overview" hidden>
+    <p class="eyebrow" id="who"></p>
+    <h1>Overview</h1>
+    <div class="section">
+      <div class="section-head"><h2>Glofox sync</h2><button class="link" type="button" id="sync-now" hidden>Sync now</button></div>
+      <div class="card scroll"><table class="table" id="sync-table"></table></div>
+      <p class="hint" id="sync-hint"></p>
+    </div>
+    <div class="section">
+      <h2>Members</h2>
+      <div class="card scroll"><table class="table" id="counts"></table></div>
+    </div>
+    <div class="section">
+      <h2>Shared by members</h2>
+      <p class="hint">The latest PBs and milestones members chose to share with coaches.</p>
+      <div class="card scroll"><table class="table" id="feed"></table></div>
+    </div>
+    <div class="section"><button class="btn block" type="button" id="logout">Log out</button></div>
+  </main>
+
+  <!-- Members -->
+  <main id="members" hidden>
+    <p class="eyebrow" id="mb-eyebrow">Members</p>
+    <h1 id="mb-title">Members</h1>
+    <p class="lede" id="mb-lede"></p>
+    <div class="section">
+      <div class="toolbar"><input class="input" id="mb-search" type="search" placeholder="Search by name" aria-label="Search members">
+        <select class="input narrow" id="mb-filter" aria-label="Filter"></select>
+        <button class="btn small" type="button" id="mb-download" hidden>Download CSV</button></div>
+      <div class="card scroll"><table class="table" id="mb-table"></table></div>
+    </div>
+  </main>
+
+  <!-- Programme -->
+  <main id="programmes" hidden>
+    <p class="eyebrow">Training</p>
+    <h1>Programmes</h1>
+    <p class="lede">Members see the published programme for their gym in the hub. Build it in Numbers as usual, then export the PROGRAMME table as CSV and add it here.</p>
+    <div class="section">
+      <div class="card scroll"><table class="table" id="pr-table"></table></div>
+    </div>
+    <div class="section" id="pr-detail" hidden>
+      <div class="section-head"><h2 id="pr-d-title"></h2><span id="pr-d-status"></span></div>
+      <div class="toolbar" id="pr-d-actions"></div>
+      <h3 class="mt12">Starting weights</h3>
+      <p class="hint">% of each member's latest 5RM for the main lift, rounded to 2.5 kg, never below 20 kg. Use 70, or 90/75 for a top set and back-offs.</p>
+      <div class="card scroll"><table class="table grid-guides" id="pr-guides"></table></div>
+      <div class="toolbar"><button class="btn primary small" type="button" id="pr-guides-save">Save starting weights</button><span class="err" id="pr-guides-err"></span></div>
+      <h3 class="mt12">Test-week results</h3>
+      <div class="card scroll" id="pr-board"></div>
+    </div>
+    <div class="section" id="pr-import">
+      <h2>Add a programme</h2>
+      <p class="hint">In Numbers: File → Export To → CSV. Pick the PROGRAMME table's CSV. Add the HOME table's CSV too if you want the "How to train this block" notes.</p>
+      <label class="field"><span>PROGRAMME CSV</span><input class="input" type="file" id="pi-file" accept=".csv,text/csv"></label>
+      <label class="field"><span>HOME CSV (optional)</span><input class="input" type="file" id="pi-home" accept=".csv,text/csv"></label>
+      <div class="toolbar">
+        <label class="field grow"><span>Week 1 starts (Monday)</span><input class="input" type="date" id="pi-start"></label>
+        <label class="field grow"><span>Gym</span><select class="input" id="pi-gym"></select></label>
+      </div>
+      <p class="err" id="pi-err"></p>
+      <div id="pi-preview"></div>
+      <div class="toolbar" id="pi-actions" hidden>
+        <button class="btn small" type="button" id="pi-draft">Save as draft</button>
+        <button class="btn primary small" type="button" id="pi-publish">Publish to members</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Import -->
+  <main id="import" hidden>
+    <p class="eyebrow">Admins</p>
+    <h1>Import from Glofox</h1>
+    <p class="lede">Only needed if the automatic Glofox sync isn't set up, or to load history. Every import is checked first and nothing changes until you press Apply.</p>
+    <p class="banner" id="import-coach" hidden>Imports are for admins.</p>
+
+    <div class="section" id="import-members">
+      <h2>Members</h2>
+      <p class="hint">Glofox → Clients → Export → CSV, one gym at a time. Members missing from the file, or whose membership has ended, lose access to the members area (their data is kept).</p>
+      <label class="field"><span>Gym</span><select class="input" id="im-gym"></select></label>
+      <label class="field"><span>Clients CSV</span><input class="input" type="file" id="im-file" accept=".csv,text/csv"></label>
+      <p class="err" id="im-err"></p>
+      <div id="im-result"></div>
+      <button class="btn primary block" type="button" id="im-apply" hidden>Apply</button>
+    </div>
+
+    <div class="section" id="import-sessions">
+      <h2>Sessions</h2>
+      <p class="hint">Any attendance export with an email or phone and a date (and time). Importing the same file twice is safe.</p>
+      <label class="field"><span>Attendance CSV</span><input class="input" type="file" id="is-file" accept=".csv,text/csv"></label>
+      <p class="err" id="is-err"></p>
+      <div id="is-result"></div>
+      <button class="btn primary block" type="button" id="is-apply" hidden>Apply</button>
+    </div>
+  </main>
+
+  <!-- News -->
+  <main id="news" hidden>
+    <p class="eyebrow">Admins</p>
+    <h1>Announcements</h1>
+    <form class="section" id="news-form" novalidate>
+      <label class="field"><span>Gym</span><select class="input" id="n-gym"></select></label>
+      <label class="field"><span>Title</span><input class="input" id="n-title" maxlength="120"></label>
+      <label class="field"><span>Message</span><textarea class="input" id="n-body" maxlength="2000"></textarea></label>
+      <label class="check"><input type="checkbox" id="n-pin"> Pin to the top</label>
+      <p class="err" id="n-err"></p>
+      <button class="btn primary block" type="submit">Post</button>
+    </form>
+    <div class="section">
+      <h2>Posted</h2>
+      <div class="card news" id="news-list"></div>
+    </div>
+  </main>
+</div>
+
+<nav class="tabbar" id="tabbar" hidden aria-label="Staff area">
+  <div class="tabbar-in staff">
+    <button type="button" data-tab="overview" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Overview</button>
+    <button type="button" data-tab="members"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c1.8.8 3 2.6 3.5 5.2"/></svg>Members</button>
+    <button type="button" data-tab="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2v4M16 2v4M4 10h16M8 14h3M8 17h6"/></svg>Programme</button>
+    <button type="button" data-tab="import"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>Import</button>
+    <button type="button" data-tab="news"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v12H8l-4 4z"/></svg>News</button>
+  </div>
+</nav>
+
+<!-- One member -->
+<div class="sheet" id="sheet-member" hidden role="dialog" aria-modal="true" aria-labelledby="md-name">
+  <div class="sheet-in wide-sheet">
+    <div class="sheet-head"><div><span class="label" id="md-meta"></span><h2 id="md-name"></h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="toolbar" id="md-coach-row"><label class="field grow"><span>Coach</span><select class="input" id="md-coach"></select></label></div>
+    <div id="md-body"><p class="empty">Loading…</p></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="vendor/supabase.min.js"></script>
+<script src="csv.js"></script>
+<script src="programme.js"></script>
+<script src="staff.js"></script>
+</body>
+</html>

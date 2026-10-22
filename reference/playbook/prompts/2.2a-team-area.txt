@@ -1,0 +1,20 @@
+Run this in Claude Code with Claude in Chrome connected. bo7.ie's DNS must already be on Cloudflare (prompt 2.1b).
+
+Set up team.bo7.ie: a staff-only area for Bo7's own tools (the add-a-lead page, the leads board, the consult page, the retain page and reporting). Nobody can open anything there without logging in with a @bo7.ie email address.
+
+Rules: I sign in to every site and create any accounts myself; never type a password. Show me each change before you save it. Never put a password, key or token in a project's code; secrets go in Cloudflare's encrypted settings only.
+
+1. The project. Create a new private GitHub project called bo7-team in the Bo7 GitHub account, with a simple home page in the style of the dashboard mockup (reference/dash/index.html in the bo7-site project) listing the tools (empty for now). Keep a README.md describing what lives here and how it's protected.
+2. Hosting. In Cloudflare, create a Pages project connected to bo7-team, so every push publishes it. Give it the custom domain team.bo7.ie.
+3. The login. In Cloudflare Zero Trust (free plan; it may ask for a card even on the free plan, tell me if so):
+   - Create an Access application for team.bo7.ie, covering every page under it.
+   - Policy: allow only email addresses ending in @bo7.ie.
+   - Login method: a one-time code sent to the email address. If Bo7's email runs on Google Workspace, offer Google sign-in as well.
+   - Sessions last one week, so coaches aren't logging in every day.
+   - Also protect the Pages project's own preview address, so the tools can't be reached around the login.
+   - Create an Access service token for scheduled jobs and for Claude Code to call the team area's API. Store it only in Cloudflare and in my password manager; never in code.
+4. Google access for the tools. The team area needs to use Google Calendar and write a nightly Google Sheets export without a person signed in. In my Chrome, in Google Cloud with the Bo7 Google account: create a project called bo7-team, turn on the Google Calendar API and the Google Sheets API, create a service account, and download its key. Store the key in the Cloudflare Pages project as an encrypted secret, then delete the downloaded file. Stop at every Google permission screen and let me approve it.
+5. The consultations calendar. In my Chrome, in Google Calendar with the Bo7 Google account, create a calendar called "Bo7 consultations", in Dublin time. Share it with the service account's email address with "Make changes to events", and with Ryan and each coach with "See all event details", so it shows on their phones. Note the calendar's ID in the README.md.
+6. Test: open team.bo7.ie in a private window. It should ask for an email, send a code to a @bo7.ie address, and then show the home page. Try a non-@bo7.ie address and confirm it is refused.
+
+Finish with: the address, who can log in, where the secrets are kept, the calendar's name, and what each coach needs (a @bo7.ie email address they can read on their phone).

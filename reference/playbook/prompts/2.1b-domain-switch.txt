@@ -1,0 +1,20 @@
+Run this in Claude Code with the bo7-site project open and Claude in Chrome connected.
+
+Help me point bo7.ie at the new website, which is hosted on GitHub Pages from the bo7-site project in the Bo7 GitHub account [account name]. bo7.ie's DNS moves to Cloudflare (free plan) as part of this, so we can later put a staff-only area at team.bo7.ie behind a Cloudflare login.
+
+Rules: I sign in to every site myself and create any accounts myself; never type a password. Before you save, change or delete anything, show me exactly what will change and wait for my OK.
+
+1. Find where bo7.ie is registered. Check Squarespace first (Settings, then Domains). If it isn't there, look up the registrar for bo7.ie and open its site for me to sign in.
+2. Open the current DNS settings and list every record in a table. Save the table to dns-before.md in this project. Mark any email records (MX, SPF or other TXT, DKIM) clearly.
+3. In Cloudflare (I'll have created a Cloudflare account with the Bo7 email), add bo7.ie as a site on the free plan. Compare the records Cloudflare imports against dns-before.md and add anything missing, especially the email records, exactly as they were.
+4. In Cloudflare, set the website records (DNS only, grey cloud, so GitHub can issue the certificate):
+   - four A records for bo7.ie: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
+   - a CNAME record for www pointing to [account name].github.io
+   Remove the old Squarespace website records. Save the final table to dns-after.md.
+5. In GitHub, open the bo7-site project: Settings, Pages, Custom domain. Enter bo7.ie and save.
+6. At the registrar, change bo7.ie's nameservers to the two Cloudflare gives us. Show me the change before saving.
+7. Check whether bo7.ie now points at GitHub through Cloudflare. If not yet, tell me; nameserver changes can take up to a day. Check again when I ask.
+8. Once it does, turn on Enforce HTTPS in the GitHub Pages settings.
+9. Test: bo7.ie and www.bo7.ie load with a padlock, the booking button opens, and bo7.ie/testimonials lands on the new site. Remind me to send a test email to an @bo7.ie address.
+
+Finish with a short report: what changed, what you tested, and anything I still need to do.

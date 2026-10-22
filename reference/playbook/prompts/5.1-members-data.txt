@@ -1,0 +1,15 @@
+Run this in Claude Code with the bo7-team project open (prompt 2.2b done).
+
+Get Bo7's members and their attendance from Glofox into the Bo7 database every night, and work out each member's health, so the retain page and the win-back sequences always work from today's picture. Bo7 is a semi-private personal training gym with two locations in south Dublin, Killiney and Blackrock; members book sessions in the Glofox app.
+
+Member data is personal: it stays in Glofox, the Bo7 database and the read-only export. Delete any downloaded files once their data is in the database. Change nothing in Glofox.
+
+1. Getting the data. Use the first route that works, and tell me which:
+   A. The Glofox API, if Ryan has access (task 2.8): a nightly job in the scheduled worker that reads members (both branches) and bookings and check-ins since the last run.
+   B. Otherwise, Glofox's reports: in my Chrome, find the reports for active members and attendance for both branches, tell me what each contains, and set up a scheduled task in Claude Code that downloads them each night and loads them through the team area's API using the Access service token. I sign in to Glofox myself; never type a password.
+2. Load into the database: members (match on Glofox member ID; link to the lead they came from where the phone or email matches), and visits (booked, attended, no-show). On the first run, load the last 13 weeks.
+3. Health, every night after loading: for each active member, write a member_health row: days since last visit, visits in the last 4 weeks, visits in the 4 weeks before, and health. Use the thresholds in the settings table (start with: healthy = trained in the last 10 days at roughly their usual pace; slowing = 10 to 20 days since they trained, or visits in the last 4 weeks are half or less of the 4 weeks before; at_risk = no booking or visit for 21 days, or two no-shows in a row). Never invent a coach; leave it empty where Glofox doesn't record one.
+4. Log every run, and show a warning on the team.bo7.ie home page if a night's load fails.
+5. Update README.md with how the data arrives and how health is worked out.
+
+Finish with: how many active members, and how many are healthy, slowing and at risk today, by gym. Don't message anyone.

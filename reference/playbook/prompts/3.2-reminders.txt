@@ -1,0 +1,11 @@
+Using the Bo7 brand position in the project files, write the messages that get people to turn up for their free consultation. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin. They are sent on WhatsApp by a person, from the Bo7 number.
+
+1. Booking confirmation (sent as soon as it's booked): day, time, which gym with its address and a Google Maps link, who they'll meet [coach name], what to wear and bring, and a link to Ryan's 44-second welcome video [link]. Under 80 words, plus the video line.
+2. Day-before reminder: short, friendly, easy to reply to if they need to move it. Under 40 words.
+3. Morning-of reminder (for consults after midday) or a "see you in an hour" message (for morning consults). Under 30 words.
+4. If they don't turn up: a no-blame message offering two new times [time 1] or [time 2]. Under 50 words.
+5. If they cancel: a kind reply that rebooks if possible, or leaves the door open.
+
+Also tell me: where Ryan's video should live so it opens nicely on a phone (for example an unlisted YouTube link or a page on bo7.ie), and the pros and cons of each.
+
+Warm, direct, no pressure. Do not invent names, times or facts; use [placeholders].

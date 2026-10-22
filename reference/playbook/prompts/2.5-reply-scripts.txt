@@ -1,0 +1,14 @@
+Using the Bo7 brand position in the project files, write the first-reply and follow-up scripts for new Bo7 enquiries. These are sent by a real person (Ryan or a coach) on WhatsApp or email, within 24 hours of the enquiry. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin; the next step is always a free consultation.
+
+1. First reply, one version per source in the Bo7 database's sources list (walk-in follow-up, phone follow-up, window or stand, referral, corporate, Instagram, Meta ads, Google ads, Google profile, website form). Each one:
+   - greets them by name and refers to how they found Bo7 (for referrals, thank them for coming via [friend's name])
+   - asks which gym suits them, if we don't know yet
+   - asks one question about what they want to get out of training
+   - offers two specific consult times: [time 1] or [time 2]
+   - asks permission to keep in touch, in a natural way
+   Under 80 words each.
+2. If they don't reply: a nudge on day 2 and a last, no-pressure message on day 5. After that the lead is removed from the board as "Couldn't reach", to try again later.
+3. If they say "not now": a friendly close that leaves the door open, and asks whether we can check in again in a couple of months.
+4. Consult confirmation: date, time, which gym with its address and a Google Maps link, what to wear, and who they'll meet [coach name].
+
+Keep every message short enough to read on a phone. Warm, direct, no pressure, no hype. Do not invent prices, times, names or claims; use [placeholders].

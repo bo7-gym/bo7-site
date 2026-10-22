@@ -1,0 +1,39 @@
+Run this in Claude Code with the bo7-team project open (prompt 2.2a).
+
+Set up the Bo7 database: one place where every lead, note, consult, member and win-back message lives, so the leads board, the consult page, the retain page, the scheduled jobs and the reports all work from the same records. Bo7 is a semi-private personal training gym with two locations in south Dublin, Killiney and Blackrock.
+
+Use Cloudflare D1, inside the bo7-team project. If Cloudflare lets you keep the database in the EU, do that, and tell me what you chose. Leads and members are personal data.
+
+Rules: never put a password, key or token in the code. Never invent leads, members, coaches or numbers. Show me the schema before you create anything.
+
+1. Create a D1 database called bo7, bound to the bo7-team Pages project. Keep every schema change as a numbered migration file in the project, so the history is clear and the database can be rebuilt.
+
+2. Tables. Use clear names, created and updated timestamps on every row, and IDs that never change.
+   - sources: code, label, description. Fill with: walk-in, phone, whatsapp, email, website-form, killiney-window, blackrock-window, stand, referral, corporate, instagram, meta-ads, google-ads, google-profile-killiney, google-profile-blackrock, other.
+   - coaches: name, email (@bo7.ie), gyms, active.
+   - consult_hours: coach, gym, day of week, from, to. Plus a setting for consult length in minutes.
+   - leads: name, phone, email, preferred contact (whatsapp, call, email), gym, source, source detail, interested in, logged by, consent to contact (yes or no, and when it was given), status (new, contacted, consult_booked, joined, not_now, couldnt_reach, lost), first reply at, follow up on, reason not joined (price, timing, location, not_ready, chose_elsewhere, wanted_one_to_one, other).
+   - notes: lead or member, written by, text. Notes are only ever added, never edited.
+   - consults: lead, gym, coach, starts at, calendar event ID, status (booked, moved, cancelled, done), showed up, outcome (joined, thinking, not_yet, no_show), and the structured consult notes: goals, training so far, injuries or health, days that suit, times that suit, anything else.
+   - members: Glofox member ID, name, phone, email, gym, coach, membership, joined on, left on, consent to contact, linked lead (if they came through the leads board).
+   - visits: member, date and time, booked or attended or no-show, from Glofox.
+   - member_health: one row per member per day: days since last visit, visits in the last 4 weeks, visits in the 4 weeks before, health (healthy, slowing, at_risk). Keep the history; the dashboard's "4 weeks ago" figures come from it.
+   - winback: member, sequence (slowing or at_risk), step, started at, next step at, status (active, paused, completed, exited_trained, removed, lapsed), paused until.
+   - messages: who it went to, channel, template, sent by (a coach or automatic), sent at, result. Every outbound message is logged here.
+   - leavers: member, left on, reason, would come back, notes.
+   - settings: health thresholds (days for slowing, days for at risk, the drop that counts as slowing), sequence timings, how long to keep leads who never joined.
+   - audit_log: who changed what and when, for every write.
+
+3. The team area's API. A small set of server-side functions in bo7-team that read and write the database for the pages. They only answer requests that came through the Cloudflare login (or carry the Access service token), and record the logged-in person's email on every change in audit_log. Validate everything that comes in.
+
+4. Scheduled jobs. Pages can't run on a schedule, so add a small Cloudflare Worker in the same project, bound to the same database, for anything that runs on a timer (Cloudflare cron). Each job logs what it did. Start with:
+   - Nightly export: copy every table, except audit_log, to a Google Sheet called "Bo7 data (read-only)" in the Bo7 Google Drive, one tab per table, using the service account. Mark the sheet as read-only in its first row. This is what Ryan opens to look at the data, and what Claude can read through the Google Drive connector.
+   - Nightly clean-up: remove personal details of leads who never joined after the number of months in settings, keeping the counts for reports.
+
+5. Backups. Check what point-in-time restore D1 offers on our plan, and write down in the README how to restore the database to a point in time.
+
+6. Save a README.md in this project describing every table and column, the statuses, the API, the scheduled jobs and the backups, so every later prompt can follow it.
+
+7. Test: add two example leads with notes and a consult through the API, show me the rows, run the export and show me the sheet, then delete the examples.
+
+Finish with: what was created, where the data is stored, how to back it up and restore it, and anything I need to decide.

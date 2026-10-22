@@ -1,0 +1,13 @@
+Attached are the responses to a member questionnaire for Bo7, a semi-private personal training gym in Killiney and Blackrock, south Dublin. Analyse them and give me:
+
+1. Member types: group the members into 2 to 4 types based on what they were doing before, why they started looking and what changed for them. For each type: roughly what share of responses, how they describe their problem, and 2 verbatim quotes.
+2. Why Bo7: the top reasons people chose Bo7, ranked by how often they appear, with quotes.
+3. The alternatives: everything people say they considered instead (other gyms, classes, PT, apps, nothing), and why Bo7 won against each.
+4. Objections: what nearly stopped people joining.
+5. How people find Bo7: the split of answers to "how did you first hear about Bo7".
+6. The one-sentence descriptions: list every answer to "describe Bo7 to a friend" and pick the 5 strongest.
+7. Recommend score: the average and the split of 0 to 6, 7 to 8 and 9 to 10.
+8. Splits by gender and age range: for the reasons people started looking, why they chose Bo7 and what changed, show where any group (for example women aged 45 to 54) differs clearly from the rest. Only call out a group with at least 5 responses.
+9. The "Other" answers: group the free-text answers into themes and quote the best ones.
+
+Show counts, not just impressions. Quote members exactly. Only use what is in the responses; flag anything that is too thin to conclude.

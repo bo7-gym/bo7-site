@@ -1,0 +1,39 @@
+Run this in Claude Code with the bo7-site project open.
+
+Make tagged links so every Bo7 lead shows where it came from. Bo7 is a semi-private personal training gym with two locations in south Dublin: Killiney (4 Military Road, Ballybrack) and Blackrock (Blackrock Village Centre).
+
+WhatsApp number: +353 85 241 3999
+Website: https://bo7.ie/
+
+For each source below, write:
+(a) a short pre-typed WhatsApp opening message that names the source naturally, for example "Hi, I saw Bo7 at the Village Centre and I'd like to book a free consultation",
+(b) the wa.me link with that message URL-encoded,
+(c) for online sources only, a website link with UTM tags (utm_source, utm_medium, utm_campaign), lower case, no spaces,
+(d) for printed sources only (windows, stand, referral cards), the short QR address: bo7.ie/go/killiney-window, bo7.ie/go/blackrock-window, bo7.ie/go/stand or bo7.ie/go/referral-card. The QR code points there, not at WhatsApp.
+
+Sources:
+- Window at Killiney
+- Window at Blackrock
+- Stand at Blackrock Village Centre
+- Instagram bio
+- Meta ads
+- Google ads
+- Google Business Profile, Killiney
+- Google Business Profile, Blackrock
+- Referral cards
+- Corporate (one per company; use [Company] as a placeholder)
+
+Return a table: Source | Opening message | WhatsApp link | Website link | QR address.
+
+Then write a short guide for whoever answers the Bo7 WhatsApp: how to recognise each opening message and which source to log in the lead list. Keep every opening message different enough to tell apart, even if someone edits it slightly before sending.
+
+Then build the QR addresses on the website: create short addresses for printed QR codes: /go/killiney-window, /go/blackrock-window, /go/stand and /go/referral-card. Each one runs a 50/50 test:
+   - Version A sends the visitor straight to WhatsApp (+353 85 241 3999) with that source's pre-typed message (from the table above).
+   - Version B sends them to the gym's own page (the Killiney or Blackrock page; for the stand and referral cards, the homepage), with utm_source set to the source, utm_medium=qr and utm_content=a or b.
+   - Pick the version at random, but remember it in the browser so the same person always gets the same version.
+   - Record each scan in Google Tag Manager as an event called qr_scan with the source and version, then redirect (don't hold the visitor more than about a second).
+   - On the page version, the site's WhatsApp button must carry the source into its pre-typed message, so those leads are still tagged.
+   - Keep the split in one setting at the top of the file, so we can later send 100% to the winner.
+   If the Killiney and Blackrock pages don't exist yet, tell me; version B needs them.
+
+Check each address on a phone-sized screen, then commit and push as CLAUDE.md describes.

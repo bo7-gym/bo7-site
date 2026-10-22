@@ -1,0 +1,31 @@
+Run this in Claude Code with the bo7-team project open and Claude in Chrome connected (prompts 2.2a, 2.2b and 5.1 done).
+
+Set up login by mobile number and text-message code for the Bo7 members area, at members.bo7.ie. Only current members (from the nightly Glofox load, prompt 5.1) can log in. Members are personal data; the login must be safe against people guessing codes and against fraudsters using the form to send texts at Bo7's expense.
+
+Rules: I sign in to every site and create any accounts myself; never type a password. Show me each change before you save it. Keys and tokens go only in Cloudflare's encrypted settings, never in code.
+
+1. The text service. Use Twilio Verify, which creates, sends and checks the codes for us (codes expire after 10 minutes and each can only be used once). In my Chrome, once I've created a Twilio account with the Bo7 email:
+   - Create a Verify service called "Bo7", so the text reads "Your Bo7 code is 123456".
+   - Allow sending to Ireland (+353) only; turn every other country off.
+   - Turn on Twilio's fraud protection for Verify.
+   - Set a monthly spending limit of [€__] and an alert at half of it, sent to Ryan.
+   - Store the Twilio account ID, key and Verify service ID as encrypted secrets in Cloudflare.
+   Tell me what each login costs in Ireland, from Twilio's current price list, before going further.
+
+2. Hosting. Create a Cloudflare Pages project called bo7-members (in a new private GitHub project of the same name), on members.bo7.ie, bound to the same Bo7 database (prompt 2.2b). It is not behind the staff login; it has its own member login.
+
+3. Bot protection. Add Cloudflare Turnstile (free) to the phone number form, so only real people can ask for a code.
+
+4. The login API (server-side functions in bo7-members):
+   - Start: takes a mobile number, normalises it to +353, checks Turnstile, checks the rate limits, and asks Twilio to text a code only if the number belongs to an active member. Always answer the same way ("If that number belongs to a Bo7 member, we've texted a code"), so the form never reveals who is a member.
+   - Rate limits, stored in the database: at most 3 codes per number per 10 minutes and 6 per day, and at most 10 requests per hour from one internet address.
+   - Verify: takes the number and code, asks Twilio to check it. After 5 wrong codes, block that number for 30 minutes.
+   - On success: create a session in a new member_sessions table (member, created at, last seen, expires at: 30 days), and set it as a secure, http-only cookie. Log out ends the session. Every login and failed attempt is logged.
+
+5. Database: add a migration for member_sessions and login_attempts. Update README.md.
+
+6. Privacy: add a short line to Bo7's privacy notice on the website about using members' mobile numbers to send login codes, and show me the wording first.
+
+7. Test with my own number (I'll make a test member record for it): log in, log out, a wrong code five times, and too many requests. Show me the logs, then remove the test member. Commit and push.
+
+Finish with: the login address, the cost per login, the spending limit, and where the keys are kept.

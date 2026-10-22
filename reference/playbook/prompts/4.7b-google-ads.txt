@@ -1,0 +1,27 @@
+Run this in Claude Code with Claude in Chrome connected. Run prompt 4.7a first; everything it lists must be Ready.
+
+Using the Bo7 brand position in the project files, write a Google Search ads plan for Bo7: one campaign covering both gyms, Killiney (4 Military Road, Ballybrack) and Blackrock (Blackrock Village Centre). They are a few miles apart, so one budget serves both.
+
+Group the campaign into three ad groups by what people search for:
+- Blackrock: searches that name Blackrock or nearby areas (for example Booterstown, Monkstown, Stillorgan). Landing page: /blackrock.
+- Killiney: searches that name Killiney or nearby areas (for example Dalkey, Ballybrack, Glenageary, Shankill). Landing page: /killiney.
+- General: searches with no place name (for example personal trainer near me, small group personal training, strength training over 40). Landing page: the homepage, where the visitor picks their gym.
+
+For the plan, give me:
+1. Keywords for each ad group, with suggested match types.
+2. Negative keywords for the whole campaign (for example jobs, courses, qualifications, cheap gym, free gym).
+3. A responsive search ad for each ad group: 15 headlines (30 characters or fewer each) and 4 descriptions (90 characters or fewer each). Show the character count beside each line. The local ad groups name their gym; the general one mentions both.
+4. Sitelinks and callouts.
+5. A suggested targeting radius around each gym, with your reasoning.
+
+Every landing page uses the Google ads tracked link from prompt 4.1.
+Do not suggest a budget; we will set it. Do not invent prices, numbers or claims.
+
+Once I have approved the plan, build it in my Chrome at ads.google.com, in the Bo7 account:
+- One Search campaign, "Bo7 Search". Search network only (no display network, no search partners).
+- Location: people in or regularly in the radius we agreed around each of the two gyms.
+- Budget: [€__ a day]. Bidding: maximise conversions, using the conversion actions 2.9a confirmed.
+- The three ad groups with their keywords, ads and landing pages; the negatives, sitelinks and callouts; and both gyms' locations from their Google profiles.
+- Create the campaign PAUSED. Never enable anything or raise a budget. Show me each screen before you save it. I review the campaign and switch it on myself.
+
+Then give me the link to the campaign.

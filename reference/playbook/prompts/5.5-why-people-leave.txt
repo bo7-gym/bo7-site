@@ -1,0 +1,11 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2b and 5.1 done).
+
+Help Bo7 learn why members leave, so we can fix the reasons we control. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin.
+
+1. Leavers: when the nightly members load (prompt 5.1) sees a membership end, add a row to the leavers table and show it on the retain page as "Left this week" with a button to record the reason: Moving away, Cost, Schedule or time, Injury or health, Not seeing results, Didn't feel part of it, Prefer another type of training, Other. Plus "Would they come back?" (yes, maybe, no) and a note.
+2. Write the message Ryan sends when someone cancels: a genuine thank-you, one question about why (easy to answer in a sentence), and an open door to come back. Under 60 words. Not a sales pitch. Make it a one-tap WhatsApp button on the leaver's row.
+3. Write a 3-month check-in for people who left on good terms and agreed to hear from us. Under 40 words. Add it to the scheduled worker, sent once, logged in the messages table.
+4. Add to the retain page: leavers per month by reason and gym, average months as a member, and monthly retention (members at the start of the month still members at the end).
+5. Update README.md.
+
+Don't change any member data beyond the leavers table.

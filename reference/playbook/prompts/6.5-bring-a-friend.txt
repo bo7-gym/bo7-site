@@ -1,0 +1,9 @@
+Using the Bo7 brand position in the project files, help Bo7 run a monthly bring-a-friend session at each gym, so members can bring someone to try a session with them for free.
+
+1. The format: a normal session with one guest per member, booked like any class in Glofox. Tell me how to set it up in Glofox (I'll do it, or you can in my Chrome once I've signed in): a monthly class per gym, with a guest spot.
+2. Messages: the invite for the community WhatsApp group from Ryan, a reminder 3 days before, and what the member forwards to their friend (with the friend's sign-up link tagged as referral and the member's name).
+3. On the day: a one-page checklist for the coach (welcome, quick health question, what to explain about Bo7, how to offer a free consultation without pressure).
+4. After: every guest becomes a lead in the Bo7 database (source referral, linked to the member), with consent asked on the day. Their first message the next day, from the coach who ran the session, offering two consult times.
+5. Track: guests per session, consults booked, joined, by gym. Show it on the refer page.
+
+Keep it relaxed and fun, not salesy. Don't invent dates, prices or offers; use [placeholders].

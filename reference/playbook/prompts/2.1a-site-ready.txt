@@ -1,0 +1,21 @@
+Run this in Claude Code with the bo7-site project open.
+
+Read CLAUDE.md and HANDOVER-NOTES.md first. They explain how the site is built, what not to change, and how to check your work.
+
+We are moving bo7.ie from Squarespace to this site. Get it ready for launch:
+
+1. Gym pages: create /killiney and /blackrock as copies of the homepage, for now. Change only the page title and meta description so each names its gym. Give both a canonical link to the homepage until they have their own content, so Google doesn't treat them as duplicates. They are where ads, Google profiles and the QR test send people.
+2. Tracking: add Google Tag Manager container GTM-NJRHF7LZ to every page (the snippet in the head and the noscript tag after the opening body tag). Do not add GA4 separately; it runs inside that container. If we have decided on a cookie banner, load GTM only after the visitor accepts.
+3. Old addresses: Squarespace pages people may have bookmarked or Google may still list must not end in a 404. Create redirect pages for these old paths, each sending the visitor to the right place on the new site:
+   /learn-morebo7-1, /learn-morebo7-1-1, /learn-morebo7-1-2 -> /#start
+   /personal-training-blackrock -> /blackrock
+   /testimonials -> the results section
+   /booking-1, /booking-1-1, /class-timetable -> the locations section
+   /contact-1 -> the footer contact details
+   /thank-you -> the homepage
+   Use a small HTML page per path with a meta refresh and a canonical link to the new address.
+4. Addresses in the code: replace any reference to bo7.thedowlings.co with https://bo7.ie and add a canonical link to the homepage.
+5. Add a robots.txt and a sitemap.xml for https://bo7.ie.
+6. Go through the "Still needed from Ryan" list in CLAUDE.md and HANDOVER-NOTES.md. For each item, tell me whether it blocks launch. Do not invent any facts, prices, names or numbers to fill gaps.
+
+Check every change at desktop and phone sizes as CLAUDE.md describes, send me screenshots, then commit and push. Tell me exactly what is live and what still needs a decision from us.

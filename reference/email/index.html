@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Bo7 Email: Before and After</title>
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+<style>
+/* Before and after: three slides. Click (or arrow keys, or swipe) to move on.
+   Slide 1 is a screenshot of the current email; slides 2 and 3 are the new email itself, live, in light and dark. */
+:root { --bg: #0A0A0A; --fg: #F4EFE7; --muted: #A39B8E; --line: #2B2B2B; --gold: #C49A6C; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif; }
+body { display: flex; flex-direction: column; overflow: hidden; }
+.top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); flex: none; }
+.top img { height: 24px; width: auto; display: block; }
+.label { display: flex; flex-direction: column; min-width: 0; }
+.label b { font: 700 22px/1.15 "Helvetica Neue", Helvetica, Inter, Arial, sans-serif; }
+.label span { font-size: 13px; color: var(--muted); }
+.dots { margin-left: auto; display: flex; gap: 8px; }
+.dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: var(--line); cursor: pointer; }
+.dots button[aria-current="true"] { background: var(--gold); }
+.stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 20px; cursor: pointer; }
+.slide { display: none; }
+.slide.on { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 0; }
+.shot { max-width: min(100%, 900px); max-height: 100%; overflow: auto; border-radius: 12px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+.shot img { display: block; width: 100%; height: auto; }
+.phone { width: 390px; max-width: 100%; height: min(100%, 844px); border-radius: 36px; border: 10px solid #1F1F1F; background: #F4EFE7; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); position: relative; }
+.phone.dark { background: #0A0A0A; }
+.phone .screen { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.phone .screen::-webkit-scrollbar { display: none; }
+.hint { flex: none; text-align: center; font-size: 13px; color: var(--muted); padding: 0 16px 14px; }
+@media (max-width: 640px) { .label b { font-size: 18px; } .stage { padding: 12px; } .phone { border-width: 6px; border-radius: 28px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="../assets/bo7-logo-tan.png" alt="Bo7">
+  <div class="label"><b id="title">The email today</b><span id="sub">Bring a friend to Bo7, as members receive it now</span></div>
+  <nav class="dots" aria-label="Slides">
+    <button type="button" data-go="0" aria-label="The email today" aria-current="true"></button>
+    <button type="button" data-go="1" aria-label="New design, light mode"></button>
+    <button type="button" data-go="2" aria-label="New design, dark mode"></button>
+  </nav>
+</header>
+
+<main class="stage" id="stage">
+  <div class="slide on" data-title="The email today" data-sub="Bring a friend to Bo7, as members receive it now">
+    <div class="shot"><img src="current-email.png" alt="The current Bring a friend to Bo7 email: plain text, a long raw WhatsApp link, and a large logo at the bottom"></div>
+  </div>
+  <div class="slide" data-title="New design: light mode" data-sub="The same message in the new Bo7 look, on a phone">
+    <div class="phone"><div class="screen" id="light"></div></div>
+  </div>
+  <div class="slide" data-title="New design: dark mode" data-sub="The same email on a phone set to dark mode">
+    <div class="phone dark"><div class="screen" id="dark"></div></div>
+  </div>
+</main>
+<p class="hint">Click or tap to move on. Scroll inside the phone to read the whole email.</p>
+
+<script>
+(function () {
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var dots = [].slice.call(document.querySelectorAll('[data-go]'));
+  var i = 0;
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+    dots.forEach(function (d, k) { d.setAttribute('aria-current', String(k === i)); });
+    document.getElementById('title').textContent = slides[i].dataset.title;
+    document.getElementById('sub').textContent = slides[i].dataset.sub;
+    var sc = slides[i].querySelector('.screen'); if (sc) sc.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+  document.getElementById('stage').addEventListener('click', function (e) {
+    if (e.target.closest('[data-go]')) return;
+    e.preventDefault(); // links inside the email don't open here
+    show(i + 1);
+  });
+  dots.forEach(function (d) { d.addEventListener('click', function () { show(+d.dataset.go); }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(i + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
+  });
+  var x0 = null;
+  document.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
+
+  // Render the live email into each phone. Light: the email as it is, forced light.
+  // Dark: the email's own dark-mode rules applied unconditionally.
+  fetch('bring-a-friend.html').then(function (r) { return r.text(); }).then(function (html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var css = [].map.call(doc.querySelectorAll('style'), function (s) { return s.textContent; }).join('\n');
+    // Pull a @media block out of the CSS: returns its inner rules and the CSS without it.
+    function take(src, head) {
+      var at = src.indexOf(head);
+      if (at === -1) return { inner: '', rest: src };
+      var open = src.indexOf('{', at), depth = 0, j = open;
+      for (; j < src.length; j++) { if (src[j] === '{') depth++; else if (src[j] === '}') { depth--; if (depth === 0) break; } }
+      return { inner: src.slice(open + 1, j), rest: src.slice(0, at) + src.slice(j + 1) };
+    }
+    var dark = take(css, '@media (prefers-color-scheme: dark)');
+    var phone = take(dark.rest, '@media (max-width: 620px)');
+    var darkRules = dark.inner;
+    // The phone frame is narrower than 620px, so the email's phone rules always apply here.
+    var lightCss = phone.rest + phone.inner;
+    var body = doc.body.innerHTML;
+    function mount(id, extra, bg) {
+      var host = document.getElementById(id), root = host.attachShadow({ mode: 'open' });
+      root.innerHTML = '<style>' + lightCss.replace(/body/g, '.mail') + extra + '</style><div class="mail bg-page" style="background:' + bg + ';min-height:100%">' + body + '</div>';
+    }
+    mount('light', '', '#F4EFE7');
+    mount('dark', darkRules, '#0A0A0A');
+  });
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show(start >= 1 && start <= 3 ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>

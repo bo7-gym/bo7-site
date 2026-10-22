@@ -1,0 +1,27 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2a and 2.2b done).
+
+Build an add-a-lead page at team.bo7.ie/add (with team.bo7.ie/walkin as a second address for the same page), so coaches can log anyone who walks in, phones, messages on WhatsApp or emails, and every one of those leads is tagged with its source in the Bo7 database. The page sits behind the Cloudflare login, so only people with a @bo7.ie email can use it.
+
+Rules: never put a password, key or token in the code. Save through the team area's API (see README.md), never straight to the database from the page.
+
+1. The page. Mobile-first and quick to fill in at the front desk. Match the "Add a lead" form in the dashboard mockup (the Add lead button on the Leads tab of reference/dash/index.html in the bo7-site project, live at bo7.thedowlings.co/dash): the same fields, order and layout. Also put the same Add lead button on the live leads board (prompt 3.1) so it opens this form.
+   - Logged by (required, first on the form): who took the lead. Staff get credit for leads they log that go on to join, so this matters. Fill it in from the logged-in @bo7.ie user; on a shared front-desk phone, let them pick from the staff list and remember the last choice on that device.
+   - Name (required) and phone (required), email (optional)
+   - Best way to reach them: WhatsApp (default), Call or Email
+   - Gym: Killiney or Blackrock (remember the last choice on this device)
+   - How they got in touch: Walked in (default), Phoned, WhatsApp, Email, Referral, Other. For Referral (a member sent their friend's details, usually on WhatsApp after the bring-a-friend email), add a required "Referred by" box: search members by name or by the phone number they messaged from. Save the referring member with the lead (prompt 6.3 links it to the referrals table). For WhatsApp, also pick the source from their opening message (from the tagged links in prompt 4.1), if it matches one.
+   - Interested in (short text)
+   - A tick box: "Happy for Bo7 to contact you about training". Record yes or no, with the date.
+   On submit: save the lead with status "new" and "logged by" as chosen, show a clear "Saved" message, and clear the form for the next person. If it fails or the device is offline, keep the entry on the device, say so, and retry later.
+
+   Save "logged by" in the leads table (the logged by column from prompt 2.2b) with the time it was logged. It does not need to show on the leads board. Add leads logged per person, and how many of them joined, to the Monday report (prompt 2.9), so the credit is counted.
+
+2. Duplicates. Before saving, check for a lead or member with the same phone number or email. If there is one, show it and ask whether to add a note to that record instead.
+
+3. Measurement. When a lead saves, also record a Google Tag Manager event called lead with the source, so these show up next to the other sources.
+
+4. Add the page to the team.bo7.ie home page.
+
+5. Test it: add one test lead from a phone-sized screen, show me the row in the database, then delete it. Commit and push.
+
+Finish with: the page address and what each coach needs to do once on their phone (open the page, log in with their @bo7.ie email, add it to their home screen).

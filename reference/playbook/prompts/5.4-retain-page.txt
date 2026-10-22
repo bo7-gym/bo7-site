@@ -1,0 +1,25 @@
+Run this in Claude Code with the bo7-team project open (prompts 5.1 and 5.3 done).
+
+Build the retain page at team.bo7.ie/retain and the win-back sequences behind it, so members who are slowing down or at risk get the right message at the right time, and drop out the moment they train again.
+
+Design: match the Retain tab of the dashboard mockup at reference/dash/index.html in the bo7-site project (live at bo7.thedowlings.co/dash/#retain). Replace its sample data with the real data from the Bo7 database (README.md describes the tables). The page talks only to the team area's API, behind the Cloudflare login.
+
+The page:
+1. Summary strip: active members, share healthy (with the change on 4 weeks ago, from member_health history), members won back in the last 30 days (were slowing or at risk, now healthy), and the win-back rate (share of members who went at risk in the last 60 days and are training again).
+2. Member health: one column split into healthy, slowing and at risk, to true scale, with an All / Killiney / Blackrock filter. Beside it a row per group: count, share, the rule, and the change on 4 weeks ago. Tapping slowing or at risk opens its list.
+3. The list: the sequence as a table (step, message, sent by, members at that step), the exit rule underneath, then each member: gym, coach, days since they trained, usual visits a week against now, sequence step, next step and date. Due today and overdue first. Buttons: the coach's WhatsApp message ready to send (for coach steps), Call, Pause (with an until date) or Resume, and Take out.
+
+The sequences (timings and wording from retention-rules.md and the retention messages from prompt 5.3, held in the settings table so they can be changed without code):
+- Slowing: Day 0 automatic nudge showing their usual sessions with a booking link; Day 5 coach check-in.
+- At risk: Day 0 WhatsApp from their coach; Day 3 automatic "hold a spot this week"; Day 7 automatic offer [offer, from Ryan]; Day 14 note from Ryan with a pause option; then lapsed, with one check-in at 60 days.
+
+The engine (a job in the scheduled worker, every morning after the nightly members load):
+- Enrol members who newly turn slowing or at risk, unless they're paused, already in a sequence, or have said no to contact.
+- Exit straight away anyone who has booked or attended since their last step, and mark it exited_trained.
+- Move members on to the next step when it's due. Automatic steps send through the chosen channel; coach steps show on the page and on the coach's list as a task for today.
+- Never send more than one message a day to a member, never outside 9:00 to 20:00 Dublin time, and always include a way to opt out.
+- Log every message in the messages table.
+
+Sending: check first what Glofox can send itself (automated emails or app notifications). If it can't be driven by us, use an email service with a free tier (for example Brevo), sending from a Bo7 address, with its key stored only in Cloudflare. Tell me the options and costs before setting any up. Automated WhatsApp needs WhatsApp's paid business service and pre-approved message templates, so leave it for later unless I ask.
+
+Test with two example members: run them through every step of both sequences with sending pointed at my own email, show me the messages and the database at each step, then delete the examples. Commit and push.

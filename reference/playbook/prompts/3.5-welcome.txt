@@ -1,0 +1,11 @@
+Using the Bo7 brand position in the project files, write what a new Bo7 member receives in their first two weeks, so joining feels personal and they come back for session two. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin.
+
+1. Welcome message from Ryan, the day they join: welcome, their coach [name], their first session [day and time], what to bring, how to book in the Bo7 app [iOS and Android links], and that they'll be added to the community WhatsApp group.
+2. A short introduction to post in the community WhatsApp group when they're added (only with their permission): first name, which gym, and a line to make them feel welcome.
+3. After their first session: a check-in from their coach asking how it felt. Under 40 words.
+4. End of week 2: a check-in on how it's going, what they'd like more of, and a reminder of the next sessions. Under 60 words.
+5. A one-page "your first month at Bo7" note: what to expect week by week, how booking works, who to ask about what.
+
+Then tell me what to record on the consult page (outcome Joined) so the member moves from leads to the retention step.
+
+Warm, personal, short. Do not invent names, times, prices or facts; use [placeholders].

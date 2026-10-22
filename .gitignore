@@ -1,0 +1,9 @@
+# crawl of the old site: raw HTML, full-size originals, source videos, preview screenshots
+source/raw/
+source/images/
+source/video/
+source/*.jpg
+source/*.jpeg
+.claude/
+Thumbs.db
+.DS_Store

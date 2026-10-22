@@ -1,0 +1,11 @@
+Using the Bo7 brand position in the project files, write everything Bo7 needs to set up WhatsApp Business on 085 241 3999 (+353 85 241 3999). Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin. The goal: every person who messages gets an instant, friendly acknowledgement, then a real reply from a person within 24 hours.
+
+Write:
+1. Business profile: a description (under 256 characters), plus the fields to fill in (address, hours, website, email). Mark anything you don't know as [TO CONFIRM].
+2. Greeting message: sent automatically to anyone messaging for the first time. Thank them, say a coach will reply today (or tomorrow if it's late), and ask which gym suits them, Killiney or Blackrock. Under 60 words. Make clear it is an automatic message.
+3. Away message: for outside the hours someone is answering. Say when they'll hear back. Under 40 words.
+4. Quick replies (shortcuts starting with /): free consultation explained, booking a consult time, both addresses with Google Maps links, what to bring to a first session, prices [TO CONFIRM], "not ready yet, no problem".
+5. Labels to sort chats by: New lead, Replied, Consult booked, Joined, Not now, Member.
+6. Step-by-step instructions to put all of this into the WhatsApp Business app (Settings, Business tools), written for someone who has never done it.
+
+Write in Bo7's voice: warm, direct, no hype. Do not invent prices, hours or facts.

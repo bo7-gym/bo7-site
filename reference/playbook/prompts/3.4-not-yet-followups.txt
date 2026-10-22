@@ -1,0 +1,11 @@
+Using the Bo7 brand position in the project files, write the follow-up messages for people who came to a free consultation and didn't join. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin. Only people who agreed to hear from us get these (the "Consent to contact" column in the leads sheet).
+
+Write a short sequence for each reason in the Bo7 database's "reason not joined" list: Price, Timing or schedule, Location, Not ready yet, Chose somewhere else, Wanted one-to-one, Other. Each sequence has:
+- 1 week after: a thank-you that answers their reason honestly, without pressure.
+- 1 month after: something useful (a tip, a member story, a change at Bo7) and an easy way back in.
+- 3 months after: a last, light check-in. After this, no more messages unless they reply.
+Each message under 60 words, sent by a person on WhatsApp.
+
+Then tell me how to run it: which leads are due each day come from each lead's "follow up on" date in the Bo7 database, and the leads board (prompt 3.1) shows them as due.
+
+Never pushy, never guilt. Do not invent offers, discounts, prices or facts; use [placeholders] for any offer we decide to make.

@@ -1,0 +1,13 @@
+Bo7 is launching a member referral reward:
+- The member who refers gets: [describe]
+- The friend gets: [describe]
+- The friend's pre-typed WhatsApp link (from prompt 4.1): [paste]
+
+Using the Bo7 brand position in the project files, write:
+1. The announcement for the Bo7 community WhatsApp group, from Ryan.
+2. Wording for a small referral card a member hands to a friend: front and back, with the WhatsApp link turned into a QR code call to action.
+3. A one-line script coaches can use at the end of a session.
+4. A natural way to ask "who sent you?" in the first WhatsApp reply to a new enquiry.
+5. A thank-you message to a member when their friend joins.
+
+Keep it in Bo7's voice: warm, direct, no salesy language.

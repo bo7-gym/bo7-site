@@ -1,0 +1,17 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2a and 2.2b done).
+
+Get leads from the Glofox form on the website into the Bo7 database automatically, tagged website-form, so they get the same 24-hour reply and show up in the numbers. Pick the first of these routes that works, in this order, and tell me which one you chose and why:
+
+A. The Glofox API, if Ryan has been given access (see task 2.8 in the playbook). Add a job to the scheduled worker (every 30 minutes) that asks Glofox for leads created since the last run, for both branches, and adds the new ones. Store the Glofox key and token as encrypted secrets in Cloudflare only.
+
+B. Glofox's new-lead emails. If Glofox emails Bo7 when someone fills in the form, set up a Cloudflare email address that receives a copy of those emails. Use Cloudflare Email Routing on a subdomain (for example glofox@in.bo7.ie), so Bo7's existing @bo7.ie email isn't touched, and a small worker that reads each one and adds the lead. Show me a real example email first, and handle the format exactly as Glofox sends it. Don't touch Bo7's other email.
+
+C. Reading the Glofox screens. As a last resort: in my Chrome, open the Glofox dashboard's leads list for both branches each morning, find leads created since the last run, and add them through the team area's API using the Access service token. Set this up as a scheduled task in Claude Code. I sign in to Glofox myself; never type a password, and change nothing in Glofox.
+
+For every route:
+- Match against existing leads and members on phone number or email; don't add duplicates, add a note to the existing record instead.
+- New leads get: name, phone, email, gym (the Glofox branch the form came in on), source website-form, logged by "Glofox", status new, consent as recorded on the form.
+- Log every run: when, how many found, how many added, any errors.
+- If a run fails twice in a row, show it on the team.bo7.ie home page.
+
+Test it with a real form submission on the website (use my own details), show me it arriving, then delete it. Commit and push.

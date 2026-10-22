@@ -1,0 +1,16 @@
+Run this in Claude Code with Claude in Chrome connected and the bo7-site project open.
+
+Check that Bo7's Google Ads account is ready, and tell me what's missing. Don't create, change or spend anything in this prompt; this is a check. Work in my Chrome at ads.google.com.
+
+Rules: I sign in to every site myself; never type a password. If something needs fixing, explain the fix and wait for me to say go.
+
+Check, and report each as Ready, Missing or Needs fixing:
+
+1. Account: a Google Ads account owned by the Bo7 Google account (not a personal one). Give me its customer ID, currency and time zone (should be EUR and Dublin). Tell me who has access.
+2. Expert mode: the account is in Expert mode, not Smart mode, so we can run normal search campaigns with our own keywords.
+3. Billing: a payment method is set up and nothing is overdue or on hold.
+4. Google profiles: both Bo7 Google Business Profiles (Killiney and Blackrock) are linked, so ads can show the address and map.
+5. Measurement: the account is linked to Google Analytics (property G-Z20JQXCC3R), and there are conversion actions for a WhatsApp click and a booking form sent from bo7.ie. Check the website code in this project too: Google Tag Manager (GTM-NJRHF7LZ) should be on every page and send those two events. If any of this is missing, explain how to set it up and whether a cookie banner affects it.
+6. Account health: any policy warnings, suspensions, or old campaigns still running or spending.
+
+Finish with a short checklist of what to fix, in order, with who needs to do each one (me in a browser, or you).

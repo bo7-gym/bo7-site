@@ -1,0 +1,21 @@
+Run this in Claude Code with the Meta Ads connector connected. Run prompt 4.6a first; everything it lists must be Ready.
+
+Using the Bo7 brand position and the member survey analysis in the project files, write Meta (Facebook and Instagram) ads for Bo7, aimed at people who live near either of its two gyms in south Dublin: Killiney (4 Military Road, Ballybrack) and Blackrock (Blackrock Village Centre). The ads cover both gyms; the person picks their gym in the WhatsApp chat.
+
+For each of the 2 or 3 member types in the brand position, give:
+1. Three primary texts, with the hook in the first 125 characters. Mention both locations naturally, for example "in Killiney and Blackrock".
+2. Three headlines, each under 40 characters.
+3. One video or image idea using footage Bo7 already has: Ryan's 44-second message, member story videos, gym photos from Killiney.
+
+The button is "Send WhatsApp message". It opens WhatsApp with the Meta ads pre-typed message from prompt 4.1.
+
+Use members' own words from the survey. No before-and-after weight claims, nothing that points at someone's body or health ("Struggling with your weight?"), and nothing else Meta's ad rules on health and fitness would reject. Flag any line you think is borderline.
+
+Once I have picked the ads I want, build them in the Bo7 ad account with the Meta Ads connector:
+- One campaign for both gyms, objective: messages to WhatsApp, with the "Send WhatsApp message" button and the Meta ads pre-typed message from prompt 4.1.
+- One audience: people living within a radius of both gyms (one pin on each). Suggest the radius and age range from the survey analysis, and tell me your reasoning.
+- Budget: [€__ a week]. Placements: Facebook and Instagram.
+- Upload the videos and photos I point you to.
+- Create everything PAUSED. Never switch anything on or raise a budget. I review it in Ads Manager and switch it on myself.
+
+Then give me the link to the campaign in Ads Manager. Remind me that whoever answers WhatsApp should record which gym each person picks on the leads board, so results can be split by gym.

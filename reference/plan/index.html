@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>The Bo7 Funnel</title>
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400..700&display=swap">
+<style>
+/* Presentation viewer for the Bo7 deck. Each slide is a fixed 1920x1080 canvas, scaled to fit.
+   Arrow keys, space, click or swipe to move; N shows speaker notes; P or the print button saves a PDF. */
+:root { --bg: #0E0D0B; --fg: #F1ECE1; --muted: #A39C8E; --line: #2E2B25; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: "DM Sans", Arial, sans-serif; }
+body { overflow: hidden; }
+
+/* Slide format: inline styles carry the design; these are the format's defaults */
+.slide { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; }
+.slide * { margin: 0; }
+.slide h1 { font-size: 96px; line-height: 1.1; font-weight: 600; }
+.slide h2 { font-size: 64px; line-height: 1.15; font-weight: 600; }
+.slide h3 { font-size: 44px; line-height: 1.2; font-weight: 600; }
+.slide p { font-size: 32px; line-height: 1.4; }
+.slide ul, .slide ol { padding-left: 1.2em; display: flex; flex-direction: column; gap: 0.35em; }
+.slide table { border-collapse: collapse; width: 100%; }
+.slide th, .slide td { text-align: left; padding: 0.35em 0.6em; border-bottom: 1px solid rgba(127,120,105,.35); vertical-align: top; }
+.slide th { font-weight: 600; }
+.slide img { display: block; }
+.x-icon { display: block; flex: none; }
+.x-arrow { display: block; clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%, 60% 100%, 60% 70%, 0 70%); }
+
+/* Viewer */
+.stage { position: fixed; inset: 0; bottom: 56px; }
+.frame { position: absolute; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+.frame .slide:not(.on) { display: none !important; }
+.bar { position: fixed; left: 0; right: 0; bottom: 0; height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 16px calc(env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: #151411; font-size: 14px; }
+.bar b { font-weight: 600; }
+.bar .count { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: auto; white-space: nowrap; }
+.bar button { font: inherit; font-weight: 600; font-size: 13px; color: var(--fg); background: #1E1C18; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+.bar button:hover { border-color: #D4A72C; }
+.bar button[aria-pressed="true"] { border-color: #D4A72C; color: #DDB958; }
+.bar button:focus-visible { outline: 2px solid #D4A72C; outline-offset: 2px; }
+.notes { position: fixed; left: 0; right: 0; bottom: 56px; max-height: 34vh; overflow: auto; padding: 14px 20px; background: #151411; border-top: 1px solid var(--line); font-size: 16px; line-height: 1.55; color: #E3DCCD; }
+.notes[hidden] { display: none; }
+.notes b { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #DDB958; margin-bottom: 4px; }
+.title-sm { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+@media (max-width: 640px) { .title-sm, .hide-sm { display: none; } }
+
+/* Print / Save as PDF: one slide per page */
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  html, body { height: auto; overflow: visible; background: #fff; }
+  .bar, .notes { display: none !important; }
+  .stage { position: static; }
+  .frame { position: static; width: auto !important; height: auto !important; box-shadow: none; overflow: visible; }
+  .frame .slide { display: flex !important; position: relative; transform: none !important; break-after: page; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<div class="frame" id="frame">
+<section class="slide" id="cover" data-notes="Frame it: this isn&#x27;t about the website. The site is one piece. Today is about the whole path a person walks to become a member and stay one, and making sure Bo7 owns every step of it rather than leaving it to chance." aria-label="Slide 1 of 12" style="background:#1B1914;color:#F4EFE4;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+<img src="../assets/img/_s7v6443.webp" alt="A small group training with kettlebells at Bo7 while a coach watches" style="position:absolute;left:1040px;top:0px;width:880px;height:1080px;object-fit:cover">
+<img src="../assets/bo7-logo.png" alt="Bo7 logo" style="width:180px;height:72px;object-fit:contain;align-self:start">
+<div style="display:flex;flex-direction:column;gap:32px;width:820px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#D4A72C">The Bo7 funnel</p>
+<h1 style="font-family:'DM Serif Display', Georgia, serif;font-size:140px;font-weight:400;line-height:1.0;color:#F4EFE4">Own every step</h1>
+<p style="font-size:36px;line-height:1.35;color:#CFC8BA">From the first time someone hears about Bo7 to the day they bring a friend.</p>
+</div>
+<p style="font-size:24px;color:#CFC8BA;width:820px">Sunday 11 October 2026</p>
+</section>
+<section class="slide" id="loop" data-notes="Start with the idea: a new member does one thing, they reach out. Everything before that and everything after it is Bo7&#x27;s job. Walk through the six steps left to right. Point out that Close is already Bo7&#x27;s strength: the consultation works. The point of the loop arrow: members who stay bring friends, and a referred friend skips Reach and arrives as a lead in Capture, already trusting Bo7. Reviews from those members help Reach too. Position sits outside the loop because it underpins everything else." aria-label="Slide 2 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
+<svg aria-label="Arrow looping from Refer back to Capture" style="position:absolute;left:0px;top:0px;width:1920px;height:1080px" width="1920" height="1080" viewBox="0 0 1920 1080"><path d="M1673 690 L1673 800 L815 800 L815 704" fill="none" stroke="#B8901C" stroke-width="4"/><path d="M801 712 L815 690 L829 712 Z" fill="#B8901C"/></svg>
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">The six steps</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Six steps, and members bring the next leads</h2>
+<div style="position:absolute;left:128px;top:430px;width:230px;height:260px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#7D640A">01</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Position</h3><p style="font-size:24px;line-height:1.35;color:#6B655A">Who it's for and why Bo7</p></div>
+<span class="x-arrow" aria-hidden="true" style="position:absolute;left:366px;top:551px;width:40px;height:20px;background:#B8901C"></span>
+<div style="position:absolute;left:414px;top:430px;width:230px;height:260px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#7D640A">02</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Reach</h3><p style="font-size:24px;line-height:1.35;color:#6B655A">Get in front of the right people</p></div>
+<span class="x-arrow" aria-hidden="true" style="position:absolute;left:652px;top:551px;width:40px;height:20px;background:#B8901C"></span>
+<div style="position:absolute;left:700px;top:430px;width:230px;height:260px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#7D640A">03</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Capture</h3><p style="font-size:24px;line-height:1.35;color:#6B655A">Turn interest into a chat</p></div>
+<span class="x-arrow" aria-hidden="true" style="position:absolute;left:938px;top:551px;width:40px;height:20px;background:#B8901C"></span>
+<div style="position:absolute;left:986px;top:430px;width:230px;height:260px;background:#1B1914;border:1px solid #1B1914;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#D4A72C">04</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400;color:#F4EFE4">Close</h3><p style="font-size:24px;line-height:1.35;color:#CFC8BA">Consult to member. Strong today</p></div>
+<span class="x-arrow" aria-hidden="true" style="position:absolute;left:1224px;top:551px;width:40px;height:20px;background:#B8901C"></span>
+<div style="position:absolute;left:1272px;top:430px;width:230px;height:260px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#7D640A">05</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Retain</h3><p style="font-size:24px;line-height:1.35;color:#6B655A">Spot slipping, step in early</p></div>
+<span class="x-arrow" aria-hidden="true" style="position:absolute;left:1510px;top:551px;width:40px;height:20px;background:#B8901C"></span>
+<div style="position:absolute;left:1558px;top:430px;width:230px;height:260px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;font-weight:700;color:#7D640A">06</p><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Refer</h3><p style="font-size:24px;line-height:1.35;color:#6B655A">Members bring the next ones</p></div>
+<p style="position:absolute;left:784px;top:820px;width:920px;font-size:28px;text-align:center;color:#6B655A">Members who stay are the cheapest source of new ones</p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">02</p>
+</section>
+<section class="slide" id="position" data-notes="The brand position should come from real members, not from a guess about who they are. Every question is tick boxes with an &quot;Other&quot; box, except the one-sentence description, because their exact words are the point. Anonymous unless they opt in. The owners&#x27; view still counts: ask Ryan who his best members are and why they picked Bo7, then compare it with what members say. The full question list and the prompt that builds the form are in the playbook, Step 1." aria-label="Slide 3 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 1 · Position</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Ask the members why they chose Bo7</h2>
+</div>
+<div style="display:flex;gap:48px;flex:1">
+<div style="flex:1.2;display:flex;flex-direction:column;gap:24px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:40px">
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">13 questions, about 4 minutes</h3>
+<ul style="font-size:28px;line-height:1.4;color:#3A362F">
+<li>Who they are: gym, how long, age and gender</li>
+<li>What they did before, and what made them look for something new</li>
+<li>Who else they considered, and why Bo7 won</li>
+<li>What nearly stopped them joining</li>
+<li>What has changed for them since</li>
+<li>Bo7 in one sentence, in their own words</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#1B1914;border-radius:16px;padding:40px">
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400;color:#F4EFE4">How it runs</h3>
+<ol style="font-size:28px;line-height:1.4;color:#CFC8BA">
+<li>Claude builds the Google Form in about 10 minutes</li>
+<li>Ryan posts it in the members' WhatsApp group</li>
+<li>Open for seven days, with a reminder on day three</li>
+<li>Claude reads the answers alongside the Google reviews</li>
+</ol>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#1B1914;width:1500px"><b>Their words become the copy.</b> <span style="color:#3A362F">Members who opt in to be quoted or filmed become the proof on the next slide.</span></p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">03</p>
+</section>
+<section class="slide" id="brief" data-notes="Claude drafts the first version from the members&#x27; survey answers, the Google reviews and the owners&#x27; view. They correct it. Without this page, every agent writes generic gym copy; with it, everything sounds like Bo7." aria-label="Slide 4 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 1 · The output</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">The Bo7 brand position, on one page</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Who it's for</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">The two or three member types you want more of</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Their problem</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">What's not working for them today, in their words</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Why Bo7</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Why Bo7 beats the alternatives they're weighing</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Proof</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Reviews, member stories, Ryan's video</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">The offer</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Free consultation, what happens in it, prices</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:36px"><h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">The voice</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">How Bo7 sounds, and words it never uses</p></div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#1B1914;width:1400px"><b>Why it matters:</b> every ad, reply and retention message starts from this page, whether a person or a Claude agent writes it.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">04</p>
+</section>
+<section class="slide" id="reach" data-notes="Ask which of these they do today and roughly how many members each brings. Paid is the only one you can turn up and down quickly; referral is the cheapest; organic is the one they already pay for in rent. Corporate: confirm what deals they run today, with which companies, and the discount. One company deal can bring several members at once, so it&#x27;s worth its own lead source tag. The referral reward is theirs to decide." aria-label="Slide 5 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 2 · Reach</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Four ways in</h2>
+</div>
+<div style="display:flex;gap:28px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:32px">
+<svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Organic</h3>
+<p style="font-size:24px;font-weight:600;color:#7D640A">People passing the door</p>
+<ul style="font-size:24px;line-height:1.4;color:#3A362F">
+<li>A window that says how to book</li>
+<li>A stand in Blackrock Village Centre, QR to WhatsApp</li>
+<li>Both Google profiles kept fresh</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:32px">
+<svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></svg>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Paid</h3>
+<p style="font-size:24px;font-weight:600;color:#7D640A">Meta and Google ads</p>
+<ul style="font-size:24px;line-height:1.4;color:#3A362F">
+<li>Meta: member stories and Ryan's video, to locals</li>
+<li>Google: people searching for a trainer nearby</li>
+<li>One page per gym, one button</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:32px">
+<svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M17.5 14.2c2.2.7 3.7 2.9 4 5.8"/></svg>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Referral</h3>
+<p style="font-size:24px;font-weight:600;color:#7D640A">Members bring friends</p>
+<ul style="font-size:24px;line-height:1.4;color:#3A362F">
+<li>A reward both sides get: [offer]</li>
+<li>Bring-a-friend sessions</li>
+<li>Ask at the right moment (Step 6)</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:32px">
+<svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Corporate</h3>
+<p style="font-size:24px;font-weight:600;color:#7D640A">Company deals</p>
+<ul style="font-size:24px;line-height:1.4;color:#3A362F">
+<li>Group rates for local employers: [terms]</li>
+<li>A taster session for each new team</li>
+<li>One champion inside each company</li>
+</ul>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">05</p>
+</section>
+<section class="slide" id="tagging" data-notes="This is the slide that makes the dashboard possible. Without source tags you can&#x27;t tell whether the stand or the ads are working, so you can&#x27;t decide where to spend. Simple and free: different opening message per source." aria-label="Slide 6 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 2 · Reach</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Tag every lead with where it came from</h2>
+</div>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:28px;color:#1B1914">
+<tr style="background:#F0ECE3"><th style="width:30%">Source</th><th style="width:70%">How it gets tagged</th></tr>
+<tr><td>Stand or window QR</td><td>WhatsApp opens with "Hi, I saw Bo7 at the Village Centre" already typed</td></tr>
+<tr><td>Meta ads</td><td>Its own pre-typed WhatsApp message, plus a tracked link</td></tr>
+<tr><td>Google ads</td><td>Tracked link to the gym's own page</td></tr>
+<tr><td>Referral</td><td>"Who sent you?" asked in the first reply</td></tr>
+<tr><td>Corporate</td><td>Logged against the company, so each deal's members can be counted</td></tr>
+<tr><td>Walk-in or phone</td><td>Logged by whoever takes it, same list as everything else</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#6B655A;width:1400px">The new website already opens WhatsApp with a pre-typed message. Each source just gets its own wording.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">06</p>
+</section>
+<section class="slide" id="capture" data-notes="Three ways to get in touch, one list behind them, one promise: a human reply within 24 hours. An instant automatic &quot;thanks, we&#x27;ll be in touch today&quot; is fine, but it doesn&#x27;t count towards the 24 hours. Ask who answers WhatsApp and email today, from which phone or inbox, and what happens at the weekend. The Blackrock Glofox form needs consent checkboxes set up before it can take leads directly." aria-label="Slide 7 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 3 · Capture</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Easy to say hello, quick to hear back</h2>
+</div>
+<div style="display:flex;gap:64px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;gap:24px;align-items:start"><svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/></svg><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:32px;font-weight:700">WhatsApp first</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Least effort for someone curious. First on the new site.</p></div></div>
+<div style="display:flex;gap:24px;align-items:start"><svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="m10 13 4.5-4.5"/></svg><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:32px;font-weight:700">Email</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">One shared inbox for people who'd rather write.</p></div></div>
+<div style="display:flex;gap:24px;align-items:start"><svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3"/></svg><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:32px;font-weight:700">Glofox form on the website</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Every web lead lands in the Killiney branch today.</p></div></div>
+<div style="display:flex;gap:24px;align-items:start"><svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="2.5"/><path d="M4 5.5v13c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-13M4 12c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5"/></svg><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:32px;font-weight:700">One list of every lead</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Name, gym, source, status. Nobody falls through the gaps.</p></div></div>
+<div style="display:flex;gap:24px;align-items:start"><svg class="x-icon" style="color:#B8901C;width:44px;height:44px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="1.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:32px;font-weight:700">Ask permission to keep in touch</h3><p style="font-size:26px;line-height:1.4;color:#6B655A">Record consent once, so follow-ups are allowed.</p></div></div>
+</div>
+<div style="width:560px;display:flex;flex-direction:column;justify-content:center;gap:24px;background:#1B1914;border-radius:16px;padding:56px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#D4A72C">The number</p>
+<h1 style="font-family:'DM Serif Display', Georgia, serif;font-size:160px;font-weight:400;line-height:1.0;color:#F4EFE4">24h</h1>
+<p style="font-size:30px;line-height:1.4;color:#CFC8BA">Every lead hears back from a real person within 24 hours, whichever way they got in touch. Measure it weekly.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">07</p>
+</section>
+<section class="slide" id="close" data-notes="Don&#x27;t teach them to sell; they&#x27;re good at it. The two leaks around a strong close are people who book and don&#x27;t show, and people who say &quot;not yet&quot; and never hear from Bo7 again. Both are fixable with messages that can be drafted automatically." aria-label="Slide 8 of 12" style="background:#F0ECE3;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 4 · Close</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Already strong. Protect it and measure it.</h2>
+</div>
+<div style="display:flex;gap:32px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:40px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">Before</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Get them in the door</h3>
+<ul style="font-size:26px;line-height:1.4;color:#3A362F">
+<li>Reminder the day before and the morning of</li>
+<li>Send Ryan's 44-second video once it's booked</li>
+<li>Track the show rate: [__%]</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:40px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">During</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Keep what works</h3>
+<ul style="font-size:26px;line-height:1.4;color:#3A362F">
+<li>Write down the consult as it runs today, so any coach can do it</li>
+<li>Track consult-to-member: [__%]</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #E4DED1;border-radius:16px;padding:40px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">After</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:44px;font-weight:400">Follow up the maybes</h3>
+<ul style="font-size:26px;line-height:1.4;color:#3A362F">
+<li>Note why each "not yet" said no</li>
+<li>A check-in at 1 week and 1 month</li>
+<li>New members join the community WhatsApp group</li>
+</ul>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">08</p>
+</section>
+<section class="slide" id="retain" data-notes="The 10-day rule is a starting point; agree the right number with them. The important design choice: the &quot;missed you&quot; message comes from a real coach, not a bot. The agent&#x27;s job is to produce the list every Monday with a drafted message for each person, and the coach sends it. Ask how many members they lost in the last three months and whether anyone noticed in advance." aria-label="Slide 9 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 5 · Retain</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Spot members slipping before they leave</h2>
+</div>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:26px;color:#1B1914">
+<tr style="background:#F0ECE3"><th style="width:30%">When this happens</th><th style="width:50%">Bo7 does this</th><th style="width:20%">Sent by</th></tr>
+<tr><td>No check-in for 10 days</td><td>A personal WhatsApp: "Missed you. Want me to hold a spot Thursday?"</td><td>Coach, drafted by agent</td></tr>
+<tr><td>Sessions per week halve over a month</td><td>A short call about goals and schedule</td><td>Coach</td></tr>
+<tr><td>First month done</td><td>Progress note and "what's working for you?"</td><td>Automatic</td></tr>
+<tr><td>10th, 50th, 100th session</td><td>Shout-out in the community group</td><td>Automatic</td></tr>
+<tr><td>One year as a member</td><td>A thank-you from Ryan</td><td>Automatic</td></tr>
+</table>
+<p style="font-size:26px;line-height:1.4;color:#6B655A;width:1500px">The signal is already there: every session is booked and checked in through Glofox. First check what Glofox can automate before adding any new tool.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">09</p>
+</section>
+<section class="slide" id="refer" data-notes="This closes the loop back to Reach. Six member videos already exist and are on the new site. The milestones from the retention slide double as the moment to ask for a review or a referral, so the two steps share one set of triggers." aria-label="Slide 10 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step 6 · Refer</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Turn happy members into the next ones</h2>
+</div>
+<div style="display:flex;gap:64px;flex:1">
+<img src="../assets/img/_s7v5457.webp" alt="Bo7 members on the beach after a group session" style="width:640px;height:580px;object-fit:cover;border-radius:16px">
+<div style="flex:1;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h1 style="font-family:'DM Serif Display', Georgia, serif;font-size:120px;font-weight:400;line-height:1.0;color:#1B1914">4.9</h1>
+<p style="font-size:28px;line-height:1.4;color:#6B655A">from 99 Google reviews at Killiney, and 5.0 from 15 at Blackrock (8 Oct 2026). Members already love it; the job is to ask.</p>
+</div>
+<ul style="font-size:28px;line-height:1.5;color:#3A362F">
+<li>Ask for a review at a high point: 10th session, a new best</li>
+<li>A referral reward both sides get: [offer]</li>
+<li>One new member story video a month</li>
+<li>Bring-a-friend sessions, booked like any class</li>
+</ul>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">10</p>
+</section>
+<section class="slide" id="agents" data-notes="Keep this practical. Nothing here replaces the coaches; it removes the admin that stops follow-ups happening. The playbook is already live at bo7.thedowlings.co/playbook, with each prompt written out." aria-label="Slide 11 of 12" style="background:#1B1914;color:#F4EFE4;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#D4A72C">Making it happen</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#F4EFE4">Claude does the legwork. You make the calls.</h2>
+</div>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:26px;color:#F4EFE4">
+<tr style="background:#2A2620"><th style="width:16%">Step</th><th style="width:56%">The agent</th><th style="width:28%">You</th></tr>
+<tr><td>Position</td><td>Drafts the brand position from the site, reviews and your answers</td><td>Correct it once</td></tr>
+<tr><td>Reach</td><td>Writes ad variations and stand copy from the brand position</td><td>Pick, approve, set budget</td></tr>
+<tr><td>Capture</td><td>Drafts first replies; weekly lead report by source</td><td>Reply, read the report</td></tr>
+<tr><td>Close</td><td>Writes reminders and "not yet" follow-ups</td><td>Run the consult</td></tr>
+<tr><td>Retain</td><td>Monday list of slipping members, a message drafted for each</td><td>Coaches send them</td></tr>
+<tr><td>Refer</td><td>Flags milestones and drafts the review or referral ask</td><td>Send, thank people</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#CFC8BA;width:1500px">Two rules: every prompt starts from the Bo7 brand position, and a person approves anything before it's sent. The playbook has every prompt, ready to copy.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#A39C8E">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#A39C8E">11</p>
+</section>
+<section class="slide" id="plan" data-notes="Two weeks is realistic: the site, the playbook, the dashboard and the members area mockups were built in two days. What&#x27;s left is setup and real data, and every task has its prompt ready in the playbook (bo7.thedowlings.co/playbook). The one thing outside our control is Glofox: ask for API access this week (apiactivation@abcfitness.com) so it isn&#x27;t holding things up in week 2. Capture and close come before reach: no ad spend until every lead is caught, answered and booked." aria-label="Slide 12 of 12" style="background:#FAF7F0;color:#1B1914;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7D640A">Step by step</p>
+<h2 style="font-family:'DM Serif Display', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#1B1914">Live by the end of October</h2>
+</div>
+<div style="display:flex;gap:28px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#FFFDF8;border:1px solid #E4DED1;border-top:6px solid #B8901C;border-radius:16px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">Now</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Start</h3>
+<ul style="font-size:25px;line-height:1.4;color:#3A362F">
+<li>Ask Glofox for API access</li>
+<li>Members questionnaire out</li>
+<li>Brand position drafted</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#FFFDF8;border:1px solid #E4DED1;border-top:6px solid #B8901C;border-radius:16px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">Week 1 · 12 to 18 Oct</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Capture and Close</h3>
+<ul style="font-size:25px;line-height:1.4;color:#3A362F">
+<li>Site on bo7.ie</li>
+<li>Team area and lead database</li>
+<li>Add-a-lead page</li>
+<li>Leads board and consult booking</li>
+<li>Reminders and follow-ups</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#FFFDF8;border:1px solid #E4DED1;border-top:6px solid #B8901C;border-radius:16px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#7D640A">Week 2 · 19 to 25 Oct</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400">Reach, Retain, Refer</h3>
+<ul style="font-size:25px;line-height:1.4;color:#3A362F">
+<li>Tagged links and QR codes</li>
+<li>Meta and Google campaigns ready</li>
+<li>Member health and win-back</li>
+<li>Members area, reviews, bring-a-friend</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#1B1914;border:1px solid #1B1914;border-top:6px solid #D4A72C;border-radius:16px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#D4A72C">By 31 Oct</p>
+<h3 style="font-family:'DM Serif Display', Georgia, serif;font-size:40px;font-weight:400;color:#F4EFE4">Running</h3>
+<ul style="font-size:25px;line-height:1.4;color:#CFC8BA">
+<li>Ads live, small budget first</li>
+<li>Every lead answered within 24 hours</li>
+<li>Win-back messages going out</li>
+<li>First Monday report</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#1B1914;width:1600px"><b>The one dependency: Glofox API access.</b> <span style="color:#3A362F">With it, leads and member data flow in by themselves. Without it, a nightly routine on Ryan's computer copies them across from Glofox. It works, but it's slower.</span></p>
+<p style="position:absolute;left:128px;bottom:64px;width:800px;font-size:24px;color:#6B655A">Bo7 · Own every step</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B655A">12</p>
+</section>
+</div>
+</main>
+<div class="notes" id="notes" hidden aria-live="polite"></div>
+<nav class="bar" aria-label="Presentation controls">
+  <b>Bo7</b><span class="title-sm">The Bo7 Funnel</span>
+  <span class="count" id="count"></span>
+  <button type="button" id="prev" aria-label="Previous slide">Back</button>
+  <button type="button" id="next" aria-label="Next slide">Next</button>
+  <button type="button" id="notes-btn" aria-pressed="false" class="hide-sm">Notes</button>
+  <button type="button" id="full" class="hide-sm">Full screen</button>
+  <button type="button" id="print" class="hide-sm">Save PDF</button>
+</nav>
+<script>
+(function () {
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var frame = document.getElementById('frame'), stage = document.getElementById('stage');
+  var notes = document.getElementById('notes'), notesBtn = document.getElementById('notes-btn');
+  var i = 0;
+  function fromHash() { var n = parseInt((location.hash || '').replace('#', ''), 10); return n >= 1 && n <= slides.length ? n - 1 : 0; }
+  function fit() {
+    var w = stage.clientWidth - 32, h = stage.clientHeight - 32;
+    var k = Math.min(w / 1920, h / 1080);
+    frame.style.width = 1920 * k + 'px'; frame.style.height = 1080 * k + 'px';
+    frame.style.left = (stage.clientWidth - 1920 * k) / 2 + 'px'; frame.style.top = (stage.clientHeight - 1080 * k) / 2 + 'px';
+    slides.forEach(function (s) { s.style.transform = 'scale(' + k + ')'; });
+  }
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, j) { s.classList.toggle('on', j === i); });
+    document.getElementById('count').textContent = (i + 1) + ' / ' + slides.length;
+    notes.innerHTML = '<b>Speaker notes</b>' + (slides[i].getAttribute('data-notes') || 'None.');
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+  function toggleNotes() {
+    notes.hidden = !notes.hidden; notesBtn.setAttribute('aria-pressed', String(!notes.hidden));
+    stage.style.bottom = notes.hidden ? '56px' : (56 + notes.offsetHeight) + 'px'; fit();
+  }
+  document.getElementById('prev').addEventListener('click', function () { show(i - 1); });
+  document.getElementById('next').addEventListener('click', function () { show(i + 1); });
+  notesBtn.addEventListener('click', toggleNotes);
+  document.getElementById('print').addEventListener('click', function () { window.print(); });
+  document.getElementById('full').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {});
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(e.key) !== -1) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(e.key) !== -1) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'n' || e.key === 'N') toggleNotes();
+    else if (e.key === 'f' || e.key === 'F') document.getElementById('full').click();
+  });
+  frame.addEventListener('click', function (e) { var r = frame.getBoundingClientRect(); show(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1); });
+  var x0 = null;
+  stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', function () { show(fromHash()); });
+  fit(); show(fromHash());
+})();
+</script>
+</body>
+</html>

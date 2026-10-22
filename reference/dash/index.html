@@ -1,0 +1,1554 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Bo7 Dashboard</title>
+<link rel="icon" href="../assets/favicon.ico">
+<script>try { var t = localStorage.getItem("bo7-dash-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Bo7 dashboard. Built on the Observatory ("Operator") design system from alfred-workspace:
+   dense, neutral, tool-like. Blue-biased neutrals, one accent (Observatory blue),
+   semantic status colours, 4px rhythm, Inter with tabular numbers.
+   No colour or size literals outside the tokens. Light on :root, dark via system or [data-theme]. */
+:root {
+  --bg-page: #F6F7F9; --bg-surface: #FFFFFF; --bg-sunken: #EFF1F4; --bg-raised: #FFFFFF;
+  --bg-hover: #F2F4F7; --bg-active: #E8ECF2;
+  --text-primary: #0F1115; --text-secondary: #545B6B; --text-tertiary: #6E7688; --text-inverse: #FFFFFF;
+  --border: #E2E5EA; --border-strong: #CFD4DC;
+  --accent: #2563EB; --accent-hover: #1D4ED8; --accent-text: #1D4ED8; --accent-subtle: #E7EEFD; --accent-contrast: #FFFFFF;
+  --border-focus: #2563EB;
+  --status-positive: #0F7B4F; --status-positive-subtle: #E4F4EC;
+  --status-negative: #C2334A; --status-negative-subtle: #FCE9EC;
+  --status-warning: #A35A07; --status-warning-subtle: #FBF0E0;
+  --status-neutral: #5B6373; --status-neutral-subtle: #EDEFF3;
+  --wa: #1DAA52; --wa-contrast: #FFFFFF;
+  --chart-1: #2A78D6; --chart-grid: #ECEEF2; --chart-axis: #6E7688; --chart-compare: #A6ADBB;
+  --table-border: #ECEEF2; --row-hover: #F5F7FA;
+  --shadow-pop: 0 1px 2px rgba(15,17,21,.06), 0 8px 24px rgba(15,17,21,.10);
+  --seg-shadow: 0 1px 1px rgba(15,17,21,.06);
+  --logo-filter: invert(1); /* the logo file is white; dark on light pages */
+
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --fs-xs: 11px; --fs-sm: 12px; --fs-base: 13px; --fs-md: 14px; --fs-lg: 16px; --fs-xl: 20px; --fs-2xl: 24px; --fs-3xl: 30px;
+  --track-tight: -0.014em; --track-wide: 0.06em;
+  --space-1: 2px; --space-2: 4px; --space-3: 6px; --space-4: 8px; --space-5: 12px; --space-6: 16px; --space-7: 20px; --space-8: 24px; --space-9: 32px;
+  --radius-sm: 3px; --radius-md: 5px; --radius-lg: 6px; --radius-full: 999px;
+  --topbar-h: 52px; --content-max: 1560px; --pad-x: 20px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-page: #0B0D11; --bg-surface: #121519; --bg-sunken: #0E1115; --bg-raised: #171B21;
+    --bg-hover: #1A1E25; --bg-active: #232830;
+    --text-primary: #EEF1F6; --text-secondary: #A2AAB8; --text-tertiary: #7F8898; --text-inverse: #0B0D11;
+    --border: #232830; --border-strong: #333A45;
+    --accent: #3B82F6; --accent-hover: #5A98F8; --accent-text: #5A98F8; --accent-subtle: #152239; --accent-contrast: #07090D;
+    --border-focus: #3B82F6;
+    --status-positive: #3FD08F; --status-positive-subtle: #0F2A20;
+    --status-negative: #FF7B8B; --status-negative-subtle: #331419;
+    --status-warning: #F0B429; --status-warning-subtle: #302209;
+    --status-neutral: #98A1B0; --status-neutral-subtle: #1C2129;
+    --wa: #25D366; --wa-contrast: #06210F;
+    --chart-1: #3987E5; --chart-grid: #1F242B; --chart-axis: #7F8898; --chart-compare: #5C6472;
+    --table-border: #1F242B; --row-hover: #171B22;
+    --shadow-pop: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px rgba(0,0,0,.55);
+    --seg-shadow: 0 1px 1px rgba(0,0,0,.4);
+    --logo-filter: none;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg-page: #0B0D11; --bg-surface: #121519; --bg-sunken: #0E1115; --bg-raised: #171B21;
+  --bg-hover: #1A1E25; --bg-active: #232830;
+  --text-primary: #EEF1F6; --text-secondary: #A2AAB8; --text-tertiary: #7F8898; --text-inverse: #0B0D11;
+  --border: #232830; --border-strong: #333A45;
+  --accent: #3B82F6; --accent-hover: #5A98F8; --accent-text: #5A98F8; --accent-subtle: #152239; --accent-contrast: #07090D;
+  --border-focus: #3B82F6;
+  --status-positive: #3FD08F; --status-positive-subtle: #0F2A20;
+  --status-negative: #FF7B8B; --status-negative-subtle: #331419;
+  --status-warning: #F0B429; --status-warning-subtle: #302209;
+  --status-neutral: #98A1B0; --status-neutral-subtle: #1C2129;
+  --wa: #25D366; --wa-contrast: #06210F;
+  --chart-1: #3987E5; --chart-grid: #1F242B; --chart-axis: #7F8898; --chart-compare: #5C6472;
+  --table-border: #1F242B; --row-hover: #171B22;
+  --shadow-pop: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px rgba(0,0,0,.55);
+  --seg-shadow: 0 1px 1px rgba(0,0,0,.4);
+    --logo-filter: none;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg-page); color: var(--text-primary); font: 400 var(--fs-base)/1.5 var(--font-ui); font-variant-numeric: tabular-nums; overflow-x: clip; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 1px; }
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+
+/* Top bar */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg-surface); border-bottom: 1px solid var(--border); }
+.topbar-inner { max-width: var(--content-max); margin: 0 auto; padding-inline: var(--pad-x); min-height: var(--topbar-h); display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; padding-block: var(--space-3); }
+.brand { display: flex; align-items: center; gap: var(--space-4); }
+.logo { display: block; width: 45px; height: 27px; filter: var(--logo-filter); }
+.title { font-size: var(--fs-md); font-weight: 600; letter-spacing: var(--track-tight); }
+.sep { width: 1px; height: 18px; background: var(--border); }
+.sub { font-size: var(--fs-sm); color: var(--text-tertiary); }
+.right { margin-left: auto; display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; }
+
+.chip { display: inline-flex; align-items: center; gap: var(--space-3); padding: 1px 7px; border-radius: var(--radius-full); font-size: var(--fs-xs); font-weight: 600; background: var(--status-neutral-subtle); color: var(--status-neutral); white-space: nowrap; }
+.chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.chip.warn { background: var(--status-warning-subtle); color: var(--status-warning); }
+.chip.bad { background: var(--status-negative-subtle); color: var(--status-negative); }
+.chip.ok { background: var(--status-positive-subtle); color: var(--status-positive); }
+.chip.info { background: var(--accent-subtle); color: var(--accent-text); }
+.chip.mute::before { display: none; }
+
+.seg { display: inline-flex; gap: var(--space-1); padding: var(--space-1); background: var(--bg-sunken); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+.seg button { border: 0; background: none; padding: 3px 9px; border-radius: var(--radius-md); font-size: var(--fs-sm); font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.seg button:hover { color: var(--text-primary); }
+.seg button[aria-pressed="true"] { background: var(--bg-surface); color: var(--text-primary); font-weight: 600; box-shadow: var(--seg-shadow); }
+
+.seg.icons button { display: grid; place-items: center; padding: 3px 7px; color: var(--text-tertiary); }
+.seg.icons button:hover { color: var(--text-primary); }
+.seg.icons button[aria-pressed="true"] { color: var(--text-primary); }
+.seg.icons svg { display: block; width: 14px; height: 14px; }
+.switch { display: inline-flex; align-items: center; gap: var(--space-4); font-size: var(--fs-sm); color: var(--text-secondary); cursor: pointer; user-select: none; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.track { width: 28px; height: 16px; border-radius: var(--radius-full); background: var(--border-strong); position: relative; transition: background .15s; flex: none; }
+.track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-surface); transition: transform .15s; }
+.switch input:checked + .track { background: var(--accent); }
+.switch input:checked + .track::after { transform: translateX(12px); }
+.switch input:focus-visible + .track { outline: 2px solid var(--border-focus); outline-offset: 1px; }
+
+/* Content */
+.content { max-width: var(--content-max); margin: 0 auto; padding: var(--space-6) var(--pad-x) var(--space-9); display: flex; flex-direction: column; gap: var(--space-6); }
+.tabs { display: flex; gap: var(--space-6); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button { border: 0; background: none; padding: var(--space-4) 0; margin-bottom: -1px; border-bottom: 2px solid transparent; font-size: var(--fs-md); font-weight: 500; color: var(--text-secondary); cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: var(--space-3); }
+.tabs button:hover:not([disabled]) { color: var(--text-primary); }
+.tabs button[aria-selected="true"] { color: var(--text-primary); font-weight: 600; border-bottom-color: var(--accent); }
+.tabs button[disabled] { cursor: default; color: var(--text-tertiary); }
+.scope { font-size: var(--fs-xs); color: var(--text-tertiary); margin: calc(var(--space-6) * -1 + var(--space-4)) 0 0; }
+
+/* KPI strip: one bordered object split by hairlines */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.kpi { background: var(--bg-surface); padding: 11px 12px 10px; display: flex; flex-direction: column; min-width: 0; }
+.eyebrow { font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-wide); color: var(--text-tertiary); }
+.kpi-value { font-size: var(--fs-2xl); font-weight: 600; letter-spacing: var(--track-tight); line-height: 1.2; margin-top: var(--space-2); display: flex; align-items: baseline; gap: var(--space-4); flex-wrap: wrap; }
+.kpi-value.bad { color: var(--status-negative); }
+.kpi-secondary { font-size: var(--fs-sm); font-weight: 500; color: var(--text-tertiary); letter-spacing: 0; }
+.kpi-meta { display: flex; align-items: center; gap: var(--space-4); min-height: 17px; margin-top: var(--space-2); }
+.kpi-ly { font-size: var(--fs-xs); color: var(--text-tertiary); }
+.spark { display: block; width: 100%; height: 44px; margin-top: var(--space-4); }
+@media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .kpi-value { font-size: var(--fs-xl); } }
+
+.delta { display: inline-flex; align-items: center; gap: 3px; padding: 1px 5px 1px 4px; border-radius: var(--radius-sm); font-size: var(--fs-xs); font-weight: 600; }
+.delta svg { width: 9px; height: 9px; }
+.delta.good { background: var(--status-positive-subtle); color: var(--status-positive); }
+.delta.bad { background: var(--status-negative-subtle); color: var(--status-negative); }
+.delta.flat { background: var(--status-neutral-subtle); color: var(--status-neutral); }
+
+/* Board */
+.board { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1.2fr); gap: var(--space-6); align-items: start; }
+@media (max-width: 1240px) { .board { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .panel.sources { grid-column: 1 / -1; order: 3; } }
+@media (max-width: 760px) { .board { grid-template-columns: minmax(0, 1fr); } }
+
+.panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); min-width: 0; }
+.panel-head { min-height: 36px; padding: 9px 12px; border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.panel-title { font-size: var(--fs-base); font-weight: 600; letter-spacing: var(--track-tight); }
+.panel-note { font-size: var(--fs-xs); color: var(--text-tertiary); }
+.panel-actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-4); }
+.count { font-size: var(--fs-xs); font-weight: 600; color: var(--text-secondary); background: var(--bg-sunken); border: 1px solid var(--border); border-radius: var(--radius-full); padding: 0 7px; }
+
+/* Sources: qualifiers left, numbers right, the bar is the aside */
+.src-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px 40px 30px; gap: var(--space-5); align-items: center; padding: 6px 12px; border-bottom: 1px solid var(--table-border); }
+.src-row:last-child { border-bottom: 0; }
+.src-row:hover { background: var(--row-hover); }
+.src-name { color: var(--text-primary); font-weight: 500; min-width: 0; }
+.src-split { display: block; font-size: var(--fs-xs); color: var(--text-tertiary); font-weight: 400; }
+.meter { height: 5px; border-radius: var(--radius-full); background: var(--bg-sunken); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--chart-1); border-radius: var(--radius-full); }
+.src-share { text-align: right; font-size: var(--fs-sm); color: var(--text-tertiary); }
+.src-val { text-align: right; font-weight: 600; }
+.src-head { white-space: nowrap; font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-wide); color: var(--text-tertiary); background: var(--bg-sunken); }
+.src-head:hover { background: var(--bg-sunken); }
+.src-foot { font-weight: 600; background: var(--bg-sunken); }
+.src-foot:hover { background: var(--bg-sunken); }
+.src-delta { justify-self: end; }
+
+/* Lead rows */
+.group-label { padding: var(--space-4) 12px var(--space-2); font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-wide); color: var(--text-tertiary); background: var(--bg-sunken); border-bottom: 1px solid var(--table-border); }
+.lead { padding: 10px 12px; border-bottom: 1px solid var(--table-border); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-5); position: relative; }
+.lead:last-child { border-bottom: 0; }
+.lead:hover { background: var(--row-hover); }
+.lead.late::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--status-negative); }
+.lead-name { font-weight: 600; font-size: var(--fs-base); }
+.lead-when { text-align: right; font-size: var(--fs-sm); color: var(--text-tertiary); white-space: nowrap; }
+.lead-when b { color: var(--text-primary); font-weight: 600; }
+.lead-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); font-size: var(--fs-sm); color: var(--text-secondary); }
+.dot-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-tertiary); }
+.lead-note { grid-column: 1 / -1; font-size: var(--fs-sm); color: var(--text-tertiary); margin: 0; }
+.lead-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+.btn { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; padding: 3px 8px; border-radius: var(--radius-md); font-size: var(--fs-sm); font-weight: 500; border: 1px solid var(--border-strong); background: var(--bg-surface); color: var(--text-primary); cursor: pointer; }
+.btn:hover { background: var(--bg-hover); }
+.btn svg { width: 13px; height: 13px; flex: none; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); font-weight: 600; }
+.btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn.primary.wa { background: var(--wa); border-color: var(--wa); color: var(--wa-contrast); }
+.btn.ghost { border-color: transparent; background: none; color: var(--text-secondary); }
+.btn.ghost:hover { background: var(--bg-hover); color: var(--text-primary); }
+.empty { padding: 32px 12px; text-align: center; font-size: var(--fs-sm); color: var(--text-tertiary); }
+
+.foot-note { font-size: var(--fs-xs); color: var(--text-tertiary); }
+
+/* Lead rows open the lead dialog */
+.lead.clickable { cursor: pointer; }
+.lead.clickable:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -2px; }
+.lead-coach { font-size: var(--fs-xs); color: var(--text-tertiary); }
+
+/* Lead dialog. Closed dialogs must stay display:none. */
+.dlg:not([open]) { display: none; }
+.dlg { padding: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-pop); width: min(960px, calc(100% - 32px)); max-height: calc(100vh - 48px); overflow: hidden; }
+.dlg[open] { display: flex; flex-direction: column; }
+.dlg::backdrop { background: rgba(11, 13, 17, .45); }
+.dlg-head { display: flex; align-items: flex-start; gap: var(--space-5); padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.dlg-title { font-size: var(--fs-lg); font-weight: 600; letter-spacing: var(--track-tight); margin: 0; }
+.dlg-head .lead-meta { margin-top: var(--space-2); }
+.dlg-head .lead-actions { margin-top: var(--space-3); }
+.icon-btn { margin-left: auto; border: 0; background: none; color: var(--text-tertiary); border-radius: var(--radius-md); padding: var(--space-2); cursor: pointer; display: grid; place-items: center; }
+.icon-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.icon-btn svg { width: 16px; height: 16px; }
+.dlg-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); overflow: auto; flex: 1; }
+.dlg-col { padding: 14px 16px; display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.dlg-col + .dlg-col { border-left: 1px solid var(--border); background: var(--bg-page); }
+.dlg-section { font-size: var(--fs-base); font-weight: 600; letter-spacing: var(--track-tight); display: flex; align-items: center; gap: var(--space-4); }
+.dlg-section .panel-note { font-weight: 400; }
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+.field > span { font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-wide); color: var(--text-tertiary); }
+.days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-2); }
+.day { border: 1px solid var(--border); background: var(--bg-surface); border-radius: var(--radius-md); padding: 6px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: var(--fs-xs); color: var(--text-secondary); }
+.day b { font-size: var(--fs-md); color: var(--text-primary); font-weight: 600; }
+.day:hover:not([disabled]) { background: var(--bg-hover); }
+.day[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-subtle); color: var(--accent-text); }
+.day[aria-pressed="true"] b { color: var(--accent-text); }
+.day[disabled] { cursor: default; opacity: .45; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: var(--space-3); min-height: 64px; align-content: start; }
+.slot { border: 1px solid var(--border-strong); background: var(--bg-surface); border-radius: var(--radius-md); padding: 5px 8px; cursor: pointer; text-align: left; display: flex; flex-direction: column; }
+.slot b { font-weight: 600; font-size: var(--fs-base); }
+.slot span { font-size: var(--fs-xs); color: var(--text-tertiary); }
+.slot:hover { background: var(--bg-hover); }
+.slot[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.slot[aria-pressed="true"] span { color: var(--accent-contrast); opacity: .85; }
+.slots .empty { grid-column: 1 / -1; padding: 16px 0; text-align: left; }
+.summary { font-size: var(--fs-sm); color: var(--text-secondary); padding: 8px 10px; border-radius: var(--radius-md); background: var(--bg-sunken); border: 1px solid var(--border); }
+.summary b { color: var(--text-primary); }
+.callout { border: 1px solid var(--border); border-left: 2px solid var(--status-positive); border-radius: var(--radius-lg); background: var(--bg-surface); padding: 10px 12px; display: flex; flex-direction: column; gap: var(--space-3); }
+.callout b { font-size: var(--fs-base); }
+.callout p { margin: 0; font-size: var(--fs-sm); color: var(--text-secondary); }
+.notes { display: flex; flex-direction: column; gap: var(--space-4); overflow: auto; }
+.note { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 8px 10px; }
+.note-meta { font-size: var(--fs-xs); color: var(--text-tertiary); }
+.note p { margin: 2px 0 0; font-size: var(--fs-sm); white-space: pre-wrap; }
+.input { font: inherit; font-size: var(--fs-base); color: var(--text-primary); background: var(--bg-surface); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 6px 8px; min-width: 0; width: 100%; }
+textarea.input { resize: vertical; min-height: 72px; }
+.input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px var(--accent-subtle); }
+.input[aria-invalid="true"] { border-color: var(--status-negative); }
+.dlg-foot { display: flex; align-items: center; gap: var(--space-4); padding: 10px 16px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+.dlg-foot .hint { font-size: var(--fs-xs); color: var(--text-tertiary); margin-right: auto; }
+.btn.lg { padding: 5px 11px; font-size: var(--fs-base); }
+.btn[disabled] { opacity: .45; cursor: default; }
+@media (max-width: 860px) {
+  .dlg-body { grid-template-columns: minmax(0, 1fr); }
+  .dlg-col + .dlg-col { border-left: 0; border-top: 1px solid var(--border); }
+}
+@media (max-width: 640px) {
+  .dlg { width: 100%; max-width: 100%; height: 100%; max-height: 100%; border-radius: 0; }
+  .days { grid-template-columns: repeat(7, minmax(44px, 1fr)); overflow-x: auto; }
+}
+
+/* Add-a-lead form: one column, quick to fill in at the front desk */
+.dlg.add { width: min(560px, calc(100% - 32px)); }
+.add-body { padding: 14px 16px; display: flex; flex-direction: column; gap: var(--space-6); overflow: auto; flex: 1; }
+.add-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-5); }
+.field > span i { font-style: normal; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.field .err { font-size: var(--fs-xs); font-style: normal; color: var(--status-negative); }
+.field .fnote { font-size: var(--fs-xs); font-style: normal; color: var(--text-tertiary); }
+.field .seg { flex-wrap: wrap; align-self: flex-start; }
+.field select.input { appearance: auto; }
+.field[hidden], #add-dupe:empty { display: none; }
+.consent { display: flex; gap: var(--space-4); align-items: flex-start; font-size: var(--fs-base); cursor: pointer; }
+.consent input { margin: 3px 0 0; width: 15px; height: 15px; accent-color: var(--accent); flex: none; }
+.consent small { display: block; font-size: var(--fs-xs); color: var(--text-tertiary); }
+.dupe { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-sunken); padding: 8px 10px; font-size: var(--fs-sm); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
+.dupe b { font-weight: 600; }
+@media (max-width: 640px) {
+  .add-row { grid-template-columns: minmax(0, 1fr); }
+  .dlg.add { width: 100%; }
+  .dlg.add .dlg-foot .btn.primary { flex: 1; justify-content: center; padding: 10px 12px; font-size: var(--fs-md); }
+  .dlg.add .input { font-size: 16px; }
+}
+
+/* Referrals tab: members bringing friends, and the thank-yous due */
+.rf { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr); gap: var(--space-6); align-items: start; }
+.rrow { padding: 10px 12px; border-bottom: 1px solid var(--table-border); display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: var(--space-2) var(--space-4); align-items: baseline; }
+.rrow:last-child { border-bottom: 0; }
+.rrow .rank { font-size: var(--fs-sm); font-weight: 600; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.rrow .lead-meta, .rrow .friends, .rrow .lead-actions { grid-column: 2 / -1; }
+.rtally { text-align: right; font-size: var(--fs-sm); color: var(--text-secondary); white-space: nowrap; }
+.rtally b { color: var(--text-primary); font-weight: 600; font-size: var(--fs-md); }
+.friends { list-style: none; margin: var(--space-2) 0 0; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-md); }
+.friends li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); padding: 5px 8px; font-size: var(--fs-sm); border-bottom: 1px solid var(--table-border); }
+.friends li:last-child { border-bottom: 0; }
+.friends .fname { font-weight: 500; color: var(--text-primary); }
+.friends .fwhen { margin-left: auto; font-size: var(--fs-xs); color: var(--text-tertiary); white-space: nowrap; }
+.chip.mute2 { background: var(--status-neutral-subtle); color: var(--text-tertiary); }
+@media (max-width: 1000px) { .rf { grid-template-columns: minmax(0, 1fr); } .rf .due-panel { order: -1; } }
+
+/* Remove-from-board panel */
+.park { margin-top: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-sunken); padding: 10px 12px; display: flex; flex-direction: column; gap: var(--space-4); }
+.park-title { font-size: var(--fs-base); font-weight: 600; }
+.park p { margin: 0; font-size: var(--fs-sm); color: var(--text-secondary); }
+.park-row { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: flex-end; }
+.park-actions { display: flex; gap: var(--space-3); }
+.btn.danger { background: var(--status-negative); border-color: var(--status-negative); color: var(--text-inverse); font-weight: 600; }
+.parked { padding: 6px 12px; border-bottom: 1px solid var(--table-border); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: baseline; font-size: var(--fs-sm); color: var(--text-secondary); }
+.parked:last-child { border-bottom: 0; }
+.parked b { color: var(--text-primary); font-weight: 600; }
+.parked .due { margin-left: auto; color: var(--text-tertiary); font-size: var(--fs-xs); }
+
+/* Tabs and panels */
+.tabpanel { display: flex; flex-direction: column; gap: var(--space-6); }
+.tabpanel[hidden], .seg[hidden], .switch[hidden] { display: none; }
+
+/* Consult tab: list on the left, consult sheet on the right; full-screen sheet on phones */
+.cx-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); }
+.cx { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: var(--space-6); align-items: start; }
+.cx-row { width: 100%; border: 0; border-bottom: 1px solid var(--table-border); background: none; text-align: left; cursor: pointer; padding: 10px 12px; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: var(--space-2) var(--space-5); align-items: center; min-height: 60px; }
+.cx-row:hover { background: var(--row-hover); }
+.cx-row[aria-current="true"] { background: var(--bg-active); box-shadow: inset 2px 0 0 var(--accent); }
+.cx-time { font-size: var(--fs-md); font-weight: 600; letter-spacing: var(--track-tight); }
+.cx-who { min-width: 0; }
+.cx-who b { display: block; font-weight: 600; font-size: var(--fs-base); }
+.cx-who span { display: block; font-size: var(--fs-sm); color: var(--text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.group-label.today { color: var(--accent-text); background: var(--accent-subtle); }
+.cx-list-panel, .cx-detail { height: calc(100vh - var(--topbar-h) - 64px); min-height: 480px; }
+.cx-list-panel { display: flex; flex-direction: column; overflow: hidden; }
+.cx-list-panel #x-list { overflow: auto; flex: 1; }
+.cx-detail { display: flex; flex-direction: column; overflow: hidden; }
+.cx-empty { padding: 48px 16px; text-align: center; color: var(--text-tertiary); font-size: var(--fs-sm); }
+.cx-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: var(--space-3); }
+.cx-head-top { display: flex; align-items: center; gap: var(--space-4); }
+.cx-name { font-size: var(--fs-xl); font-weight: 600; letter-spacing: var(--track-tight); margin: 0; flex: 1; min-width: 0; }
+.cx-when { font-size: var(--fs-sm); color: var(--text-secondary); }
+.cx-when b { color: var(--text-primary); }
+.cx-back { display: none; }
+.cx-body { overflow: auto; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: var(--space-6); flex: 1; }
+.cx-sec { display: flex; flex-direction: column; gap: var(--space-4); padding-top: var(--space-5); }
+.cx-sec + .cx-sec { border-top: 1px solid var(--border); }
+.cx-sec h3 { margin: 0; font-size: var(--fs-base); font-weight: 600; letter-spacing: var(--track-tight); display: flex; align-items: baseline; gap: var(--space-4); }
+.cx-sec h3 .panel-note { font-weight: 400; }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 0; font-size: var(--fs-sm); }
+.facts dt { color: var(--text-tertiary); }
+.facts dd { margin: 0; color: var(--text-primary); }
+.prev-notes { display: flex; flex-direction: column; gap: var(--space-3); }
+.prev-notes .note { background: var(--bg-sunken); }
+.cx textarea.input, .cx-detail textarea.input { min-height: 64px; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.tog { border: 1px solid var(--border-strong); background: var(--bg-surface); color: var(--text-secondary); border-radius: var(--radius-full); padding: 5px 12px; font-size: var(--fs-sm); font-weight: 500; cursor: pointer; min-height: 32px; }
+.tog:hover { background: var(--bg-hover); color: var(--text-primary); }
+.tog[aria-pressed="true"] { background: var(--accent-subtle); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+.tog.big { padding: 8px 14px; font-size: var(--fs-base); min-height: 40px; }
+.tog.good[aria-pressed="true"] { background: var(--status-positive-subtle); border-color: var(--status-positive); color: var(--status-positive); }
+.tog.bad[aria-pressed="true"] { background: var(--status-negative-subtle); border-color: var(--status-negative); color: var(--status-negative); }
+.saved { font-size: var(--fs-xs); color: var(--text-tertiary); }
+.hint-text { font-size: var(--fs-xs); color: var(--text-tertiary); margin: 0; }
+.cx-foot { padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); display: flex; align-items: center; gap: var(--space-4); background: var(--bg-surface); }
+.cx-foot .hint { font-size: var(--fs-xs); color: var(--text-tertiary); margin-right: auto; }
+
+@media (max-width: 1000px) {
+  .cx { grid-template-columns: minmax(0, 1fr); }
+  .cx-detail { display: none; }
+  .cx-list-panel { height: auto; min-height: 0; }
+  .cx-detail.open { display: flex; position: fixed; inset: 0; z-index: 50; max-height: none; border-radius: 0; border: 0; padding-top: env(safe-area-inset-top, 0px); }
+  .cx-back { display: grid; margin-left: -6px; }
+  body.sheet-open { overflow: hidden; }
+}
+@media (max-width: 640px) {
+  .cx-detail textarea.input { font-size: 16px; } /* stops phones zooming in on focus */
+  .cx-foot .btn.primary { flex: 1; justify-content: center; padding: 10px 12px; font-size: var(--fs-md); }
+  .cx-foot .hint { display: none; }
+  .cx-row { grid-template-columns: 48px minmax(0, 1fr) auto; }
+}
+
+/* Retain tab: member health column, then the win-back list */
+.rt { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: var(--space-6); align-items: start; }
+.rt-health { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: var(--space-6); padding: 16px; align-items: stretch; }
+.hcol { display: flex; flex-direction: column; height: 420px; border-radius: var(--radius-lg); overflow: hidden; gap: 2px; background: var(--bg-surface); }
+.hseg { border: 0; padding: 0; margin: 0; min-height: 6px; display: flex; align-items: flex-start; justify-content: center; color: var(--text-inverse); font-weight: 600; font-size: var(--fs-sm); cursor: pointer; position: relative; }
+.hseg span { padding-top: 8px; }
+.hseg.healthy { background: var(--status-positive); cursor: default; }
+.hseg.slowing { background: var(--status-warning); }
+.hseg.risk { background: var(--status-negative); }
+.hseg:not(.healthy):hover { filter: brightness(1.08); }
+.hseg[aria-pressed="true"] { box-shadow: inset 0 0 0 3px var(--text-primary); }
+.hlegend { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.hrow { border: 1px solid var(--border); background: var(--bg-surface); border-radius: var(--radius-lg); padding: 10px 12px; text-align: left; display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 2px var(--space-4); align-items: baseline; cursor: pointer; }
+.hrow:hover { background: var(--bg-hover); }
+.hrow[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-subtle); }
+.hrow.healthy { cursor: default; }
+.hrow.healthy:hover { background: var(--bg-surface); }
+.hdot { width: 10px; height: 10px; border-radius: 3px; align-self: center; }
+.hdot.healthy { background: var(--status-positive); } .hdot.slowing { background: var(--status-warning); } .hdot.risk { background: var(--status-negative); }
+.hname { font-weight: 600; font-size: var(--fs-base); }
+.hnum { font-size: var(--fs-xl); font-weight: 600; letter-spacing: var(--track-tight); text-align: right; }
+.hdef { grid-column: 2 / -1; font-size: var(--fs-xs); color: var(--text-tertiary); }
+.hmeta { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); font-size: var(--fs-xs); color: var(--text-tertiary); }
+.hmeta > * { white-space: nowrap; }
+.seq-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 64px 72px; gap: var(--space-5); align-items: center; padding: 6px 12px; border-bottom: 1px solid var(--table-border); font-size: var(--fs-base); }
+.seq-row.head { background: var(--bg-sunken); font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-wide); color: var(--text-tertiary); }
+.seq-row .when { color: var(--text-secondary); white-space: nowrap; }
+.seq-row .who { color: var(--text-secondary); }
+.seq-row .n { text-align: right; font-weight: 600; }
+.seq-row.head .n { font-weight: 600; }
+@media (max-width: 640px) { .seq-row { grid-template-columns: 52px minmax(0, 1fr) 52px 40px; gap: var(--space-4); } }
+.seq-note { padding: 8px 12px; font-size: var(--fs-xs); color: var(--text-tertiary); border-bottom: 1px solid var(--border); }
+.mrow { padding: 10px 12px; border-bottom: 1px solid var(--table-border); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-5); }
+.mrow:last-child { border-bottom: 0; }
+.mrow:hover { background: var(--row-hover); }
+.mrow .lead-meta b { color: var(--text-primary); font-weight: 600; }
+.mstage { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.mstage .next { font-size: var(--fs-xs); color: var(--text-tertiary); white-space: nowrap; }
+.pace { font-variant-numeric: tabular-nums; }
+@media (max-width: 1000px) { .rt { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .mrow .lead-actions { gap: var(--space-1); } .mrow .btn.ghost { padding: 3px 6px; } .rt-health { grid-template-columns: 64px minmax(0, 1fr); gap: var(--space-5); padding: 12px; } .hcol { height: 340px; } .mstage .next { white-space: normal; } }
+
+/* Toast */
+.toast { position: fixed; left: 50%; bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); max-width: calc(100% - 32px); background: var(--bg-raised); border: 1px solid var(--border); box-shadow: var(--shadow-pop); color: var(--text-primary); padding: 9px 12px; border-radius: var(--radius-lg); font-size: var(--fs-sm); opacity: 0; transition: opacity .15s; pointer-events: none; }
+.toast.show { opacity: 1; }
+
+@media (max-width: 900px) { :root { --pad-x: 16px; } .sub, .sep { display: none; } }
+@media (max-width: 640px) { :root { --pad-x: 12px; } .right { margin-left: 0; width: 100%; } .topbar { position: static; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img class="logo" src="../assets/bo7-logo.png" alt="Bo7" width="45" height="27"></div>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="sub" id="period-sub">This week · 5 to 11 Oct 2026</span>
+    <span class="chip warn" title="Every name and number on this page is made up, for layout only.">Sample data</span>
+    <div class="right">
+      <div class="seg" role="group" aria-label="Gym">
+        <button type="button" data-gym="all" aria-pressed="true">Both gyms</button>
+        <button type="button" data-gym="Killiney" aria-pressed="false">Killiney</button>
+        <button type="button" data-gym="Blackrock" aria-pressed="false">Blackrock</button>
+      </div>
+      <div class="seg" role="group" aria-label="Period" id="period-seg">
+        <button type="button" data-period="week" aria-pressed="true">This week</button>
+        <button type="button" data-period="month" aria-pressed="false">Last 4 weeks</button>
+      </div>
+      <label class="switch" id="compare-wrap"><input type="checkbox" id="compare" checked><span class="track" aria-hidden="true"></span>Versus previous</label>
+      <div class="seg icons" role="group" aria-label="Theme">
+        <button type="button" data-theme-opt="light" aria-pressed="false" title="Light" aria-label="Light"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1"/></svg></button>
+        <button type="button" data-theme-opt="dark" aria-pressed="false" title="Dark" aria-label="Dark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M13.6 9.6A5.8 5.8 0 0 1 6.4 2.4a5.8 5.8 0 1 0 7.2 7.2Z"/></svg></button>
+        <button type="button" data-theme-opt="system" aria-pressed="false" title="System" aria-label="System"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.8" y="3" width="12.4" height="8.2" rx="1.2"/><path d="M5.6 13.6h4.8"/></svg></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+  <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+    <button role="tab" aria-selected="true" type="button" data-tab="leads">Leads</button>
+    <button role="tab" aria-selected="false" type="button" data-tab="consult">Consult</button>
+    <button role="tab" aria-selected="false" type="button" data-tab="retain">Retain</button>
+    <button role="tab" aria-selected="false" type="button" data-tab="refer">Referrals</button>
+  </nav>
+
+  <div class="tabpanel" id="tab-leads" role="tabpanel">
+  <section class="kpis" aria-label="Summary">
+    <div class="kpi">
+      <span class="eyebrow">Leads in</span>
+      <span class="kpi-value" id="k-leads">0</span>
+      <span class="kpi-meta" id="m-leads"></span>
+      <svg class="spark" id="s-leads" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+    <div class="kpi">
+      <span class="eyebrow">Answered within 24 hours</span>
+      <span class="kpi-value" id="k-reply">0%</span>
+      <span class="kpi-meta" id="m-reply"></span>
+      <svg class="spark" id="s-reply" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+    <div class="kpi">
+      <span class="eyebrow">Waiting over 24 hours</span>
+      <span class="kpi-value bad" id="k-late">0</span>
+      <span class="kpi-meta"><span class="kpi-ly" id="m-late"></span></span>
+    </div>
+    <div class="kpi">
+      <span class="eyebrow">Consults booked</span>
+      <span class="kpi-value" id="k-consult">0</span>
+      <span class="kpi-meta"><span class="kpi-ly" id="m-consult"></span></span>
+    </div>
+  </section>
+
+  <div class="board">
+    <section class="panel sources" aria-labelledby="h-sources">
+      <div class="panel-head"><span class="panel-title" id="h-sources">Where leads come from</span><span class="panel-note" id="n-sources"></span></div>
+      <div id="src-list"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="h-new">
+      <div class="panel-head"><span class="panel-title" id="h-new">Leads</span><span class="panel-note">Not booked yet. Open a lead to book or add notes</span><span class="panel-actions"><span class="count" id="c-new">0</span><button type="button" class="btn primary" id="add-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>Add lead</button></span></div>
+      <div id="list-new"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="h-consult">
+      <div class="panel-head"><span class="panel-title" id="h-consult">Consults booked</span><span class="panel-note">Next 7 days, by date and time</span><span class="panel-actions"><span class="count" id="c-consult">0</span></span></div>
+      <div id="list-consult"></div>
+    </section>
+  </div>
+
+  </div>
+
+  <div class="tabpanel" id="tab-consult" role="tabpanel" hidden>
+    <section class="kpis" aria-label="This week's consults">
+      <div class="kpi"><span class="eyebrow">Booked this week</span><span class="kpi-value" id="x-booked">0</span><span class="kpi-meta"><span class="kpi-ly" id="x-booked-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Done</span><span class="kpi-value" id="x-done">0</span><span class="kpi-meta"><span class="kpi-ly" id="x-done-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Showed up</span><span class="kpi-value" id="x-show">0%</span><span class="kpi-meta"><span class="kpi-ly" id="x-show-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Joined</span><span class="kpi-value" id="x-joined">0</span><span class="kpi-meta"><span class="kpi-ly" id="x-joined-m"></span></span></div>
+    </section>
+    <div class="cx-bar">
+      <div class="seg" role="group" aria-label="Coach" id="x-coach"></div>
+      <span class="panel-note">This week and next. Open a consult to take notes and record the outcome.</span>
+    </div>
+    <div class="cx">
+      <section class="panel cx-list-panel" aria-labelledby="x-list-h">
+        <div class="panel-head"><span class="panel-title" id="x-list-h">Consults</span><span class="panel-actions"><span class="count" id="x-count">0</span></span></div>
+        <div id="x-list"></div>
+      </section>
+      <section class="panel cx-detail" id="cx-detail" aria-label="Consult"></section>
+    </div>
+  </div>
+
+  <div class="tabpanel" id="tab-retain" role="tabpanel" hidden>
+    <section class="kpis" aria-label="Member health">
+      <div class="kpi"><span class="eyebrow">Members</span><span class="kpi-value" id="r-members">0</span><span class="kpi-meta"><span class="kpi-ly" id="r-members-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Healthy</span><span class="kpi-value" id="r-healthy">0%</span><span class="kpi-meta" id="r-healthy-m"></span></div>
+      <div class="kpi"><span class="eyebrow">Won back, last 30 days</span><span class="kpi-value" id="r-won">0</span><span class="kpi-meta"><span class="kpi-ly" id="r-won-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Win-back rate</span><span class="kpi-value" id="r-rate">0%</span><span class="kpi-meta"><span class="kpi-ly" id="r-rate-m"></span></span></div>
+    </section>
+    <div class="rt">
+      <section class="panel" aria-labelledby="r-health-h">
+        <div class="panel-head"><span class="panel-title" id="r-health-h">Member health</span><span class="panel-note">From Glofox bookings and check-ins</span><span class="panel-actions"><div class="seg" role="group" aria-label="Gym" id="r-gym"></div></span></div>
+        <div class="rt-health">
+          <div class="hcol" id="r-col" role="group" aria-label="Members by health"></div>
+          <div class="hlegend" id="r-legend"></div>
+        </div>
+      </section>
+      <section class="panel" id="r-list-panel" aria-labelledby="r-list-h">
+        <div class="panel-head"><span class="panel-title" id="r-list-h">Win-back</span><span class="panel-note" id="r-list-note"></span><span class="panel-actions"><span class="count" id="r-count">0</span></span></div>
+        <div id="r-seq"></div>
+        <div id="r-list"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="tabpanel" id="tab-refer" role="tabpanel" hidden>
+    <section class="kpis" aria-label="Referrals">
+      <div class="kpi"><span class="eyebrow">Friends referred, last 90 days</span><span class="kpi-value" id="f-ref">0</span><span class="kpi-meta"><span class="kpi-ly" id="f-ref-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Joined</span><span class="kpi-value" id="f-joined">0</span><span class="kpi-meta"><span class="kpi-ly" id="f-joined-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Join rate</span><span class="kpi-value" id="f-rate">0%</span><span class="kpi-meta"><span class="kpi-ly" id="f-rate-m"></span></span></div>
+      <div class="kpi"><span class="eyebrow">Thank-yous due</span><span class="kpi-value" id="f-due">0</span><span class="kpi-meta"><span class="kpi-ly" id="f-due-m"></span></span></div>
+    </section>
+    <div class="rf">
+      <section class="panel" aria-labelledby="f-list-h">
+        <div class="panel-head"><span class="panel-title" id="f-list-h">Members bringing friends</span><span class="panel-note">Most friends joined first. Last 90 days</span><span class="panel-actions"><span class="count" id="f-count">0</span></span></div>
+        <div id="f-list"></div>
+      </section>
+      <section class="panel due-panel" aria-labelledby="f-due-h">
+        <div class="panel-head"><span class="panel-title" id="f-due-h">Thank-yous due</span><span class="panel-note">Their friend joined. A free week, and a message from Ryan</span><span class="panel-actions"><span class="count" id="f-due-count">0</span></span></div>
+        <div id="f-due-list"></div>
+      </section>
+    </div>
+  </div>
+
+  <p class="foot-note">Sample data for layout only. The live version reads the Bo7 leads sheet and sits behind the team login at team.bo7.ie.</p>
+</main>
+<dialog class="dlg" id="lead-dlg" aria-labelledby="dlg-name">
+  <div class="dlg-head">
+    <div style="min-width:0">
+      <h2 class="dlg-title" id="dlg-name">Name</h2>
+      <div id="dlg-meta"></div>
+      <div id="dlg-contact"></div>
+      <div id="dlg-status" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+      <div id="dlg-remove"></div>
+    </div>
+    <button type="button" class="icon-btn" id="dlg-close" aria-label="Close" autofocus><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <section class="dlg-col" aria-labelledby="dlg-book-h">
+      <div class="dlg-section" id="dlg-book-h">Book a consultation <span class="panel-note">Bo7 consultations calendar</span></div>
+      <div id="dlg-booked"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <label class="field"><span>Gym</span><div class="seg" role="group" aria-label="Gym" id="dlg-gym"></div></label>
+        <label class="field"><span>Coach</span><div class="seg" role="group" aria-label="Coach" id="dlg-coach"></div></label>
+      </div>
+      <div class="field"><span>Day</span><div class="days" id="dlg-days"></div></div>
+      <div class="field"><span>Free times</span><div class="slots" id="dlg-slots"></div></div>
+      <div class="summary" id="dlg-summary">Pick a time.</div>
+    </section>
+    <section class="dlg-col" aria-labelledby="dlg-notes-h">
+      <div class="dlg-section" id="dlg-notes-h">Notes <span class="panel-note" id="dlg-notes-count"></span></div>
+      <div class="notes" id="dlg-notes"></div>
+      <label class="field"><span>Add a note</span><textarea class="input" id="dlg-note-text" rows="3" placeholder="What did they say? Goals, injuries, best times to reach them..."></textarea></label>
+      <div><button type="button" class="btn" id="dlg-note-add">Add note</button></div>
+    </section>
+  </div>
+  <div class="dlg-foot">
+    <span class="hint">Sample data. Nothing is saved or sent.</span>
+    <button type="button" class="btn ghost lg" id="dlg-cancel">Cancel</button>
+    <button type="button" class="btn primary lg" id="dlg-book" disabled>Book consult</button>
+  </div>
+</dialog>
+<dialog class="dlg add" id="add-dlg" aria-labelledby="add-title">
+  <form id="add-form" novalidate style="display:contents">
+  <div class="dlg-head">
+    <div style="min-width:0">
+      <h2 class="dlg-title" id="add-title">Add a lead</h2>
+      <p class="panel-note" style="margin:2px 0 0">Walk-ins, calls, WhatsApps and emails. Add them there and then.</p>
+    </div>
+    <button type="button" class="icon-btn" id="add-close" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="add-body">
+    <div class="field"><span>Logged by</span><div class="seg" role="group" aria-label="Logged by" id="add-by"></div><em class="err" id="add-by-err" hidden>Pick who took this lead.</em></div>
+    <div class="field"><span>How they got in touch</span><div class="seg" role="group" aria-label="How they got in touch" id="add-how"></div></div>
+    <label class="field" id="add-ref-wrap" hidden><span>Referred by</span>
+      <input class="input" id="add-ref" list="add-ref-list" autocomplete="off" placeholder="Start typing the member's name">
+      <datalist id="add-ref-list"></datalist>
+      <em class="err" id="add-ref-err" hidden>Pick the member from the list.</em>
+      <em class="fnote">In the live version you can also search by the number they messaged from.</em>
+    </label>
+    <label class="field" id="add-match-wrap" hidden><span>Their opening message matched <i>(optional)</i></span>
+      <select class="input" id="add-match"></select>
+    </label>
+    <div class="add-row">
+      <label class="field"><span>Name</span><input class="input" id="add-name" autocomplete="off" autocapitalize="words"><em class="err" id="add-name-err" hidden>Add their name.</em></label>
+      <label class="field"><span>Mobile</span><input class="input" id="add-phone" type="tel" inputmode="tel" autocomplete="off" placeholder="08x xxx xxxx"><em class="err" id="add-phone-err" hidden>Add a mobile number.</em></label>
+    </div>
+    <div id="add-dupe"></div>
+    <label class="field"><span>Email <i>(optional)</i></span><input class="input" id="add-email" type="email" inputmode="email" autocomplete="off"></label>
+    <div class="add-row">
+      <div class="field"><span>Gym</span><div class="seg" role="group" aria-label="Gym" id="add-gym"></div></div>
+      <div class="field"><span>Best way to reach them</span><div class="seg" role="group" aria-label="Best way to reach them" id="add-pref"></div></div>
+    </div>
+    <label class="field"><span>Interested in <i>(optional)</i></span><input class="input" id="add-int" autocomplete="off" placeholder="Goals, injuries, best times..."></label>
+    <label class="consent"><input type="checkbox" id="add-consent"><span>Happy for Bo7 to contact them about training<small>Ask them. Saved with today's date.</small></span></label>
+  </div>
+  <div class="dlg-foot">
+    <span class="hint">Sample data. Nothing is saved or sent.</span>
+    <button type="button" class="btn ghost lg" id="add-cancel">Cancel</button>
+    <button type="submit" class="btn primary lg" id="add-save">Save lead</button>
+  </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  // ---------- Sample data (made up) ----------
+  var SOURCES = {
+    'walk-in': 'Walk-in', 'phone': 'Phone call', 'whatsapp': 'WhatsApp (direct)', 'website-form': 'Website form',
+    'killiney-window': 'Killiney window', 'blackrock-window': 'Blackrock window', 'stand': 'Village Centre stand',
+    'referral': 'Referral', 'corporate': 'Corporate', 'instagram': 'Instagram', 'meta-ads': 'Meta ads',
+    'google-ads': 'Google ads', 'google-profile': 'Google profile', 'email': 'Email (direct)', 'other': 'Other'
+  };
+  // [source, gym, this week, rest of last 4 weeks, previous week, previous 4 weeks]
+  var COUNTS = [
+    ['meta-ads', 'Killiney', 4, 9, 3, 10], ['meta-ads', 'Blackrock', 5, 11, 4, 12],
+    ['referral', 'Killiney', 3, 6, 2, 6], ['referral', 'Blackrock', 1, 3, 1, 2],
+    ['google-profile', 'Killiney', 2, 7, 3, 7], ['google-profile', 'Blackrock', 2, 4, 1, 4],
+    ['website-form', 'Killiney', 2, 5, 2, 6], ['website-form', 'Blackrock', 1, 3, 1, 3],
+    ['walk-in', 'Killiney', 2, 3, 1, 4], ['walk-in', 'Blackrock', 3, 6, 2, 5],
+    ['stand', 'Blackrock', 3, 5, 3, 2], ['google-ads', 'Killiney', 1, 4, 2, 3], ['google-ads', 'Blackrock', 2, 3, 1, 3],
+    ['instagram', 'Killiney', 1, 3, 1, 3], ['instagram', 'Blackrock', 1, 2, 1, 2],
+    ['killiney-window', 'Killiney', 1, 2, 0, 1], ['blackrock-window', 'Blackrock', 0, 2, 1, 1],
+    ['corporate', 'Blackrock', 2, 2, 0, 1], ['phone', 'Killiney', 1, 2, 1, 3], ['whatsapp', 'Killiney', 0, 2, 0, 1]
+  ];
+  // Weekly totals for both gyms, oldest first; the last value is this week.
+  var WEEKLY_LEADS = [22, 25, 24, 27, 26, 28, 30, 37];
+  var WEEKLY_REPLY = [72, 75, 74, 79, 77, 80, 79, 86];
+  var NEW = [
+    { name: 'Aoife Brennan', source: 'meta-ads', gym: 'Blackrock', prefers: 'whatsapp', hours: 31, note: 'Wants to get stronger after having a baby' },
+    { name: 'Declan Murphy', source: 'google-profile', gym: 'Killiney', prefers: 'phone', hours: 27, note: 'Asked about early morning sessions' },
+    { name: 'Sinead Kavanagh', source: 'stand', gym: 'Blackrock', prefers: 'whatsapp', hours: 19, note: 'Met at the stand, nervous about fitness level' },
+    { name: 'Ciaran Doyle', source: 'website-form', gym: 'Killiney', prefers: 'email', hours: 14, note: '' },
+    { name: 'Niamh O’Sullivan', source: 'referral', gym: 'Killiney', prefers: 'whatsapp', hours: 9, note: 'Referred by a member (Sorcha Daly)' },
+    { name: 'Rory Fitzgerald', source: 'corporate', gym: 'Blackrock', prefers: 'email', hours: 6, note: 'Via the company deal, wants lunchtime' },
+    { name: 'Grainne Walsh', source: 'walk-in', gym: 'Blackrock', prefers: 'phone', hours: 3, note: 'Walked in Saturday, back injury history' },
+    { name: 'Paul Keane', source: 'google-ads', gym: 'Killiney', prefers: 'whatsapp', hours: 1, note: '' },
+    { name: 'Claire Dunne', source: 'website-form', gym: 'Killiney', prefers: 'email', hours: 70, contacted: true, replied: '2d ago', status: 'Asked for evenings', note: '' },
+    { name: 'Jack Moran', source: 'stand', gym: 'Blackrock', prefers: 'whatsapp', hours: 96, contacted: true, replied: '3d ago', status: 'Away until next week', note: 'Met at the stand, keen once back' }
+  ];
+  // Taken off the board, kept in the leads sheet to try again later.
+  var PARKED = [
+    { name: 'Shane Byrne', gym: 'Killiney', status: "Couldn't reach", reason: 'No reply to 3 messages', tryAgain: '12 Oct' },
+    { name: 'Ruth Hayes', gym: 'Blackrock', status: 'Not now', reason: 'Training for a marathon until spring', tryAgain: '9 Jan 2027' }
+  ];
+  var CONSULT = [
+    { name: 'Emma Byrne', source: 'meta-ads', gym: 'Killiney', prefers: 'whatsapp', when: 'Today', time: '18:00', booked: true, day: 0, coach: 'Ryan' },
+    { name: 'Mark Nolan', source: 'referral', gym: 'Blackrock', prefers: 'phone', when: 'Tomorrow', time: '09:15', booked: true, day: 1, coach: 'Coach C' },
+    { name: 'Laura Quinn', source: 'google-profile', gym: 'Blackrock', prefers: 'whatsapp', when: 'Thu 15 Oct', time: '12:15', booked: true, day: 6, coach: 'Ryan' },
+    { name: 'Tom Gallagher', source: 'walk-in', gym: 'Killiney', prefers: 'phone', when: 'Tomorrow', time: '10:30', booked: true, day: 1, coach: 'Coach B' },
+  ];
+
+  // Sample calendar: today is Fri 9 Oct 2026, 11:00. Consult slots per gym; coaches per gym.
+  var DAYS = ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'].map(function (d, i) { return { short: d, date: 9 + i, label: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : d + ' ' + (9 + i) + ' Oct' }; });
+  var SLOT_TIMES = {
+    Killiney: { weekday: ['07:00', '07:45', '12:30', '18:00', '18:45', '19:30'], Sat: ['09:00', '09:45', '10:30'], Sun: [] },
+    Blackrock: { weekday: ['06:45', '12:15', '13:00', '17:30', '18:15', '19:00'], Sat: ['08:30', '09:15', '10:00'], Sun: [] }
+  };
+  var COACHES = { Killiney: ['Ryan', 'Coach B'], Blackrock: ['Ryan', 'Coach C'] };
+  var NOW = '11:00';
+  NEW.concat(CONSULT).forEach(function (p, i) {
+    p.id = 'L' + i;
+    p.notes = p.note ? [{ by: 'Logged at enquiry', at: 'Earlier', text: p.note }] : [];
+  });
+  NEW.forEach(function (p) { if (p.contacted) p.notes.push({ by: 'Ryan', at: p.replied, text: 'Replied on ' + (p.prefers === 'email' ? 'email' : 'WhatsApp') + '. ' + p.status + '.' }); });
+  CONSULT.forEach(function (p) { if (p.booked) p.notes.push({ by: 'Ryan', at: 'Earlier', text: 'Consult booked for ' + p.when + ' at ' + p.time + ' with ' + p.coach + '.' }); });
+
+  var ICON = {
+    whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.3.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.1.5.2.5.4.1.1.1.7-.2 1.4Z"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>',
+    email: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm18 2-10 7L2 6"/></svg>'
+  };
+  var LABEL = { whatsapp: 'WhatsApp', phone: 'Call', email: 'Email' };
+  var PREF = { whatsapp: 'prefers WhatsApp', phone: 'prefers a call', email: 'prefers email' };
+
+  var state = { gym: 'all', period: 'week', compare: true };
+  function byGym(x) { return state.gym === 'all' || (x.gym || x[1]) === state.gym; }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---------- Delta badge: colour from "good" direction, not the arrow ----------
+  function delta(cur, prev, unit, good) {
+    if (prev === null || prev === undefined) return '<span class="kpi-ly" title="No comparison period">—</span>';
+    var v = unit === 'pt' ? cur - prev : (prev === 0 ? null : (cur - prev) / prev * 100);
+    if (v === null) return '<span class="kpi-ly" title="Nothing to compare against">—</span>';
+    var dir = v > 0 ? 'up' : v < 0 ? 'down' : 'flat';
+    var tone = dir === 'flat' ? 'flat' : (dir === good ? 'good' : 'bad');
+    var arrow = dir === 'up' ? '<path d="M5 1l4 6H1z"/>' : dir === 'down' ? '<path d="M5 9L1 3h8z"/>' : '';
+    var txt = Math.abs(v).toFixed(unit === 'pt' ? 0 : 0) + (unit === 'pt' ? 'pt' : '%');
+    return '<span class="delta ' + tone + '">' + (arrow ? '<svg viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">' + arrow + '</svg>' : '') + txt + '</span>';
+  }
+
+  // ---------- Sparkline: monotone cubic (Fritsch-Carlson), shared y-scale with comparison ----------
+  function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function monotonePath(pts) {
+    var n = pts.length; if (n < 2) return '';
+    var dx = [], m = [], t = [];
+    for (var i = 0; i < n - 1; i++) { dx[i] = pts[i + 1][0] - pts[i][0]; m[i] = (pts[i + 1][1] - pts[i][1]) / dx[i]; }
+    t[0] = m[0]; t[n - 1] = m[n - 2];
+    for (i = 1; i < n - 1; i++) t[i] = (m[i - 1] * m[i] <= 0) ? 0 : (m[i - 1] + m[i]) / 2;
+    for (i = 0; i < n - 1; i++) {
+      if (m[i] === 0) { t[i] = 0; t[i + 1] = 0; continue; }
+      var a = t[i] / m[i], b = t[i + 1] / m[i], h = a * a + b * b;
+      if (h > 9) { var k = 3 / Math.sqrt(h); t[i] = k * a * m[i]; t[i + 1] = k * b * m[i]; }
+    }
+    var d = 'M' + pts[0][0].toFixed(2) + ',' + pts[0][1].toFixed(2);
+    for (i = 0; i < n - 1; i++) {
+      var x0 = pts[i][0], y0 = pts[i][1], x1 = pts[i + 1][0], y1 = pts[i + 1][1], s = dx[i] / 3;
+      d += ' C' + (x0 + s).toFixed(2) + ',' + (y0 + t[i] * s).toFixed(2) + ' ' + (x1 - s).toFixed(2) + ',' + (y1 - t[i + 1] * s).toFixed(2) + ' ' + x1.toFixed(2) + ',' + y1.toFixed(2);
+    }
+    return d;
+  }
+  function spark(el, cur, prev) {
+    var all = cur.concat(state.compare && prev ? prev : []);
+    var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all), pad = (hi - lo) * 0.15 || 1;
+    lo -= pad; hi += pad;
+    function pts(vals) { return vals.map(function (v, i) { return [i / (vals.length - 1) * 300, 40 - (v - lo) / (hi - lo) * 40]; }); }
+    var c = css('--chart-1'), id = el.id + '-g';
+    var p = pts(cur), line = monotonePath(p);
+    var html = '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c + '" stop-opacity=".18"/><stop offset="1" stop-color="' + c + '" stop-opacity="0"/></linearGradient></defs>';
+    if (state.compare && prev) html += '<path d="' + monotonePath(pts(prev)) + '" fill="none" stroke="' + css('--chart-compare') + '" stroke-width="1.5" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>';
+    html += '<path d="' + line + ' L300,40 L0,40 Z" fill="url(#' + id + ')"/>';
+    html += '<path d="' + line + '" fill="none" stroke="' + c + '" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+    el.innerHTML = html;
+  }
+
+  // ---------- Render ----------
+  function actions(p) {
+    var order = [p.prefers].concat(['whatsapp', 'phone', 'email'].filter(function (k) { return k !== p.prefers; }));
+    return '<div class="lead-actions">' + order.map(function (k, i) {
+      var cls = i === 0 ? 'btn primary' + (k === 'whatsapp' ? ' wa' : '') : 'btn ghost';
+      return '<button type="button" class="' + cls + '" data-act="' + k + '" data-name="' + esc(p.name) + '">' + ICON[k] + LABEL[k] + '</button>';
+    }).join('') + '</div>';
+  }
+  function meta(p) {
+    return '<div class="lead-meta"><span class="chip info">' + esc(SOURCES[p.source]) + '</span><span>' + esc(p.gym) + '</span><span class="dot-sep" aria-hidden="true"></span><span>' + PREF[p.prefers] + '</span></div>';
+  }
+  function waited(h) { return h < 1 ? 'under 1h' : h < 24 ? h + 'h' : Math.floor(h / 24) + 'd ' + (h % 24) + 'h'; }
+
+  function render() {
+    var wk = state.period === 'week';
+    if (!document.getElementById('tab-leads').hidden) document.getElementById('period-sub').textContent = wk ? 'This week · 5 to 11 Oct 2026' : 'Last 4 weeks · 14 Sep to 11 Oct 2026';
+
+    // Sources
+    var cur = {}, prev = {}, split = {};
+    COUNTS.filter(byGym).forEach(function (r) {
+      var c = wk ? r[2] : r[2] + r[3], p = wk ? r[4] : r[5];
+      cur[r[0]] = (cur[r[0]] || 0) + c; prev[r[0]] = (prev[r[0]] || 0) + p;
+      split[r[0]] = split[r[0]] || { Killiney: 0, Blackrock: 0 }; split[r[0]][r[1]] += c;
+    });
+    var rows = Object.keys(cur).filter(function (k) { return cur[k] > 0; }).sort(function (a, b) { return cur[b] - cur[a]; });
+    var total = rows.reduce(function (t, k) { return t + cur[k]; }, 0);
+    var totalPrev = Object.keys(prev).reduce(function (t, k) { return t + prev[k]; }, 0);
+    var max = rows.length ? cur[rows[0]] : 1;
+    var cols = state.compare ? 'minmax(0,1fr) 56px 36px 36px 56px' : 'minmax(0,1fr) 72px 40px 36px';
+    var head = '<div class="src-row src-head" style="grid-template-columns:' + cols + '"><span>Source</span><span></span><span class="src-share">Share</span><span class="src-val">Leads</span>' + (state.compare ? '<span class="src-delta">vs prev</span>' : '') + '</div>';
+    var body = rows.map(function (k) {
+      var sp = state.gym === 'all' ? '<span class="src-split">Killiney ' + split[k].Killiney + ' · Blackrock ' + split[k].Blackrock + '</span>' : '';
+      return '<div class="src-row" style="grid-template-columns:' + cols + '"><span class="src-name">' + esc(SOURCES[k]) + sp + '</span><span class="meter"><i style="width:' + Math.round(cur[k] / max * 100) + '%"></i></span><span class="src-share">' + Math.round(cur[k] / total * 100) + '%</span><span class="src-val">' + cur[k] + '</span>' + (state.compare ? '<span class="src-delta">' + delta(cur[k], prev[k], '%', 'up') + '</span>' : '') + '</div>';
+    }).join('');
+    var foot = '<div class="src-row src-foot" style="grid-template-columns:' + cols + '"><span>Total</span><span></span><span class="src-share">100%</span><span class="src-val">' + total + '</span>' + (state.compare ? '<span class="src-delta">' + delta(total, totalPrev, '%', 'up') + '</span>' : '') + '</div>';
+    document.getElementById('src-list').innerHTML = rows.length ? head + body + foot : '<div class="empty">No leads for this period.</div>';
+    document.getElementById('n-sources').textContent = rows.length + ' sources';
+
+    // KPIs
+    var share = total / (COUNTS.reduce(function (t, r) { return t + (wk ? r[2] : r[2] + r[3]); }, 0) || 1);
+    var seriesLeads = WEEKLY_LEADS.map(function (v) { return Math.round(v * share); });
+    document.getElementById('k-leads').textContent = total;
+    document.getElementById('m-leads').innerHTML = state.compare ? delta(total, totalPrev, '%', 'up') + '<span class="kpi-ly">' + (wk ? 'Last week ' : 'Previous 4 weeks ') + totalPrev + '</span>' : '';
+    spark(document.getElementById('s-leads'), seriesLeads.slice(4), seriesLeads.slice(0, 4));
+
+    var reply = wk ? 86 : 81, replyPrev = wk ? 79 : 76;
+    document.getElementById('k-reply').textContent = reply + '%';
+    document.getElementById('m-reply').innerHTML = state.compare ? delta(reply, replyPrev, 'pt', 'up') + '<span class="kpi-ly">' + (wk ? 'Last week ' : 'Previous 4 weeks ') + replyPrev + '%</span>' : '';
+    spark(document.getElementById('s-reply'), WEEKLY_REPLY.slice(4), WEEKLY_REPLY.slice(0, 4));
+
+    var mine = NEW.filter(byGym);
+    var fresh = mine.filter(function (p) { return !p.contacted; }).sort(function (a, b) { return b.hours - a.hours; });
+    var talking = mine.filter(function (p) { return p.contacted; }).sort(function (a, b) { return b.hours - a.hours; });
+    var late = fresh.filter(function (p) { return p.hours > 24; });
+    var parked = PARKED.filter(byGym);
+    document.getElementById('k-late').innerHTML = late.length + '<span class="kpi-secondary">of ' + fresh.length + ' not contacted</span>';
+    document.getElementById('k-late').classList.toggle('bad', late.length > 0);
+    document.getElementById('m-late').textContent = late.length ? 'Oldest waiting ' + waited(late[0].hours) : 'Nobody waiting over 24 hours';
+
+    var booked = CONSULT.filter(byGym).filter(function (p) { return p.booked; }).sort(function (a, b) { return (a.day - b.day) || (a.time < b.time ? -1 : a.time > b.time ? 1 : 0); });
+    document.getElementById('k-consult').textContent = booked.length;
+    document.getElementById('m-consult').textContent = booked.length ? 'Next: ' + booked[0].when + ' ' + booked[0].time + ', ' + booked[0].name : 'None booked';
+
+    // Leads: not contacted yet (the 24-hour rule), then contacted but not booked
+    function freshRow(p) {
+      return '<article class="lead clickable' + (p.hours > 24 ? ' late' : '') + '" data-lead="' + p.id + '" tabindex="0" aria-label="Open ' + esc(p.name) + '"><span class="lead-name">' + esc(p.name) + '</span><span class="lead-when">' + (p.hours > 24 ? '<span class="chip bad">' + waited(p.hours) + '</span>' : 'waiting <b>' + waited(p.hours) + '</b>') + '</span>' + meta(p) + (p.note ? '<p class="lead-note">' + esc(p.note) + '</p>' : '') + actions(p) + '</article>';
+    }
+    function talkingRow(p) {
+      return '<article class="lead clickable" data-lead="' + p.id + '" tabindex="0" aria-label="Open ' + esc(p.name) + '"><span class="lead-name">' + esc(p.name) + '</span><span class="lead-when">replied <b>' + esc(p.replied) + '</b>' + '</span>' + meta(p) + '<p class="lead-note">' + esc(p.status) + '</p>' + actions(p) + '</article>';
+    }
+    document.getElementById('list-new').innerHTML =
+      '<div class="group-label">Not contacted yet \u00b7 ' + fresh.length + '</div>' + (fresh.map(freshRow).join('') || '<div class="empty">Everyone has had a reply.</div>') +
+      '<div class="group-label">Contacted \u00b7 ' + talking.length + '</div>' + (talking.map(talkingRow).join('') || '<div class="empty">Nobody in conversation.</div>') +
+      (parked.length ? '<div class="group-label">Parked to try again \u00b7 ' + parked.length + '</div>' + parked.map(function (p) {
+        return '<div class="parked"><b>' + esc(p.name) + '</b><span>' + esc(p.status) + ': ' + esc(p.reason) + '</span><span class="due">' + (p.tryAgain ? 'try again ' + esc(p.tryAgain) : 'do not contact') + '</span></div>';
+      }).join('') : '');
+    document.getElementById('c-new').textContent = mine.length;
+
+    // Consults booked
+    function consultRow(p) {
+      var when = '<b>' + esc(p.when) + '</b> ' + esc(p.time) + '<br><span class="lead-coach">with ' + esc(p.coach) + '</span>';
+      return '<article class="lead clickable" data-lead="' + p.id + '" tabindex="0" aria-label="Open ' + esc(p.name) + '"><span class="lead-name">' + esc(p.name) + '</span><span class="lead-when">' + when + '</span>' + meta(p) + actions(p) + '</article>';
+    }
+    document.getElementById('list-consult').innerHTML = booked.map(consultRow).join('') || '<div class="empty">No consults booked.</div>';
+    document.getElementById('c-consult').textContent = booked.length;
+  }
+
+  function wireSeg(attr, key) {
+    document.querySelectorAll('[data-' + attr + ']').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('[data-' + attr + ']').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        state[key] = b.getAttribute('data-' + attr);
+        render();
+        if (!document.getElementById('tab-consult').hidden) renderConsult();
+        if (!document.getElementById('tab-retain').hidden) renderRetain();
+        if (!document.getElementById('tab-refer').hidden) renderRefer();
+      });
+    });
+  }
+  wireSeg('gym', 'gym');
+  wireSeg('period', 'period');
+  document.getElementById('compare').addEventListener('change', function (e) { state.compare = e.target.checked; render(); if (!document.getElementById('tab-retain').hidden) renderRetain(); });
+
+  // Theme: System (no attribute, follows the device), Light or Dark. Remembered in this browser only.
+  var THEME_KEY = 'bo7-dash-theme';
+  function currentTheme() { return document.documentElement.getAttribute('data-theme') || 'system'; }
+  function markTheme() { document.querySelectorAll('[data-theme-opt]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.themeOpt === currentTheme())); }); }
+  document.querySelectorAll('[data-theme-opt]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.themeOpt;
+      if (t === 'system') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', t);
+      try { if (t === 'system') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, t); } catch (e) {}
+      markTheme();
+    });
+  });
+  markTheme();
+
+
+  // ---------- Lead dialog: book a consult, keep notes ----------
+  var dlg = document.getElementById('lead-dlg'), cur = null, pick = { gym: null, coach: 'any', day: 0, slot: null };
+  function findLead(id) { return NEW.concat(CONSULT).filter(function (p) { return p.id === id; })[0]; }
+  function busy(gym, day, time, coach) {
+    var taken = CONSULT.some(function (p) { return p.booked && p !== cur && p.gym === gym && p.day === day && p.time === time && p.coach === coach; });
+    if (taken) return true;
+    var h = 0, k = gym + day + time + coach;
+    for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) % 997;
+    return h % 3 === 0;
+  }
+  function slotsFor(gym, day, coach) {
+    var d = DAYS[day].short, times = d === 'Sat' ? SLOT_TIMES[gym].Sat : d === 'Sun' ? SLOT_TIMES[gym].Sun : SLOT_TIMES[gym].weekday;
+    var out = [];
+    times.forEach(function (t) {
+      if (day === 0 && t <= NOW) return;
+      COACHES[gym].forEach(function (c) {
+        if (coach !== 'any' && coach !== c) return;
+        if (!busy(gym, day, t, c)) out.push({ time: t, coach: c });
+      });
+    });
+    return out;
+  }
+  function segHtml(opts, current, attr) {
+    return opts.map(function (o) { return '<button type="button" data-' + attr + '="' + esc(o[0]) + '" aria-pressed="' + (o[0] === current) + '">' + esc(o[1]) + '</button>'; }).join('');
+  }
+  function drawBooking() {
+    document.getElementById('dlg-gym').innerHTML = segHtml([['Killiney', 'Killiney'], ['Blackrock', 'Blackrock']], pick.gym, 'pgym');
+    document.getElementById('dlg-coach').innerHTML = segHtml([['any', 'Any coach']].concat(COACHES[pick.gym].map(function (c) { return [c, c]; })), pick.coach, 'pcoach');
+    document.getElementById('dlg-days').innerHTML = DAYS.map(function (d, i) {
+      var n = slotsFor(pick.gym, i, pick.coach).length;
+      return '<button type="button" class="day" data-pday="' + i + '" aria-pressed="' + (i === pick.day) + '"' + (n ? '' : ' disabled') + '><span>' + d.short + '</span><b>' + d.date + '</b><span>' + (n ? n + ' free' : 'none') + '</span></button>';
+    }).join('');
+    var sl = slotsFor(pick.gym, pick.day, pick.coach);
+    document.getElementById('dlg-slots').innerHTML = sl.map(function (x) {
+      var on = pick.slot && pick.slot.time === x.time && pick.slot.coach === x.coach;
+      return '<button type="button" class="slot" data-ptime="' + x.time + '" data-pc="' + esc(x.coach) + '" aria-pressed="' + !!on + '"><b>' + x.time + '</b><span>' + esc(x.coach) + '</span></button>';
+    }).join('') || '<p class="empty">No free times this day. Try another day or coach.</p>';
+    var sum = document.getElementById('dlg-summary'), btn = document.getElementById('dlg-book');
+    if (pick.slot) {
+      sum.innerHTML = '<b>' + DAYS[pick.day].label + ' at ' + pick.slot.time + '</b> \u00b7 ' + pick.gym + ' \u00b7 with ' + esc(pick.slot.coach) + ' \u00b7 45 minutes';
+      btn.disabled = false;
+    } else { sum.textContent = 'Pick a time.'; btn.disabled = true; }
+    btn.textContent = cur.booked ? 'Move consult' : 'Book consult';
+  }
+  function drawNotes() {
+    document.getElementById('dlg-notes').innerHTML = cur.notes.slice().reverse().map(function (n) {
+      return '<div class="note"><div class="note-meta">' + esc(n.by) + ' \u00b7 ' + esc(n.at) + '</div><p>' + esc(n.text) + '</p></div>';
+    }).join('') || '<p class="empty" style="padding:8px 0;text-align:left">No notes yet.</p>';
+    document.getElementById('dlg-notes-count').textContent = cur.notes.length ? cur.notes.length + (cur.notes.length === 1 ? ' note' : ' notes') : '';
+  }
+  function drawHead() {
+    document.getElementById('dlg-name').textContent = cur.name;
+    document.getElementById('dlg-meta').innerHTML = meta(cur);
+    document.getElementById('dlg-contact').innerHTML = actions(cur);
+    document.getElementById('dlg-booked').innerHTML = cur.booked
+      ? '<div class="callout"><b>Booked: ' + esc(cur.when) + ' at ' + esc(cur.time) + ', ' + esc(cur.gym) + ', with ' + esc(cur.coach) + '</b><p>Pick a new time below to move it.</p></div>' : '';
+    var st = document.getElementById('dlg-status');
+    var off = cur.booked ? '' : ' <button type="button" class="btn ghost" id="dlg-park">Remove from board</button>';
+    st.innerHTML = (cur.booked ? '<span class="chip ok">Consult booked</span>'
+      : cur.contacted ? '<span class="chip info">Contacted ' + esc(cur.replied) + '</span>'
+      : '<span class="chip ' + (cur.hours > 24 ? 'bad' : 'warn') + '">Not contacted · ' + waited(cur.hours) + '</span> <button type="button" class="btn" id="dlg-contacted">Mark as contacted</button>') + off;
+    drawPark();
+  }
+  var parking = false, park = { reason: 'unreachable', months: 3 };
+  var REASONS = { unreachable: ["Couldn't reach them", "Couldn't reach"], notnow: ['Not interested right now', 'Not now'], stop: ["Don't contact again", 'Lost'] };
+  var AGAIN = { 1: '9 Nov', 3: '9 Jan 2027', 6: '9 Apr 2027' };
+  function drawPark() {
+    var box = document.getElementById('dlg-remove');
+    if (!parking || cur.booked) { box.innerHTML = ''; return; }
+    var stop = park.reason === 'stop';
+    box.innerHTML = '<div class="park"><span class="park-title">Remove ' + esc(cur.name) + ' from the board</span>' +
+      '<p>They stay in the leads sheet with this status, so they can be contacted again later. Only people who agreed to hear from Bo7 get contacted again.</p>' +
+      '<div class="park-row"><label class="field"><span>Why</span><div class="seg" role="group" aria-label="Why">' +
+      Object.keys(REASONS).map(function (k) { return '<button type="button" data-preason="' + k + '" aria-pressed="' + (park.reason === k) + '">' + REASONS[k][0] + '</button>'; }).join('') + '</div></label>' +
+      (stop ? '' : '<label class="field"><span>Try again in</span><div class="seg" role="group" aria-label="Try again in">' +
+        [1, 3, 6].map(function (m) { return '<button type="button" data-pmonths="' + m + '" aria-pressed="' + (park.months === m) + '">' + m + (m === 1 ? ' month' : ' months') + '</button>'; }).join('') + '</div></label>') +
+      '</div><p>' + (stop ? 'Status becomes <b>Lost</b>. They won\u2019t be contacted again.' : 'Status becomes <b>' + REASONS[park.reason][1] + '</b>. They come back onto the board on <b>' + AGAIN[park.months] + '</b>.') + ' Add a note to say why.</p>' +
+      '<div class="park-actions"><button type="button" class="btn danger" id="dlg-park-ok">Remove from board</button><button type="button" class="btn ghost" id="dlg-park-cancel">Keep on board</button></div></div>';
+  }
+  dlg.addEventListener('click', function (e) {
+    var b;
+    if (e.target.closest('#dlg-park')) { parking = true; drawPark(); }
+    else if (e.target.closest('#dlg-park-cancel')) { parking = false; drawPark(); }
+    else if ((b = e.target.closest('[data-preason]'))) { park.reason = b.dataset.preason; drawPark(); }
+    else if ((b = e.target.closest('[data-pmonths]'))) { park.months = +b.dataset.pmonths; drawPark(); }
+    else if (e.target.closest('#dlg-park-ok')) {
+      var stop = park.reason === 'stop', status = REASONS[park.reason][1], typed = document.getElementById('dlg-note-text').value.trim();
+      var reason = typed || REASONS[park.reason][0];
+      cur.notes.push({ by: 'You', at: 'Just now', text: 'Removed from the board: ' + reason + (stop ? '. Do not contact again.' : '. Try again on ' + AGAIN[park.months] + '.') });
+      NEW.splice(NEW.indexOf(cur), 1);
+      PARKED.unshift({ name: cur.name, gym: cur.gym, status: status, reason: reason, tryAgain: stop ? '' : AGAIN[park.months] });
+      parking = false; dlg.close(); render();
+      showToast(cur.name + ' removed from the board as "' + status + '"' + (stop ? '.' : ', back on ' + AGAIN[park.months] + '.') + ' In the live board this updates the leads sheet.');
+    }
+  });
+  function openLead(id) {
+    parking = false; park = { reason: 'unreachable', months: 3 };
+    cur = findLead(id); if (!cur) return;
+    pick = { gym: cur.gym, coach: 'any', day: 0, slot: null };
+    for (var i = 0; i < 7; i++) { if (slotsFor(pick.gym, i, 'any').length) { pick.day = i; break; } }
+    document.getElementById('dlg-note-text').value = '';
+    drawHead(); drawBooking(); drawNotes();
+    dlg.showModal();
+  }
+  dlg.addEventListener('click', function (e) {
+    if (e.target === dlg) { dlg.close(); return; }
+    var b;
+    if ((b = e.target.closest('[data-pgym]'))) { pick.gym = b.dataset.pgym; pick.coach = 'any'; pick.slot = null; drawBooking(); }
+    else if ((b = e.target.closest('[data-pcoach]'))) { pick.coach = b.dataset.pcoach; pick.slot = null; drawBooking(); }
+    else if ((b = e.target.closest('[data-pday]'))) { pick.day = +b.dataset.pday; pick.slot = null; drawBooking(); }
+    else if ((b = e.target.closest('[data-ptime]'))) { pick.slot = { time: b.dataset.ptime, coach: b.dataset.pc }; drawBooking(); }
+  });
+  document.getElementById('dlg-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) {
+    if (!e.target.closest('#dlg-contacted')) return;
+    cur.contacted = true; cur.replied = 'just now'; cur.status = 'Replied, no time agreed yet';
+    cur.notes.push({ by: 'You', at: 'Just now', text: 'Marked as contacted.' });
+    render(); drawHead(); drawNotes();
+    showToast(cur.name + ' moved to Contacted. In the live board this also records the first reply time in the leads sheet.');
+  });
+  document.getElementById('dlg-cancel').addEventListener('click', function () { dlg.close(); });
+  document.getElementById('dlg-note-add').addEventListener('click', function () {
+    var t = document.getElementById('dlg-note-text'), v = t.value.trim();
+    if (!v) { t.focus(); return; }
+    cur.notes.push({ by: 'You', at: 'Just now', text: v });
+    t.value = ''; drawNotes();
+  });
+  document.getElementById('dlg-book').addEventListener('click', function () {
+    if (!pick.slot) return;
+    var label = DAYS[pick.day].label, wasNew = NEW.indexOf(cur) !== -1;
+    if (wasNew) { NEW.splice(NEW.indexOf(cur), 1); CONSULT.unshift(cur); }
+    cur.booked = true; cur.gym = pick.gym; cur.day = pick.day; cur.when = label; cur.time = pick.slot.time; cur.coach = pick.slot.coach;
+    cur.notes.push({ by: 'You', at: 'Just now', text: 'Consult booked for ' + label + ' at ' + cur.time + ' with ' + cur.coach + ' (' + cur.gym + ').' });
+    render(); drawNotes(); drawHead(); pick.slot = null; drawBooking();
+    showToast('Booked ' + cur.name + ': ' + label + ' at ' + cur.time + ' with ' + cur.coach + '. In the live board this adds it to the Bo7 consultations calendar and offers the WhatsApp confirmation.');
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-act]') || dlg.contains(e.target)) return;
+    var card = e.target.closest('[data-lead]');
+    if (card) openLead(card.dataset.lead);
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-lead]')) { e.preventDefault(); openLead(e.target.dataset.lead); }
+  });
+
+  // ---------- Add a lead: walk-ins, calls, WhatsApps and emails ----------
+  var adlg = document.getElementById('add-dlg'), GYM_KEY = 'bo7-dash-add-gym', BY_KEY = 'bo7-dash-add-by', nextId = 0;
+  var STAFF = ['Ryan', 'Coach B', 'Coach C'];
+  var HOW = [['walk-in', 'Walked in'], ['phone', 'Phoned'], ['whatsapp', 'WhatsApp'], ['email', 'Email'], ['referral', 'Referral'], ['other', 'Other']];
+  var HOW_PREF = { 'walk-in': 'whatsapp', phone: 'phone', whatsapp: 'whatsapp', email: 'email', referral: 'whatsapp', other: 'whatsapp' };
+  var MATCH = ['meta-ads', 'google-ads', 'google-profile', 'instagram', 'killiney-window', 'blackrock-window', 'stand', 'referral', 'corporate'];
+  var add = {};
+  function lastBy() { try { return localStorage.getItem(BY_KEY) || null; } catch (e) { return null; } }
+  function lastGym() { try { return localStorage.getItem(GYM_KEY) || 'Killiney'; } catch (e) { return 'Killiney'; } }
+  function drawAdd() {
+    document.getElementById('add-by').innerHTML = segHtml(STAFF.map(function (c) { return [c, c]; }), add.by, 'aby');
+    document.getElementById('add-how').innerHTML = segHtml(HOW, add.how, 'ahow');
+    document.getElementById('add-gym').innerHTML = segHtml([['Killiney', 'Killiney'], ['Blackrock', 'Blackrock']], add.gym, 'agym');
+    document.getElementById('add-pref').innerHTML = segHtml([['whatsapp', 'WhatsApp'], ['phone', 'Call'], ['email', 'Email']], add.pref, 'apref');
+    document.getElementById('add-match-wrap').hidden = add.how !== 'whatsapp';
+    document.getElementById('add-ref-wrap').hidden = add.how !== 'referral';
+  }
+  function members() {
+    var seen = {}, out = [];
+    REFERRERS.concat(SLOWING, RISK).forEach(function (m) { if (!seen[m.name]) { seen[m.name] = 1; out.push({ name: m.name, gym: m.gym, coach: m.coach }); } });
+    return out.sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+  }
+  function findSame(name) {
+    var n = name.trim().toLowerCase(); if (n.length < 3) return null;
+    var pools = [[NEW, 'is already a lead'], [CONSULT.filter(function (p) { return p.booked; }), 'has a consult booked'], [PARKED, 'was parked to try again'], [EARLIER, 'had a consult already']];
+    for (var i = 0; i < pools.length; i++) {
+      var hit = pools[i][0].filter(function (p) { return p.name.toLowerCase() === n; })[0];
+      if (hit) return { p: hit, what: pools[i][1] };
+    }
+    return null;
+  }
+  function drawDupe() {
+    var d = findSame(document.getElementById('add-name').value), box = document.getElementById('add-dupe');
+    box.innerHTML = d ? '<div class="dupe"><span class="chip warn">Already on file</span><span><b>' + esc(d.p.name) + '</b> ' + d.what + (d.p.gym ? ' (' + esc(d.p.gym) + ')' : '') + '. Add a note to that lead instead of a second one.</span>' +
+      (d.p.id && findLead(d.p.id) ? '<button type="button" class="btn" data-aopen="' + d.p.id + '">Open their lead</button>' : '') + '</div>' : '';
+  }
+  function openAdd() {
+    add = { by: lastBy(), how: 'walk-in', gym: lastGym(), pref: 'whatsapp', prefSet: false };
+    ['add-name', 'add-phone', 'add-email', 'add-int'].forEach(function (id) { var el = document.getElementById(id); el.value = ''; el.removeAttribute('aria-invalid'); });
+    document.getElementById('add-name-err').hidden = document.getElementById('add-phone-err').hidden = document.getElementById('add-by-err').hidden = true;
+    document.getElementById('add-consent').checked = false;
+    document.getElementById('add-match').innerHTML = '<option value="">No, a direct message</option>' + MATCH.map(function (k) { return '<option value="' + k + '">' + esc(SOURCES[k]) + '</option>'; }).join('');
+    document.getElementById('add-dupe').innerHTML = '';
+    document.getElementById('add-ref').value = ''; document.getElementById('add-ref').removeAttribute('aria-invalid'); document.getElementById('add-ref-err').hidden = true;
+    document.getElementById('add-ref-list').innerHTML = members().map(function (m) { return '<option value="' + esc(m.name) + '">' + esc(m.gym) + '</option>'; }).join('');
+    drawAdd();
+    adlg.showModal();
+    document.getElementById('add-name').focus();
+  }
+  document.getElementById('add-open').addEventListener('click', openAdd);
+  adlg.addEventListener('click', function (e) {
+    if (e.target === adlg) { adlg.close(); return; }
+    var b;
+    if ((b = e.target.closest('[data-ahow]'))) { add.how = b.dataset.ahow; if (!add.prefSet) add.pref = HOW_PREF[add.how]; drawAdd(); }
+    else if ((b = e.target.closest('[data-aby]'))) { add.by = b.dataset.aby; document.getElementById('add-by-err').hidden = true; drawAdd(); }
+    else if ((b = e.target.closest('[data-agym]'))) { add.gym = b.dataset.agym; drawAdd(); }
+    else if ((b = e.target.closest('[data-apref]'))) { add.pref = b.dataset.apref; add.prefSet = true; drawAdd(); }
+    else if ((b = e.target.closest('[data-aopen]'))) { adlg.close(); openLead(b.dataset.aopen); }
+  });
+  document.getElementById('add-name').addEventListener('input', drawDupe);
+  document.getElementById('add-ref').addEventListener('change', function (e) {
+    var m = members().filter(function (x) { return x.name.toLowerCase() === e.target.value.trim().toLowerCase(); })[0];
+    if (m) { add.gym = m.gym; document.getElementById('add-ref-err').hidden = true; e.target.removeAttribute('aria-invalid'); drawAdd(); }
+  });
+  document.getElementById('add-close').addEventListener('click', function () { adlg.close(); });
+  document.getElementById('add-cancel').addEventListener('click', function () { adlg.close(); });
+  document.getElementById('add-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('add-name'), phone = document.getElementById('add-phone'), ok = true;
+    [[name, 'add-name-err'], [phone, 'add-phone-err']].forEach(function (x) {
+      var bad = !x[0].value.trim(); document.getElementById(x[1]).hidden = !bad;
+      if (bad) { x[0].setAttribute('aria-invalid', 'true'); if (ok) x[0].focus(); ok = false; } else x[0].removeAttribute('aria-invalid');
+    });
+    if (!add.by) { document.getElementById('add-by-err').hidden = false; if (ok) document.getElementById('add-by').scrollIntoView({ block: 'nearest' }); ok = false; }
+    var refEl = document.getElementById('add-ref'), referrer = null;
+    if (add.how === 'referral') {
+      referrer = members().filter(function (m) { return m.name.toLowerCase() === refEl.value.trim().toLowerCase(); })[0] || null;
+      document.getElementById('add-ref-err').hidden = !!referrer;
+      if (!referrer) { refEl.setAttribute('aria-invalid', 'true'); if (ok) refEl.focus(); ok = false; } else refEl.removeAttribute('aria-invalid');
+    }
+    if (!ok) return;
+    var match = document.getElementById('add-match').value;
+    var source = add.how === 'whatsapp' && match ? match : add.how;
+    var interested = document.getElementById('add-int').value.trim();
+    var consent = document.getElementById('add-consent').checked;
+    var p = { id: 'A' + (nextId++), name: name.value.trim(), source: source, gym: add.gym, prefers: add.pref, hours: 0, note: referrer ? 'Referred by a member (' + referrer.name + ')' + (interested ? '. ' + interested : '') : interested, consent: consent, loggedBy: add.by, referredBy: referrer && referrer.name, notes: [] };
+    p.notes.push({ by: add.by, at: 'Just now', text: 'Logged by ' + add.by + ': ' + HOW.filter(function (h) { return h[0] === add.how; })[0][1].toLowerCase() + (source !== add.how ? ', from ' + SOURCES[source] : '') + (referrer ? ', referred by ' + referrer.name : '') + '. ' + (consent ? 'Happy to be contacted (9 Oct 2026).' : 'Did not agree to be contacted yet.') + (interested ? ' Interested in: ' + interested : '') });
+    NEW.push(p);
+    if (referrer) {
+      var r = REFERRERS.filter(function (m) { return m.name === referrer.name; })[0];
+      if (!r) { r = { id: 'R' + REFERRERS.length, name: referrer.name, gym: referrer.gym, coach: referrer.coach, since: 'Member', friends: [] }; REFERRERS.push(r); }
+      r.friends.push({ name: p.name, status: 'new', when: 'Today' });
+    }
+    var row = COUNTS.filter(function (r) { return r[0] === source && r[1] === add.gym; })[0];
+    if (row) row[2]++; else COUNTS.push([source, add.gym, 1, 0, 0, 0]);
+    try { localStorage.setItem(GYM_KEY, add.gym); localStorage.setItem(BY_KEY, add.by); } catch (err) {}
+    if (state.gym !== 'all' && state.gym !== add.gym) document.querySelector('[data-gym="all"]').click();
+    adlg.close(); render();
+    var card = document.querySelector('[data-lead="' + p.id + '"]');
+    if (card) card.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    showToast('Saved ' + p.name + ' as a new lead, logged by ' + add.by + ' (' + SOURCES[source] + ', ' + add.gym + '). In the live version this goes into the Bo7 database, with who logged it, and onto the board for everyone.');
+  });
+
+  // ---------- Consult tab ----------
+  var WD = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  function dayName(d) { return WD[(4 + d + 700) % 7]; }
+  function dayLong(d) { return (d === 0 ? 'Today \u00b7 ' : d === 1 ? 'Tomorrow \u00b7 ' : '') + dayName(d) + ' ' + (9 + d) + ' Oct'; }
+  var EARLIER = [
+    { name: 'Gavin Reilly', source: 'google-profile', gym: 'Killiney', prefers: 'phone', day: -4, time: '07:00', coach: 'Ryan', outcome: 'joined', interested: 'Getting back into training after years off' },
+    { name: 'Fiona Lynch', source: 'meta-ads', gym: 'Blackrock', prefers: 'whatsapp', day: -3, time: '12:15', coach: 'Coach C', outcome: 'notyet', reason: 'Price', interested: 'Strength for running' },
+    { name: 'Kevin Daly', source: 'walk-in', gym: 'Killiney', prefers: 'phone', day: -2, time: '18:45', coach: 'Coach B', outcome: 'noshow', interested: 'Lose weight before a wedding' },
+    { name: 'Aisling Kenny', source: 'referral', gym: 'Blackrock', prefers: 'whatsapp', day: -1, time: '17:30', coach: 'Ryan', outcome: 'joined', interested: 'Referred by her sister, wants evening sessions' }
+  ];
+  var LATER = [
+    { name: 'Sarah Whelan', source: 'instagram', gym: 'Killiney', prefers: 'whatsapp', day: 3, time: '07:45', coach: 'Ryan', interested: 'Back pain from desk work' },
+    { name: 'Conor Hayes', source: 'corporate', gym: 'Blackrock', prefers: 'email', day: 4, time: '18:15', coach: 'Coach C', interested: 'Via the company deal' }
+  ];
+  EARLIER.concat(LATER).forEach(function (p, i) { p.id = 'X' + i; p.booked = true; p.notes = p.interested ? [{ by: 'Logged at enquiry', at: 'Earlier', text: p.interested }] : []; });
+  CONSULT.forEach(function (p) { if (!p.interested) p.interested = ({ 'Emma Byrne': 'Wants to feel strong again after an injury', 'Mark Nolan': 'Friend of a member, played rugby', 'Tom Gallagher': 'Walked in, wants to lose weight', 'Laura Quinn': 'Early mornings only' })[p.name] || ''; });
+  var xs = { coach: 'all', sel: null };
+  var REASONS_NJ = ['Price', 'Timing or schedule', 'Location', 'Not ready yet', 'Chose somewhere else', 'Wanted one-to-one', 'Other'];
+  function consults() {
+    return EARLIER.concat(CONSULT.filter(function (p) { return p.booked; }), LATER).filter(byGym)
+      .filter(function (p) { return xs.coach === 'all' || p.coach === xs.coach; })
+      .sort(function (a, b) { return (a.day - b.day) || (a.time < b.time ? -1 : a.time > b.time ? 1 : 0); });
+  }
+  function outcomeChip(p) {
+    if (p.outcome === 'joined') return '<span class="chip ok">Joined</span>';
+    if (p.outcome === 'notyet') return '<span class="chip warn">Not yet</span>';
+    if (p.outcome === 'thinking') return '<span class="chip info">Thinking it over</span>';
+    if (p.outcome === 'noshow') return '<span class="chip bad">No-show</span>';
+    if (p.day < 0) return '<span class="chip warn">No outcome</span>';
+    return p.day === 0 ? '<span class="chip info">Today</span>' : '<span class="chip mute">Booked</span>';
+  }
+  function renderConsult() {
+    var all = consults();
+    var coaches = ['all', 'Ryan', 'Coach B', 'Coach C'];
+    document.getElementById('x-coach').innerHTML = coaches.map(function (c) { return '<button type="button" data-xcoach="' + c + '" aria-pressed="' + (xs.coach === c) + '">' + (c === 'all' ? 'All coaches' : c) + '</button>'; }).join('');
+    var week = all.filter(function (p) { return p.day <= 2; });
+    var done = week.filter(function (p) { return p.outcome; });
+    var showed = done.filter(function (p) { return p.outcome !== 'noshow'; });
+    var joined = done.filter(function (p) { return p.outcome === 'joined'; });
+    var left = week.filter(function (p) { return !p.outcome && p.day >= 0; });
+    document.getElementById('x-booked').textContent = week.length;
+    document.getElementById('x-booked-m').textContent = 'Mon 5 to Sun 11 Oct';
+    document.getElementById('x-done').innerHTML = done.length + '<span class="kpi-secondary">of ' + week.length + '</span>';
+    document.getElementById('x-done-m').textContent = left.length + ' still to come';
+    document.getElementById('x-show').textContent = done.length ? Math.round(showed.length / done.length * 100) + '%' : '\u2014';
+    document.getElementById('x-show-m').textContent = showed.length + ' of ' + done.length + ' turned up';
+    document.getElementById('x-joined').textContent = joined.length;
+    document.getElementById('x-joined-m').textContent = showed.length ? Math.round(joined.length / showed.length * 100) + '% of those who showed' : 'None yet';
+
+    // Upcoming first (today at the top), then earlier this week, most recent first.
+    var upcoming = all.filter(function (p) { return p.day >= 0; });
+    var earlier = all.filter(function (p) { return p.day < 0; }).reverse();
+    var html = '', lastGroup = null;
+    upcoming.concat(earlier).forEach(function (p) {
+      var group = p.day >= 3 ? 'next' : p.day < 0 ? 'earlier' : String(p.day);
+      if (group !== lastGroup) {
+        html += '<div class="group-label' + (p.day === 0 ? ' today' : '') + '">' + (p.day >= 3 ? 'Next week' : p.day < 0 ? 'Earlier this week' : esc(dayLong(p.day))) + '</div>';
+        lastGroup = group;
+      }
+      var sub = (p.day >= 3 || p.day < 0 ? dayName(p.day) + ' ' + (9 + p.day) + ' \u00b7 ' : '') + p.gym + ' \u00b7 ' + p.coach;
+      html += '<button type="button" class="cx-row" data-x="' + p.id + '" aria-current="' + (xs.sel === p.id) + '"><span class="cx-time">' + esc(p.time) + '</span><span class="cx-who"><b>' + esc(p.name) + '</b><span>' + esc(sub) + '</span></span>' + outcomeChip(p) + '</button>';
+    });
+    document.getElementById('x-list').innerHTML = html || '<div class="empty">No consults for this coach.</div>';
+    document.getElementById('x-count').textContent = all.length;
+    if (xs.sel && !all.some(function (p) { return p.id === xs.sel; })) xs.sel = null;
+    if (!xs.sel && window.innerWidth > 1000) {
+      var next = all.filter(function (p) { return p.day >= 0 && !p.outcome; })[0] || all[0];
+      if (next) { xs.sel = next.id; markRows(); }
+    }
+    drawSheet();
+  }
+  function markRows() { document.querySelectorAll('[data-x]').forEach(function (r) { r.setAttribute('aria-current', String(r.dataset.x === xs.sel)); }); }
+  function findX(id) { return EARLIER.concat(CONSULT, LATER).filter(function (p) { return p.id === id; })[0]; }
+  function tog(group, value, label, on, extra) { return '<button type="button" class="tog' + (extra || '') + '" data-' + group + '="' + esc(value) + '" aria-pressed="' + !!on + '">' + esc(label) + '</button>'; }
+  function drawSheet() {
+    var box = document.getElementById('cx-detail'), p = xs.sel && findX(xs.sel);
+    if (!p) { box.innerHTML = '<div class="cx-empty">Pick a consult to open it.</div>'; return; }
+    var f = p.form = p.form || { goals: '', history: '', health: '', other: '', days: [], times: [] };
+    var o = p.draft = p.draft || { showed: p.outcome ? (p.outcome === 'noshow' ? 'no' : 'yes') : '', result: p.outcome && p.outcome !== 'noshow' ? p.outcome : '', reason: p.reason || '', follow: '1 week' };
+    var past = p.notes.filter(function (n) { return n.by !== 'Consult notes'; });
+    box.innerHTML =
+      '<div class="cx-head"><div class="cx-head-top"><button type="button" class="icon-btn cx-back" data-xback aria-label="Back to the list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button><h2 class="cx-name">' + esc(p.name) + '</h2>' + outcomeChip(p) + '</div>' +
+      '<div class="cx-when"><b>' + esc(dayLong(p.day)) + ', ' + esc(p.time) + '</b> \u00b7 ' + esc(p.gym) + ' \u00b7 with ' + esc(p.coach) + '</div>' + actions(p) + '</div>' +
+      '<div class="cx-body">' +
+        '<section class="cx-sec"><h3>About them</h3><dl class="facts">' +
+          '<dt>Found Bo7 through</dt><dd>' + esc(SOURCES[p.source]) + '</dd>' +
+          '<dt>Interested in</dt><dd>' + esc(p.interested || '\u2014') + '</dd>' +
+          '<dt>Best way to reach</dt><dd>' + LABEL[p.prefers] + '</dd>' +
+        '</dl>' + (past.length ? '<div class="prev-notes">' + past.slice().reverse().map(function (n) { return '<div class="note"><div class="note-meta">' + esc(n.by) + ' \u00b7 ' + esc(n.at) + '</div><p>' + esc(n.text) + '</p></div>'; }).join('') + '</div>' : '') + '</section>' +
+        '<section class="cx-sec"><h3>Consult notes <span class="saved" id="cx-saved">' + (p.savedAt ? 'Saved ' + p.savedAt : 'Saved as you type') + '</span></h3>' +
+          '<label class="field"><span>What they want to achieve</span><textarea class="input" data-f="goals" rows="3" placeholder="In their words">' + esc(f.goals) + '</textarea></label>' +
+          '<label class="field"><span>Training so far</span><textarea class="input" data-f="history" rows="2" placeholder="What they\u2019ve done before, what worked, what didn\u2019t">' + esc(f.history) + '</textarea></label>' +
+          '<label class="field"><span>Injuries or health</span><textarea class="input" data-f="health" rows="2" placeholder="Anything to work around"></textarea></label>' +
+          '<p class="hint-text">Only what a coach needs to train them safely, and only with their OK.</p>' +
+          '<div class="field"><span>Days that suit</span><div class="chips">' + WD.map(function (d) { return tog('fday', d, d, f.days.indexOf(d) !== -1); }).join('') + '</div></div>' +
+          '<div class="field"><span>Times that suit</span><div class="chips">' + ['Early morning', 'Lunchtime', 'Evening', 'Weekend'].map(function (t) { return tog('ftime', t, t, f.times.indexOf(t) !== -1); }).join('') + '</div></div>' +
+          '<label class="field"><span>Anything else</span><textarea class="input" data-f="other" rows="2" placeholder="Questions they asked, what they\u2019re worried about"></textarea></label>' +
+        '</section>' +
+        '<section class="cx-sec"><h3>Outcome</h3>' +
+          '<div class="field"><span>Did they show up?</span><div class="chips">' + tog('oshow', 'yes', 'Showed up', o.showed === 'yes', ' big good') + tog('oshow', 'no', 'No-show', o.showed === 'no', ' big bad') + '</div></div>' +
+          (o.showed === 'yes' ? '<div class="field"><span>Result</span><div class="chips">' + tog('ores', 'joined', 'Joined', o.result === 'joined', ' big good') + tog('ores', 'thinking', 'Thinking it over', o.result === 'thinking', ' big') + tog('ores', 'notyet', 'Not yet', o.result === 'notyet', ' big') + '</div></div>' : '') +
+          (o.showed === 'yes' && o.result === 'notyet' ? '<div class="field"><span>Why not yet</span><div class="chips">' + REASONS_NJ.map(function (r) { return tog('oreason', r, r, o.reason === r); }).join('') + '</div></div>' : '') +
+          (o.showed === 'yes' && o.result === 'thinking' ? '<div class="field"><span>Follow up in</span><div class="chips">' + ['3 days', '1 week', '2 weeks'].map(function (r) { return tog('ofollow', r, r, o.follow === r); }).join('') + '</div></div>' : '') +
+          (o.showed === 'yes' && o.result === 'joined' ? '<p class="hint-text">Next: Ryan\u2019s welcome message and the community WhatsApp group (Step 3, task 5).</p>' : '') +
+          (o.showed === 'no' ? '<p class="hint-text">They move back to Contacted on the Leads tab, with a no-show message ready to send.</p>' : '') +
+        '</section>' +
+      '</div>' +
+      '<div class="cx-foot"><span class="hint">Sample data. Nothing is saved.</span><button type="button" class="btn primary lg" data-xsave' + (o.showed ? '' : ' disabled') + '>Save outcome</button></div>';
+    box.querySelector('[data-f="health"]').value = f.health;
+    box.querySelector('[data-f="other"]').value = f.other;
+  }
+  function openSheet(id) {
+    xs.sel = id; markRows(); drawSheet();
+    var box = document.getElementById('cx-detail');
+    if (window.innerWidth <= 1000) { box.classList.add('open'); document.body.classList.add('sheet-open'); box.scrollTop = 0; }
+  }
+  function closeSheet() { document.getElementById('cx-detail').classList.remove('open'); document.body.classList.remove('sheet-open'); }
+  document.getElementById('tab-consult').addEventListener('click', function (e) {
+    var b, p = xs.sel && findX(xs.sel);
+    if ((b = e.target.closest('[data-xcoach]'))) { xs.coach = b.dataset.xcoach; xs.sel = null; renderConsult(); return; }
+    if ((b = e.target.closest('[data-x]'))) { openSheet(b.dataset.x); return; }
+    if (e.target.closest('[data-xback]')) { closeSheet(); return; }
+    if (!p) return;
+    if ((b = e.target.closest('[data-fday]'))) { var i = p.form.days.indexOf(b.dataset.fday); if (i === -1) p.form.days.push(b.dataset.fday); else p.form.days.splice(i, 1); b.setAttribute('aria-pressed', String(i === -1)); saved(p); return; }
+    if ((b = e.target.closest('[data-ftime]'))) { var j = p.form.times.indexOf(b.dataset.ftime); if (j === -1) p.form.times.push(b.dataset.ftime); else p.form.times.splice(j, 1); b.setAttribute('aria-pressed', String(j === -1)); saved(p); return; }
+    if ((b = e.target.closest('[data-oshow]'))) { p.draft.showed = b.dataset.oshow; keepScroll(drawSheet); return; }
+    if ((b = e.target.closest('[data-ores]'))) { p.draft.result = b.dataset.ores; keepScroll(drawSheet); return; }
+    if ((b = e.target.closest('[data-oreason]'))) { p.draft.reason = b.dataset.oreason; keepScroll(drawSheet); return; }
+    if ((b = e.target.closest('[data-ofollow]'))) { p.draft.follow = b.dataset.ofollow; keepScroll(drawSheet); return; }
+    if (e.target.closest('[data-xsave]')) {
+      var d = p.draft;
+      p.outcome = d.showed === 'no' ? 'noshow' : (d.result || 'thinking');
+      p.reason = d.reason;
+      var f = p.form, bits = [];
+      if (f.goals) bits.push('Goals: ' + f.goals);
+      if (f.history) bits.push('Training so far: ' + f.history);
+      if (f.days.length || f.times.length) bits.push('Suits: ' + f.days.concat(f.times).join(', '));
+      if (f.other) bits.push('Other: ' + f.other);
+      var summary = { noshow: 'No-show.', joined: 'Joined.', thinking: 'Thinking it over; follow up in ' + d.follow + '.', notyet: 'Not yet' + (d.reason ? ' (' + d.reason + ').' : '.') }[p.outcome];
+      p.notes.push({ by: p.coach, at: 'Just now', text: 'Consult: ' + summary + (bits.length ? '\n' + bits.join('\n') : '') });
+      renderConsult(); render();
+      showToast(p.name + ': ' + summary + ' In the live board this saves the notes and outcome to the leads sheet.');
+      if (window.innerWidth <= 1000) closeSheet();
+    }
+  });
+  function keepScroll(fn) { var body = document.querySelector('.cx-body'), y = body ? body.scrollTop : 0; fn(); var nb = document.querySelector('.cx-body'); if (nb) nb.scrollTop = y; }
+  function saved(p) { p.savedAt = 'just now'; var el = document.getElementById('cx-saved'); if (el) el.textContent = 'Saved just now'; }
+  document.getElementById('tab-consult').addEventListener('input', function (e) {
+    var t = e.target.closest('[data-f]'), p = xs.sel && findX(xs.sel);
+    if (!t || !p) return;
+    p.form[t.dataset.f] = t.value; saved(p);
+  });
+
+  // ---------- Retain tab ----------
+  // Sample: 200 members. Healthy counts per gym; slowing and at-risk members listed by name.
+  var HEALTHY = { Killiney: 98, Blackrock: 72 };
+  var HEALTH_4W_AGO = { healthy: 162, slowing: 24, risk: 14 };
+  function mk(name, gym, coach, days, before, now, stage, next, extra) { var m = { name: name, gym: gym, coach: coach, days: days, before: before, now: now, stage: stage, next: next, prefers: 'whatsapp', source: 'member' }; for (var k in extra || {}) m[k] = extra[k]; return m; }
+  var SLOWING = [
+    mk('Brian Walsh', 'Killiney', 'Ryan', 12, 3, 1.5, 'nudge', 'Coach check-in Wed'),
+    mk('Deirdre Moore', 'Killiney', 'Coach B', 11, 2, 1, 'nudge', 'Coach check-in Thu'),
+    mk('Eoghan Ryan', 'Blackrock', 'Coach C', 14, 3, 1, 'checkin', 'Coach check-in due today'),
+    mk('Grace Cullen', 'Blackrock', 'Ryan', 10, 2, 1, 'new', 'Nudge goes out tonight'),
+    mk('Hugh Fallon', 'Killiney', 'Coach B', 16, 2, 0.5, 'checkin', 'Coach check-in due today'),
+    mk('Isabel Farrell', 'Killiney', 'Ryan', 13, 3, 1.5, 'nudge', 'Coach check-in Tue'),
+    mk('Joe Brady', 'Blackrock', 'Coach C', 12, 2, 1, 'nudge', 'Coach check-in Wed'),
+    mk('Karen Doherty', 'Killiney', 'Coach B', 18, 2, 0.5, 'checkin', 'Coach check-in overdue'),
+    mk('Liam Power', 'Blackrock', 'Ryan', 11, 3, 1.5, 'nudge', 'Coach check-in Thu'),
+    mk('Maeve Boyle', 'Killiney', 'Ryan', 15, 2, 1, 'paused', 'Paused: knee injury, physio until 1 Nov'),
+    mk('Niall Hogan', 'Blackrock', 'Coach C', 10, 2, 1, 'new', 'Nudge goes out tonight'),
+    mk('Olivia Nash', 'Killiney', 'Coach B', 12, 3, 1.5, 'nudge', 'Coach check-in Wed'),
+    mk('Pat Coyle', 'Killiney', 'Ryan', 17, 2, 0.5, 'checkin', 'Coach check-in due today'),
+    mk('Roisin Keogh', 'Blackrock', 'Ryan', 13, 2, 1, 'nudge', 'Coach check-in Tue'),
+    mk('Sean Molloy', 'Killiney', 'Coach B', 11, 3, 1.5, 'nudge', 'Coach check-in Thu'),
+    mk('Tara Quigley', 'Blackrock', 'Coach C', 14, 2, 1, 'nudge', 'Coach check-in Mon'),
+    mk('Una Dillon', 'Killiney', 'Ryan', 12, 2, 1, 'nudge', 'Coach check-in Wed'),
+    mk('Vincent Ward', 'Blackrock', 'Coach C', 19, 3, 0.5, 'checkin', 'Coach check-in overdue'),
+    mk('Wendy Sheehan', 'Killiney', 'Coach B', 10, 2, 1, 'nudge', 'Coach check-in Fri'),
+    mk('Yvonne Carey', 'Blackrock', 'Ryan', 13, 2, 1, 'nudge', 'Coach check-in Tue')
+  ];
+  var RISK = [
+    mk('Adam Kinsella', 'Killiney', 'Ryan', 23, 3, 0, 'd0', 'Coach WhatsApp due today'),
+    mk('Bernadette Lyons', 'Blackrock', 'Coach C', 22, 2, 0, 'd0', 'Coach WhatsApp due today'),
+    mk('Colm Healy', 'Killiney', 'Coach B', 21, 2, 0, 'd0', 'Coach WhatsApp due today', { noshows: 2 }),
+    mk('Dara Corcoran', 'Blackrock', 'Ryan', 25, 3, 0, 'd3', 'Offer goes out Mon'),
+    mk('Emer Fitzpatrick', 'Killiney', 'Ryan', 26, 2, 0, 'd3', 'Offer goes out Sun'),
+    mk('Finbar Egan', 'Killiney', 'Coach B', 27, 2, 0, 'd3', 'Offer goes out Sat'),
+    mk('Gemma Rooney', 'Blackrock', 'Coach C', 30, 3, 0, 'd7', 'Ryan\u2019s note Thu'),
+    mk('Harry McGrath', 'Killiney', 'Ryan', 33, 2, 0, 'd7', 'Ryan\u2019s note Tue'),
+    mk('Ita Gleeson', 'Blackrock', 'Ryan', 36, 2, 0, 'd14', 'Ryan\u2019s note due today'),
+    mk('Jim O\u2019Brien', 'Killiney', 'Coach B', 24, 2, 0, 'paused', 'Paused: away until 20 Oct')
+  ];
+  SLOWING.concat(RISK).forEach(function (m, i) { m.id = 'M' + i; });
+  var STAGES = {
+    slowing: [
+      { key: 'new', step: 'Today', what: 'Joins tonight', who: 'auto' },
+      { key: 'nudge', step: 'Day 0', what: 'Nudge with their usual sessions', who: 'auto' },
+      { key: 'checkin', step: 'Day 5', what: 'Coach check-in', who: 'coach' }
+    ],
+    risk: [
+      { key: 'd0', step: 'Day 0', what: 'WhatsApp from their coach', who: 'coach' },
+      { key: 'd3', step: 'Day 3', what: 'Hold a spot this week', who: 'auto' },
+      { key: 'd7', step: 'Day 7', what: 'Free catch-up session [offer]', who: 'auto' },
+      { key: 'd14', step: 'Day 14', what: 'Note from Ryan, pause option', who: 'coach' }
+    ]
+  };
+  var STAGE_CHIP = {
+    new: ['mute', 'Starts tonight'], nudge: ['info', 'Nudge sent'], checkin: ['warn', 'Coach check-in'],
+    d0: ['warn', 'Day 0: coach message'], d3: ['info', 'Day 3 sent'], d7: ['info', 'Day 7 offer sent'], d14: ['warn', 'Day 14: Ryan\u2019s note'],
+    paused: ['mute', 'Paused'], removed: ['mute', 'Out of sequence']
+  };
+  var rs = { seg: 'risk' };
+  function renderRetain() {
+    document.getElementById('r-gym').innerHTML = [['all', 'All'], ['Killiney', 'Killiney'], ['Blackrock', 'Blackrock']].map(function (g) { return '<button type="button" data-rgym="' + g[0] + '" aria-pressed="' + (state.gym === g[0]) + '">' + g[1] + '</button>'; }).join('');
+    var slow = SLOWING.filter(byGym), risk = RISK.filter(byGym);
+    var healthy = state.gym === 'all' ? HEALTHY.Killiney + HEALTHY.Blackrock : HEALTHY[state.gym];
+    var total = healthy + slow.length + risk.length;
+    var scale = state.gym === 'all' ? 1 : total / 200;
+    document.getElementById('r-members').textContent = total;
+    document.getElementById('r-members-m').textContent = state.gym === 'all' ? 'Killiney ' + (HEALTHY.Killiney + SLOWING.concat(RISK).filter(function (m) { return m.gym === 'Killiney'; }).length) + ' \u00b7 Blackrock ' + (HEALTHY.Blackrock + SLOWING.concat(RISK).filter(function (m) { return m.gym === 'Blackrock'; }).length) : 'Active members';
+    document.getElementById('r-healthy').textContent = Math.round(healthy / total * 100) + '%';
+    var prevHealthy = Math.round(HEALTH_4W_AGO.healthy * scale);
+    document.getElementById('r-healthy-m').innerHTML = state.compare ? delta(Math.round(healthy / total * 100), Math.round(prevHealthy / total * 100), 'pt', 'up') + '<span class="kpi-ly">4 weeks ago ' + Math.round(prevHealthy / total * 100) + '%</span>' : '<span class="kpi-ly">' + healthy + ' training regularly</span>';
+    document.getElementById('r-won').textContent = Math.round(7 * scale);
+    document.getElementById('r-won-m').textContent = 'Back training after going red or amber';
+    document.getElementById('r-rate').textContent = '41%';
+    document.getElementById('r-rate-m').textContent = '7 of 17 who went red in the last 60 days';
+
+    var segs = [
+      { key: 'healthy', label: 'Healthy', n: healthy, prev: Math.round(HEALTH_4W_AGO.healthy * scale), def: 'Trained in the last 10 days, at their usual pace', good: 'up' },
+      { key: 'slowing', label: 'Slowing down', n: slow.length, prev: Math.round(HEALTH_4W_AGO.slowing * scale), def: '10 to 20 days since they trained, or half their usual sessions', good: 'down' },
+      { key: 'risk', label: 'At risk', n: risk.length, prev: Math.round(HEALTH_4W_AGO.risk * scale), def: 'No booking or visit for 21 days, or two no-shows in a row', good: 'down' }
+    ];
+    document.getElementById('r-col').innerHTML = segs.map(function (g) {
+      var tag = g.key === 'healthy' ? 'div' : 'button';
+      return '<' + tag + (tag === 'button' ? ' type="button" data-rseg="' + g.key + '" aria-pressed="' + (rs.seg === g.key) + '" aria-label="' + g.label + ', ' + g.n + ' members"' : '') + ' class="hseg ' + g.key + '" style="flex:' + g.n + ' 1 0"><span>' + (g.n / total > 0.12 ? g.n : '') + '</span></' + tag + '>';
+    }).join('');
+    document.getElementById('r-legend').innerHTML = segs.map(function (g) {
+      var tag = g.key === 'healthy' ? 'div' : 'button';
+      return '<' + tag + (tag === 'button' ? ' type="button" data-rseg="' + g.key + '" aria-pressed="' + (rs.seg === g.key) + '"' : '') + ' class="hrow ' + (g.key === 'healthy' ? 'healthy' : '') + '"><span class="hdot ' + g.key + '"></span><span class="hname">' + g.label + '</span><span class="hnum">' + g.n + '</span>' +
+        '<span class="hdef">' + g.def + '</span>' +
+        '<span class="hmeta"><span>' + Math.round(g.n / total * 100) + '% of members</span>' + (state.compare ? delta(g.n, g.prev, '%', g.good) + '<span>4 weeks ago ' + g.prev + '</span>' : '') + '</span></' + tag + '>';
+    }).join('');
+
+    var list = rs.seg === 'slowing' ? slow : risk;
+    document.getElementById('r-list-h').textContent = rs.seg === 'slowing' ? 'Slowing down' : 'At risk';
+    document.getElementById('r-list-note').textContent = rs.seg === 'slowing' ? 'Light-touch, mostly automatic' : 'Win-back sequence';
+    document.getElementById('r-count').textContent = list.length;
+    document.getElementById('r-seq').innerHTML = '<div role="table" aria-label="Sequence"><div class="seq-row head" role="row"><span role="columnheader">Step</span><span role="columnheader">Message</span><span role="columnheader">Sent by</span><span class="n" role="columnheader">Members</span></div>' + STAGES[rs.seg].map(function (st) {
+      var n = list.filter(function (m) { return m.stage === st.key; }).length;
+      return '<div class="seq-row" role="row"><span class="when" role="cell">' + st.step + '</span><span role="cell">' + st.what + '</span><span class="who" role="cell">' + (st.who === 'coach' ? 'Coach' : 'Automatic') + '</span><span class="n" role="cell">' + n + '</span></div>';
+    }).join('') + '</div><div class="seq-note">' + (rs.seg === 'slowing'
+      ? 'Anyone who books or trains drops out straight away. Still not training after the coach check-in? They move to At risk.'
+      : 'Anyone who books or trains drops out straight away. After Day 14 with no reply they\u2019re marked Lapsed, with one check-in at 60 days.') + '</div>';
+    var order = STAGES[rs.seg].map(function (s) { return s.key; }).concat(['paused', 'removed']);
+    list = list.slice().sort(function (a, b) { return (order.indexOf(b.stage) - order.indexOf(a.stage)) || (b.days - a.days); });
+    list.sort(function (a, b) { var due = function (m) { return /due today|overdue/.test(m.next) ? 0 : 1; }; return due(a) - due(b); });
+    document.getElementById('r-list').innerHTML = list.map(function (m) {
+      var chip = STAGE_CHIP[m.stage];
+      var coachDue = m.stage === 'd0' || m.stage === 'checkin' || m.stage === 'd14';
+      return '<article class="mrow"><span class="lead-name">' + esc(m.name) + '</span>' +
+        '<span class="mstage"><span class="chip ' + chip[0] + '">' + chip[1] + '</span></span>' +
+        '<div class="lead-meta"><span>' + esc(m.gym) + ' \u00b7 ' + esc(m.coach) + '</span><span class="dot-sep" aria-hidden="true"></span><span>Last trained <b>' + m.days + ' days ago</b></span><span class="dot-sep" aria-hidden="true"></span><span class="pace">' + m.before + ' a week \u2192 ' + m.now + '</span>' + (m.noshows ? '<span class="dot-sep" aria-hidden="true"></span><span>' + m.noshows + ' no-shows</span>' : '') + '</div>' +
+        '<p class="lead-note" style="grid-column:1/-1">' + esc(m.next) + '</p>' +
+        '<div class="lead-actions">' +
+          (m.stage === 'removed' ? '' : '<button type="button" class="btn' + (coachDue ? ' primary wa' : '') + '" data-ract="wa" data-m="' + m.id + '">' + ICON.whatsapp + (coachDue ? 'Message' : 'WhatsApp') + '</button>' +
+          '<button type="button" class="btn ghost" data-ract="call" data-m="' + m.id + '">' + ICON.phone + 'Call</button>' +
+          (m.stage === 'paused' ? '<button type="button" class="btn ghost" data-ract="resume" data-m="' + m.id + '">Resume</button>' : '<button type="button" class="btn ghost" data-ract="pause" data-m="' + m.id + '">Pause</button>') +
+          '<button type="button" class="btn ghost" data-ract="remove" data-m="' + m.id + '">Take out</button>') +
+        '</div></article>';
+    }).join('') || '<div class="empty">Nobody here. Good.</div>';
+  }
+  function findM(id) { return SLOWING.concat(RISK).filter(function (m) { return m.id === id; })[0]; }
+  document.getElementById('tab-retain').addEventListener('click', function (e) {
+    var b;
+    if ((b = e.target.closest('[data-rgym]'))) {
+      state.gym = b.dataset.rgym;
+      document.querySelectorAll('[data-gym]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.gym === state.gym)); });
+      render(); renderRetain(); return;
+    }
+    if ((b = e.target.closest('[data-rseg]'))) {
+      rs.seg = b.dataset.rseg; renderRetain();
+      if (window.innerWidth <= 1000) document.getElementById('r-list-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    if ((b = e.target.closest('[data-ract]'))) {
+      var m = findM(b.dataset.m), a = b.dataset.ract;
+      if (a === 'pause') { m.prevStage = m.stage; m.stage = 'paused'; m.next = 'Paused by you. No messages until you resume.'; showToast(m.name + ' paused. In the live version this stops their sequence.'); }
+      else if (a === 'resume') { m.stage = m.prevStage || (RISK.indexOf(m) !== -1 ? 'd0' : 'nudge'); m.next = 'Resumed'; showToast(m.name + ' is back in the sequence.'); }
+      else if (a === 'remove') { m.stage = 'removed'; m.next = 'Taken out of the sequence. They stay on the members list.'; showToast(m.name + ' taken out of the win-back sequence.'); }
+      else if (a === 'wa') { showToast('Sample data. In the live version this opens WhatsApp to ' + m.name + ' with ' + m.coach + '\u2019s message ready, then moves them on a step.'); return; }
+      else { showToast('Sample data. In the live version this calls ' + m.name + '.'); return; }
+      renderRetain();
+    }
+  });
+
+  // ---------- Referrals tab: members bringing friends ----------
+  // Rewards as Bo7's bring-a-friend email states them: the friend's first session is free; the member gets a free week when the friend joins.
+  var REFERRERS = [
+    { name: 'Sorcha Daly', gym: 'Killiney', coach: 'Ryan', since: 'Member since 2023', friends: [
+      { name: 'Rachel Doyle', status: 'joined', when: '22 Sep', reward: 'given' },
+      { name: 'Lisa Moran', status: 'joined', when: '2 Oct', reward: 'due' },
+      { name: 'Niamh O\u2019Sullivan', status: 'new', when: 'Today' } ] },
+    { name: 'Martin Shiels', gym: 'Killiney', coach: 'Coach B', since: 'Member since 2022', friends: [
+      { name: 'Conor Fahy', status: 'joined', when: '15 Sep', reward: 'given' },
+      { name: 'Paddy Ryan', status: 'joined', when: '29 Sep', reward: 'given' },
+      { name: 'Gary Byrne', status: 'unreachable', when: '1 Oct' } ] },
+    { name: 'Aoife Kenny', gym: 'Blackrock', coach: 'Coach C', since: 'Member since 2025', friends: [
+      { name: 'Aisling Kenny', status: 'joined', when: '8 Oct', reward: 'due' } ] },
+    { name: 'Brian Nolan', gym: 'Blackrock', coach: 'Ryan', since: 'Member since 2025', friends: [
+      { name: 'Mark Nolan', status: 'booked', when: 'Tomorrow 09:15' },
+      { name: 'Dave Kehoe', status: 'notnow', when: '24 Sep' } ] },
+    { name: 'Helen Walsh', gym: 'Killiney', coach: 'Ryan', since: 'Member since 2024', friends: [
+      { name: 'Joanne Murray', status: 'contacted', when: '6 Oct' } ] },
+    { name: 'Ger Doyle', gym: 'Blackrock', coach: 'Coach C', since: 'Member since 2024', friends: [
+      { name: 'Eimear Ward', status: 'joined', when: '12 Sep', reward: 'given' },
+      { name: 'Ronan Fox', status: 'notnow', when: '19 Sep' } ] }
+  ];
+  REFERRERS.forEach(function (m, i) { m.id = 'R' + i; });
+  var FSTATUS = { joined: ['ok', 'Joined'], booked: ['info', 'Consult booked'], contacted: ['mute', 'Contacted'], new: ['mute', 'New lead'], notnow: ['warn', 'Not now'], unreachable: ['mute2', 'Couldn\u2019t reach'] };
+  function renderRefer() {
+    var ms = REFERRERS.filter(byGym);
+    var all = [], joined = [], due = [];
+    ms.forEach(function (m) { m.friends.forEach(function (f) { all.push(f); if (f.status === 'joined') { joined.push(f); if (f.reward === 'due') due.push({ m: m, f: f }); } }); });
+    document.getElementById('f-ref').textContent = all.length;
+    document.getElementById('f-ref-m').textContent = 'From ' + ms.length + (ms.length === 1 ? ' member' : ' members');
+    document.getElementById('f-joined').textContent = joined.length;
+    document.getElementById('f-joined-m').textContent = 'Each one came with a member they already know';
+    document.getElementById('f-rate').textContent = all.length ? Math.round(joined.length / all.length * 100) + '%' : '\u2014';
+    document.getElementById('f-rate-m').textContent = joined.length + ' of ' + all.length + ' referred friends';
+    document.getElementById('f-due').textContent = due.length;
+    document.getElementById('f-due-m').textContent = due.length ? 'Free week and a thank-you from Ryan' : 'Everyone has been thanked';
+    document.getElementById('f-due').classList.toggle('bad', due.length > 0);
+
+    var ranked = ms.slice().sort(function (a, b) {
+      var j = function (m) { return m.friends.filter(function (f) { return f.status === 'joined'; }).length; };
+      return (j(b) - j(a)) || (b.friends.length - a.friends.length);
+    });
+    document.getElementById('f-count').textContent = ranked.length;
+    document.getElementById('f-list').innerHTML = ranked.map(function (m, i) {
+      var nj = m.friends.filter(function (f) { return f.status === 'joined'; }).length;
+      return '<article class="rrow"><span class="rank">' + (i + 1) + '</span><span class="lead-name">' + esc(m.name) + '</span>' +
+        '<span class="rtally"><b>' + nj + '</b> joined \u00b7 ' + m.friends.length + ' referred</span>' +
+        '<div class="lead-meta"><span>' + esc(m.gym) + ' \u00b7 ' + esc(m.coach) + '</span><span class="dot-sep" aria-hidden="true"></span><span>' + esc(m.since) + '</span></div>' +
+        '<ul class="friends">' + m.friends.map(function (f) {
+          var c = FSTATUS[f.status];
+          return '<li><span class="fname">' + esc(f.name) + '</span><span class="chip ' + c[0] + '">' + c[1] + '</span>' + (f.reward === 'given' ? '<span class="chip mute">Thanked</span>' : '') + '<span class="fwhen">' + esc(f.when) + '</span></li>';
+        }).join('') + '</ul>' +
+        '<div class="lead-actions"><button type="button" class="btn ghost" data-fact="wa" data-m="' + m.id + '">' + ICON.whatsapp + 'WhatsApp ' + esc(m.name.split(' ')[0]) + '</button></div>' +
+        '</article>';
+    }).join('') || '<div class="empty">No referrals yet for this gym.</div>';
+
+    document.getElementById('f-due-count').textContent = due.length;
+    document.getElementById('f-due-list').innerHTML = due.map(function (d) {
+      return '<article class="mrow"><span class="lead-name">' + esc(d.m.name) + '</span><span class="mstage"><span class="chip warn">Free week due</span></span>' +
+        '<div class="lead-meta"><span>' + esc(d.m.gym) + '</span><span class="dot-sep" aria-hidden="true"></span><span>' + esc(d.f.name) + ' joined <b>' + esc(d.f.when) + '</b></span></div>' +
+        '<div class="lead-actions"><button type="button" class="btn primary wa" data-fact="thank" data-m="' + d.m.id + '" data-f="' + esc(d.f.name) + '">' + ICON.whatsapp + 'Send Ryan\u2019s thank-you</button>' +
+        '<button type="button" class="btn ghost" data-fact="given" data-m="' + d.m.id + '" data-f="' + esc(d.f.name) + '">Mark free week given</button></div></article>';
+    }).join('') || '<div class="empty">Everyone has been thanked.</div>';
+  }
+  function findR(id) { return REFERRERS.filter(function (m) { return m.id === id; })[0]; }
+  document.getElementById('tab-refer').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-fact]'); if (!b) return;
+    var m = findR(b.dataset.m), a = b.dataset.fact;
+    if (a === 'wa') { showToast('Sample data. In the live version this opens WhatsApp to ' + m.name + '.'); return; }
+    if (a === 'thank') { showToast('Sample data. In the live version this opens WhatsApp to ' + m.name + ' with Ryan\u2019s thank-you for bringing ' + b.dataset.f + ' ready to send.'); return; }
+    var f = m.friends.filter(function (x) { return x.name === b.dataset.f; })[0];
+    f.reward = 'given'; renderRefer();
+    showToast('Free week marked as given to ' + m.name + '. In the live version this is saved against the referral.');
+  });
+
+  // ---------- Tabs ----------
+  function showTab(name) {
+    document.querySelectorAll('[data-tab]').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === name)); });
+    document.getElementById('tab-leads').hidden = name !== 'leads';
+    document.getElementById('tab-consult').hidden = name !== 'consult';
+    document.getElementById('tab-retain').hidden = name !== 'retain';
+    document.getElementById('tab-refer').hidden = name !== 'refer';
+    document.getElementById('period-seg').hidden = name !== 'leads';
+    document.getElementById('compare-wrap').hidden = name === 'consult' || name === 'refer';
+    document.getElementById('period-sub').textContent = name === 'retain' ? 'Members \u00b7 as of Fri 9 Oct 2026' : name === 'refer' ? 'Referrals \u00b7 last 90 days' : name === 'consult' ? 'Consults \u00b7 week of 5 Oct 2026' : (state.period === 'week' ? 'This week \u00b7 5 to 11 Oct 2026' : 'Last 4 weeks \u00b7 14 Sep to 11 Oct 2026');
+    if (name === 'consult') renderConsult(); else closeSheet();
+    if (name === 'retain') renderRetain();
+    if (name === 'refer') renderRefer();
+    try { history.replaceState(null, '', name === 'leads' ? location.pathname : '#' + name); } catch (e) {}
+  }
+  document.querySelectorAll('[data-tab]').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.getElementById('cx-detail').classList.contains('open')) closeSheet(); });
+
+  var toast = document.getElementById('toast'), tt;
+  function showToast(msg) { (dlg.open ? dlg : document.body).appendChild(toast); toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 3800); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]');
+    if (!b) return;
+    showToast('Sample data. In the live board this opens ' + LABEL[b.dataset.act] + ' for ' + b.dataset.name + ' with the right message ready.');
+  });
+  // Restyle sparklines if the theme changes.
+  if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  render();
+  if (['#consult', '#retain', '#refer'].indexOf(location.hash) !== -1) showTab(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>

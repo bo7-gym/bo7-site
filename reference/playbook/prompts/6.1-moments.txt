@@ -1,0 +1,16 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2b and 5.1 done).
+
+Find the moments when a Bo7 member is happiest, and turn them into a short daily list of people to ask for a review or a referral. Asking at a high point works; asking at random feels like a sales pitch.
+
+1. Moments. Add a job to the scheduled worker, every morning after the nightly members load, that finds members who today:
+   - hit their 10th, 50th or 100th session
+   - finished their first month (and are still training)
+   - reached one year as a member
+   - had a coach mark a personal best or a milestone on the refer page (add a simple "Log a win" button there for coaches: member, what they achieved)
+2. Who to ask: only members who are healthy (prompt 5.1), agreed to hear from Bo7, haven't been asked anything in the last 60 days, and aren't in a win-back sequence. Never ask someone who is slowing or at risk.
+3. What to ask: a Google review if they haven't left one (we can't see this automatically, so record it when they say yes), otherwise a referral. At most one ask per member per 60 days.
+4. Database: add a migration with an asks table (member, moment, type: review or referral or story, asked by, asked at, result: yes, not now, no reply). Update README.md.
+5. The refer page at team.bo7.ie/refer, in the style of the dashboard mockup (reference/dash/index.html in the bo7-site project): today's asks grouped by coach, each with the moment ("Sarah's 50th session"), a one-tap WhatsApp button with the right message already typed (from prompt 6.2 or 6.3), and buttons to record the result. Coaches send these personally; nothing on this page sends automatically.
+6. Add the refer page to the team.bo7.ie home page.
+
+Test with example members at each moment, show me the list and the database, then delete the examples. Commit and push.

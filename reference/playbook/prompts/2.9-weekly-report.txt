@@ -1,0 +1,13 @@
+Run this in Claude Code with the bo7-team project open, every Monday.
+
+Give me the weekly lead report from the Bo7 database (README.md describes the tables). Read only: use read-only SQL queries through wrangler (d1 execute against the remote database) or the team area's API. Change nothing.
+
+For the last 7 days, and the 4 weeks before for comparison:
+1. Leads by source: how many came in from each source, and from each gym.
+2. Replies: the share answered by a person within 24 hours, and anyone who waited longer (name and source).
+3. Consults: booked, showed up, and joined, by source.
+4. Parked leads: how many went to Not now or Couldn't reach, and how many are due back this week.
+5. What changed: anything that moved a lot week on week, in one or two plain sentences. For example, a source that has gone quiet, or one that brings leads who rarely book.
+6. Gaps: leads with no source, gym or consent recorded, so they can be fixed.
+
+Keep it short: a few lines per section, names and numbers, no padding. If a section is empty, say "None".

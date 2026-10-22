@@ -1,0 +1,43 @@
+Write a Google Apps Script (one function called buildBo7Survey) that creates a Google Form for Bo7, a semi-private personal training gym with two locations in south Dublin (Killiney and Blackrock). Then run it for me in my Chrome browser (steps at the end).
+
+Form settings:
+- Title: "Bo7 member survey"
+- Description: "Four minutes, mostly tick boxes. Anonymous unless you choose otherwise at the end. Thank you for helping us. Ryan"
+- Do not collect email addresses. Do not require sign-in, and do not turn on "limit to one response" (that forces a Google sign-in).
+- Show a progress bar.
+- Confirmation message: "Thanks a million. Your answers will shape how we tell people about Bo7."
+- Create a new Google Sheet called "Bo7 member survey: responses" and set it as the form's response destination.
+- At the end, log the form's published URL, the form's edit URL and the sheet's URL.
+
+Question rules:
+- "Pick one" questions are multiple choice. "Pick up to 3" questions are checkboxes with validation requiring at most 3 selections.
+- Where the options end in "Other", do not add "Other" as a normal option: turn on the built-in Other option (showOtherOption(true)) so people can type their own answer.
+- Questions 3 and 4 are optional. All others are required, except the opt-ins at the end (14 to 17).
+
+Questions, in this order:
+1. Which gym do you train at? (pick one) Killiney / Blackrock / Both
+2. How long have you been a member? (pick one) Under 3 months / 3 to 12 months / 1 to 2 years / Over 2 years
+3. Your gender (pick one, optional) Woman / Man / Non-binary / Prefer not to say / Other
+4. Your age range (pick one, optional) Under 25 / 25 to 34 / 35 to 44 / 45 to 54 / 55 to 64 / 65 or over
+5. Before Bo7, what were you doing for exercise? (pick up to 3) Gym membership / Classes (spin, HIIT, CrossFit) / One-to-one PT / Pilates or yoga / Sport or running / Home workouts or an app / Nothing regular / Other
+6. What made you start looking for something new? (pick up to 3) Wanted to get stronger / Wanted to lose weight / Injury, pain or stiffness / Advice from a doctor or physio / Getting older and want to stay strong / Lost motivation training on my own / Life change (new baby, new job, retirement, moved) / Other
+7. How did you first hear about Bo7? (pick one) Friend or family / Instagram / Google search / Walked or drove past / Through work / Other
+8. What else did you consider before choosing Bo7? (pick up to 3) Another gym / Classes / One-to-one PT / Pilates or yoga / Home workouts or an app / Nothing else / Other
+9. Why did you pick Bo7 in the end? (pick up to 3) Small groups / The coaching and attention / A programme built around me / Close to home or work / The people and community / Someone recommended it / Price / The free consultation / Other
+10. Was there anything that nearly stopped you joining? (pick one) Price / Nervous about my fitness level / Finding the time / Not sure it was for me / Location or opening hours / Nothing / Other
+11. What has changed for you since you started? (pick up to 3) Stronger / Fitter / Weight / Less pain / Moving better / More confident / More energy or better sleep / Better mood / Made friends / Other
+12. How would you describe Bo7 to a friend, in one sentence? (paragraph text, required)
+13. How likely are you to recommend Bo7 to a friend? (linear scale 0 to 10, labels "Not likely" and "Very likely")
+14. Happy for us to quote your answer with your first name? (pick one, optional) Yes / No
+15. If yes, your first name (short text, optional)
+16. Would you be up for telling your story on video? (pick one, optional) Yes / No / Maybe
+17. If yes or maybe, your phone number so we can get in touch (short text, optional)
+
+Keep the wording exactly as written. Add short comments in the script so a non-developer can follow it, and save it as survey/build-form.gs in this project.
+
+Then, in my Chrome browser:
+1. Open script.google.com. I am signed in to the Bo7 Google account; if not, stop and ask me to sign in. Never type a password.
+2. Create a new project called "Bo7 member survey", replace the starter code with the script, save and run buildBo7Survey.
+3. When Google shows its permission screen, stop and let me approve it myself.
+4. Read the three URLs from the execution log and give them to me.
+5. Open the published form and check every question against the list above. Tell me about anything that doesn't match.

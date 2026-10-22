@@ -1,0 +1,19 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2b and 3.1 done).
+
+Build the consult page at team.bo7.ie/consult: the page a coach opens on their phone just before and during a free consultation, to see who's coming, take notes while they talk, and record the outcome. It sits behind the Cloudflare login.
+
+Design: match the Consult tab of the dashboard mockup at reference/dash/index.html in the bo7-site project (live at bo7.thedowlings.co/dash/#consult): the same list, the same consult sheet, full screen on a phone with the Save button fixed at the bottom. Replace its sample data with the real data from the Bo7 database (README.md describes the tables). The page talks only to the team area's API.
+
+1. The summary strip: consults booked this week, done, show-up rate, and joined (with join rate of those who showed).
+2. The list: today first, then tomorrow, the rest of this week, next week, and earlier this week at the bottom with each outcome. Each row: time, name, gym, coach, status. A coach filter, with "my consults" for the logged-in coach; the gym filter applies too.
+3. The consult sheet (tap a name):
+   - Header: name, day and time, gym and coach, with WhatsApp, Call and Email buttons in case someone's running late.
+   - About them: how they found Bo7, what they're interested in, best way to reach them, and their earlier notes.
+   - Consult notes, saved as they type: what they want to achieve, training so far, injuries or health (only what a coach needs to train them safely, with their OK), days and times that suit (tap buttons), anything else. Use 16px text in the boxes on phones, so they don't zoom in.
+   - Outcome: Showed up or No-show; then Joined, Thinking it over (follow up in 3 days, 1 week or 2 weeks) or Not yet (with the reason from the database's list).
+4. Save outcome:
+   - Updates the consult (done, showed up, outcome, the structured notes) and the lead (status joined, or follow up on and reason not joined, or back to contacted for a no-show with the no-show message from prompt 3.2 ready to send).
+   - Adds one note to the lead summarising the consult.
+   - For Joined: show the welcome message from Ryan (prompt 3.5) ready to send, and link the lead to their Glofox member record once it exists.
+
+Test it with an example consult on a phone-sized screen: take notes, save each outcome in turn, and show me the database after each. Delete the example. Commit and push. Add the page to the team.bo7.ie home page.

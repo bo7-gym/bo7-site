@@ -1,0 +1,28 @@
+Run this in Claude Code with the bo7-members and bo7-team projects open (prompt 5.6a done).
+
+Build the Bo7 members area at members.bo7.ie, behind the member login from prompt 5.6a, and the staff page that feeds it.
+
+Design: match the members area mockup at reference/members/index.html in the bo7-site project (live at bo7.thedowlings.co/members): the same screens, layout and Bo7 look, built for phones first. Replace its sample data with real data from the Bo7 database (README.md describes the tables). Glofox's own app still handles bookings and payments; this area adds what Glofox doesn't do.
+
+1. Database: add a migration with
+   - announcements: title, body, gym (both, Killiney or Blackrock), pinned, publish at, expires at, written by.
+   - pbs: member, exercise, value, unit, date, shared with coaches.
+   - milestones: member, kind (automatic or their own), text, date, shared with coaches.
+   Update README.md.
+
+2. The members area (bo7-members):
+   - Home: hello by first name with their gym; sessions this month, in total, and PBs this year (from visits and pbs); their next booked session if Glofox data shows one, with a button to open the Bo7 app (iOS and Android links are in the bo7-site project notes); announcements for their gym, pinned first, newest first, hiding expired ones; shortcuts to log a PB or a milestone.
+   - PBs: each exercise with the current best, the last improvement and a small trend line; "Log a new PB" with the exercise list from the mockup, value, unit, date, and "Share with the coaches".
+   - Milestones: a timeline. Automatic milestones (joined, 10th, 25th, 50th, 100th session, one year) are added by the nightly job from visits, plus the next one coming up. Members add their own, with suggestions.
+   - Me: their details from the database (read only), and switches for WhatsApp from their coach, emails about Bo7 news, and sharing PBs with the coaches. These switches update their consent in the database and are respected everywhere else (win-back, refer asks).
+   - Every request checks the member's session; a member can only ever see and change their own records.
+
+3. The staff side (bo7-team, behind the staff login):
+   - team.bo7.ie/announcements: write, preview, pin, schedule and expire announcements for one gym or both. Show how many members can see each one.
+   - Shared PBs and milestones appear as wins on the refer page (prompt 6.1), so coaches can congratulate the member and, at the right moment, ask for a review or a referral.
+
+4. Links: add a "Members" link to the bo7-site footer, and a bo7.ie/members page that forwards to members.bo7.ie.
+
+5. Test on a phone-sized screen with a test member: log in, read announcements for each gym, log PBs and milestones (shared and not), change each switch, and check the refer page shows only shared wins. Then remove the test data. Commit and push both projects.
+
+Use only real data; never invent announcements, members or numbers.

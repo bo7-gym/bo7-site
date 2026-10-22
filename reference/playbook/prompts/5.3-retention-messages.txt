@@ -1,0 +1,12 @@
+Using the Bo7 brand position and retention-rules.md in the project files, write the messages Bo7 sends to keep members training and part of the community. Bo7 is a semi-private personal training gym in Killiney and Blackrock, south Dublin. Most messages are sent on WhatsApp by the member's coach or Ryan, as themselves, not as a brand.
+
+For each rule in retention-rules.md, write:
+1. No visit for 10 days: a personal message from their coach. Two or three versions, so they don't all read the same. Offer to hold a spot at a specific session [day and time]. Never guilt. Under 40 words each.
+2. Visits dropping: a short note asking for a quick chat, plus a guide for the coach's 5-minute call: what to ask (schedule, goals, injuries, anything about the sessions), and what they can offer [options we actually have, for example changing session times or a programme review].
+3. First month done: a progress message from their coach that names one real thing they've improved [the coach fills it in], and asks what's working for them.
+4. 10th, 50th and 100th visit: a shout-out for the community WhatsApp group (only with the member's permission) and a personal note from their coach.
+5. One year as a member: a thank-you from Ryan.
+6. Coming back after a gap: a warm welcome-back that makes it easy to rebook.
+7. When someone asks to pause or cancel: a kind reply that asks why, mentions any option we really offer [for example a pause], and makes leaving easy if they want to.
+
+Each message must sound like a person, short enough to read on a phone, with [placeholders] for names, sessions and specifics. Do not invent offers, prices or facts.

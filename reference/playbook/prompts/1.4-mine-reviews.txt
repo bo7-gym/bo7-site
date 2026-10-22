@@ -1,0 +1,11 @@
+Below are all the Google reviews for Bo7, a semi-private personal training gym with two locations in south Dublin (Killiney and Blackrock). Read them all, then give me:
+
+1. The 5 to 8 themes that come up most, each with how many reviews mention it and two short verbatim quotes.
+2. A word bank: the exact phrases reviewers use to describe Bo7, the coaches and how they feel. Verbatim only, no paraphrasing.
+3. What reviewers say they were doing or struggling with before Bo7.
+4. Anything negative or any recurring hesitation.
+
+Only use what is in the reviews. If something isn't there, say so. Do not invent quotes or numbers.
+
+REVIEWS:
+[paste here]

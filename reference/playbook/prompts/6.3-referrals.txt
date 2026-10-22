@@ -1,0 +1,12 @@
+Run this in Claude Code with the bo7-team project open (prompts 2.2b, 2.7 and 3.1 done). The referral reward itself is decided and launched in Reach (prompt 4.4).
+
+Track every referral from the member who made it to the friend who joins, so each one is thanked and rewarded without anyone keeping a list in their head.
+
+1. Database: add a migration with a referrals table (referring member, referred lead, status: invited, enquired, consult booked, joined, didn't join; reward for the member, reward for the friend, reward given on, thanked on). Update README.md.
+2. Capture: on the add-a-lead page and the leads board, when the source is referral, pick the member who referred them from a search box (name or phone). The referral tag links from prompt 4.1 should carry the member's name where possible.
+3. Progress: when the referred lead books a consult or joins, update the referral automatically. When they join, put two tasks on the refer page: give the member their reward, and give the friend theirs, with the reward from settings ([reward for the member], [reward for the friend]).
+4. Thank-you: a WhatsApp message from Ryan to the member, sent the day their friend joins (one tap from the refer page), and a shorter one when their friend just books a consult.
+5. On the refer page: referrals this month and last, how many joined, rewards still owed, and the members who have referred the most this year (so Ryan can thank them properly).
+6. Design: match the Referrals tab of the dashboard mockup (reference/dash/index.html in the bo7-site project, live at bo7.thedowlings.co/dash/#refer): members bringing friends, ranked by friends who joined, each with their friends and where each one is, and the thank-yous due. Build it as the Referrals tab of the live dashboard.
+
+Test with an example member and an example referred lead through every status, show me the database, then delete them. Commit and push.

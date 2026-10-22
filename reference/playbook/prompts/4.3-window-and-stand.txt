@@ -1,0 +1,8 @@
+Using the Bo7 brand position in the project files, write:
+
+1. Window graphics for each gym (Killiney and Blackrock): a headline under 8 words that reads from across the street, one supporting line, and the call to action "Scan to WhatsApp us for a free consultation". Three options per gym.
+2. A pull-up banner for a stand in Blackrock Village Centre: a headline, three short points, and a QR call to action.
+3. A script for whoever staffs the stand: a one-line opener, three questions to ask a passer-by, and how to get them to scan the QR code before they walk on.
+4. An A6 flyer to hand out at the stand: front and back.
+
+Keep it plain and warm. No hype, no invented claims or numbers. Mark anything missing as [TO CONFIRM].

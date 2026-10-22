@@ -1,0 +1,14 @@
+Using the Bo7 brand position in the project files, help Bo7 get more Google reviews from happy members, at both gyms. Bo7 has 4.9 from 99 reviews at Killiney and 5.0 from 15 at Blackrock (8 Oct 2026); Blackrock needs them most.
+
+1. The links. In my Chrome, open each Google Business Profile (I sign in myself) and get its "ask for reviews" short link. Save both in the project and in the Bo7 database's settings, so the refer page can use them.
+2. The messages, sent personally by a coach on WhatsApp, under 50 words each:
+   - after a 10th, 50th or 100th session
+   - after a personal best
+   - after one year
+   - a gentle reminder 5 days later if they said yes but haven't posted
+   Each one names the moment, asks in a sentence, and includes the right gym's link. No incentives for reviews: Google doesn't allow them.
+3. A one-line script for coaches to ask in person at the end of a session.
+4. A QR code for each gym's review link, sized for a card at the front desk.
+5. Replies: a reminder that every new review gets a reply within a few days, using the reply templates from prompt 4.2.
+
+Warm, short, never pushy. Don't invent anything about Bo7.

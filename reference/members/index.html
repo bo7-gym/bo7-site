@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B1914">
+<title>Bo7 Members</title>
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400..700&display=swap">
+<style>
+/* Bo7 members area. Phone-first, in the Bo7 website's look (DM Serif Display + DM Sans, warm paper, gold).
+   One column, at most 560px wide; a bottom tab bar on every screen size. Sample data only. */
+:root {
+  --bg: #FAF7F0; --surface: #FFFDF8; --sunk: #F0ECE3; --ink: #1B1914; --ink-2: #3A362F; --muted: #6B655A;
+  --line: #E4DED1; --gold: #C99A1E; --gold-text: #7D640A; --gold-subtle: #F6EDD3; --on-gold: #1B1608;
+  --good: #1F7A4C; --good-subtle: #E3F2E9;
+  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --logo-filter: invert(1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0E0D0B; --surface: #171512; --sunk: #1F1C18; --ink: #F1ECE1; --ink-2: #D9D2C4; --muted: #A39C8E;
+    --line: #2E2B25; --gold: #D4A72C; --gold-text: #E3BD55; --gold-subtle: #2A2210; --on-gold: #14100A;
+    --good: #4FCB8A; --good-subtle: #10281C; --logo-filter: none; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--body); -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.app { max-width: 560px; margin: 0 auto; min-height: 100vh; padding: 0 20px calc(96px + env(safe-area-inset-bottom, 0px)); }
+[hidden] { display: none !important; }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top, 0px)) 0 10px; }
+.logo { height: 26px; width: auto; filter: var(--logo-filter); display: block; }
+.sample { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-text); background: var(--gold-subtle); border-radius: 999px; padding: 3px 9px; }
+
+h1 { font: 400 36px/1.1 var(--display); margin: 8px 0 4px; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { font: 400 24px/1.2 var(--display); margin: 0; }
+.lede { color: var(--muted); margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-text); margin: 0; }
+.section { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.link { background: none; border: 0; padding: 0; color: var(--gold-text); font-weight: 600; font-size: 14px; cursor: pointer; }
+
+/* Buttons and fields */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 12px 18px; font-weight: 600; cursor: pointer; min-height: 48px; }
+.btn.primary { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.btn.block { width: 100%; }
+.btn[disabled] { opacity: .5; cursor: default; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field > span { font-size: 13px; font-weight: 600; color: var(--muted); }
+.input { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 12px 14px; font-size: 16px; min-height: 48px; }
+.input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-subtle); }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+
+/* Login */
+.login { min-height: calc(100vh - 80px); display: flex; flex-direction: column; justify-content: center; gap: 22px; padding-bottom: 40px; }
+.phone { display: flex; gap: 8px; }
+.phone .cc { width: 88px; flex: none; text-align: center; color: var(--muted); }
+.code { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.code input { text-align: center; font-size: 22px; font-weight: 600; padding: 10px 0; }
+
+/* Cards */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.stat { padding: 14px 12px; display: flex; flex-direction: column; gap: 2px; }
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat b { font: 400 30px/1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+.next { display: flex; align-items: center; gap: 14px; }
+.next .when { font: 400 22px/1.1 var(--display); }
+.next .meta { color: var(--muted); font-size: 14px; }
+.next .btn { margin-left: auto; padding: 8px 14px; min-height: 40px; font-size: 14px; }
+
+.news { display: flex; flex-direction: column; }
+.post { padding: 14px 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.post:first-child { border-top: 0; padding-top: 0; }
+.post-meta { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--sunk); color: var(--ink-2); }
+.tag.pin { background: var(--gold-subtle); color: var(--gold-text); }
+.post h3 { font-size: 17px; font-weight: 700; margin: 2px 0 0; }
+.post p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+.quick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quick button { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; cursor: pointer; min-height: 88px; }
+.quick button b { font-size: 16px; }
+.quick button span { font-size: 13px; color: var(--muted); }
+.quick svg { width: 22px; height: 22px; color: var(--gold-text); }
+
+/* PBs */
+.pb-list { display: flex; flex-direction: column; }
+.pb { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 14px 0; border-top: 1px solid var(--line); align-items: center; }
+.pb:first-child { border-top: 0; padding-top: 0; }
+.pb b { font-size: 16px; }
+.pb .val { font: 400 26px/1 var(--display); text-align: right; font-variant-numeric: tabular-nums; }
+.pb .val small { font: 600 13px var(--body); color: var(--muted); margin-left: 3px; }
+.pb .sub { font-size: 13px; color: var(--muted); }
+.pb .up { font-size: 13px; color: var(--good); font-weight: 600; text-align: right; }
+.pb svg.trend { grid-column: 1 / -1; width: 100%; height: 28px; margin-top: 6px; }
+
+/* Milestones timeline */
+.timeline { list-style: none; margin: 0; padding: 0 0 0 22px; position: relative; display: flex; flex-direction: column; gap: 18px; }
+.timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.timeline li { position: relative; display: flex; flex-direction: column; gap: 2px; }
+.timeline li::before { content: ""; position: absolute; left: -22px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 2px solid var(--gold); }
+.timeline li.auto::before { background: var(--gold); }
+.timeline b { font-size: 16px; }
+.timeline span { font-size: 13px; color: var(--muted); }
+.timeline li.next-up::before { border-style: dashed; border-color: var(--muted); background: var(--surface); }
+
+/* Sheet (forms) */
+.sheet { position: fixed; inset: 0; z-index: 40; background: rgba(14,13,11,.45); display: flex; align-items: flex-end; justify-content: center; }
+.sheet-in { width: 100%; max-width: 560px; background: var(--bg); border-radius: 20px 20px 0 0; padding: 18px 20px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; max-height: 92vh; overflow: auto; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; }
+.x { border: 0; background: var(--sunk); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; line-height: 1; }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) 120px; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 14px; font-weight: 500; min-height: 40px; }
+.chip[aria-pressed="true"] { background: var(--gold-subtle); border-color: var(--gold); color: var(--gold-text); font-weight: 600; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+.check input { width: 20px; height: 20px; accent-color: var(--gold); margin-top: 2px; flex: none; }
+
+/* Profile */
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.list > div, .list > label { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; }
+.list > * + * { border-top: 1px solid var(--line); }
+.list span { color: var(--muted); }
+.switch { position: relative; width: 44px; height: 26px; flex: none; }
+.switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.switch i { position: absolute; inset: 0; background: var(--line); border-radius: 999px; transition: background .15s; }
+.switch i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform .15s; }
+.switch input:checked + i { background: var(--gold); }
+.switch input:checked + i::after { transform: translateX(18px); }
+.switch input:focus-visible + i { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Tab bar */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tabbar-in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabbar button { border: 0; background: none; padding: 10px 0 12px; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; min-height: 60px; }
+.tabbar button svg { width: 22px; height: 22px; }
+.tabbar button[aria-current="page"] { color: var(--gold-text); }
+
+.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 60; }
+.toast.show { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <img class="logo" src="../assets/bo7-logo.png" alt="Bo7" width="43" height="26">
+    <span class="sample" title="Everything here is made up, for layout only">Sample</span>
+  </header>
+
+  <!-- Login -->
+  <section class="login" id="login" aria-labelledby="login-h">
+    <div>
+      <p class="eyebrow">Members</p>
+      <h1 id="login-h">Welcome back</h1>
+      <p class="lede">Log in with the mobile number you gave Bo7. We'll text you a code.</p>
+    </div>
+    <form id="phone-form" novalidate>
+      <div class="field"><span>Mobile number</span>
+        <div class="phone"><input class="input cc" value="+353" aria-label="Country code" readonly><input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="85 123 4567" aria-label="Mobile number"></div>
+      </div>
+      <p class="hint" id="phone-err" style="margin-top:8px"></p>
+      <button class="btn primary block" type="submit" style="margin-top:12px">Text me a code</button>
+    </form>
+    <form id="code-form" hidden novalidate>
+      <div class="field"><span>Enter the 6-digit code sent to <b id="sent-to"></b></span>
+        <div class="code" id="code">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 1" autocomplete="one-time-code">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+          <input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+        </div>
+      </div>
+      <p class="hint" style="margin-top:8px">Sample: any six digits work. <button class="link" type="button" id="resend">Send a new code</button></p>
+      <button class="btn primary block" type="submit" style="margin-top:12px" id="verify">Log in</button>
+      <button class="btn block" type="button" id="change-number" style="margin-top:8px">Use a different number</button>
+    </form>
+    <p class="hint">Only members can log in. Not a member yet? <a href="../" style="color:var(--gold-text)">Book a free consultation</a>.</p>
+  </section>
+
+  <!-- Home -->
+  <main id="home" hidden>
+    <p class="eyebrow" id="home-gym">Killiney</p>
+    <h1 id="hello">Hi Clodagh</h1>
+    <p class="lede" id="streak">You've trained 3 times a week for 6 weeks running.</p>
+
+    <div class="section">
+      <div class="stats">
+        <div class="stat"><b id="s-month">11</b><span>sessions in October</span></div>
+        <div class="stat"><b id="s-total">47</b><span>sessions in total</span></div>
+        <div class="stat"><b id="s-pbs">4</b><span>PBs this year</span></div>
+      </div>
+      <div class="card next">
+        <div><div class="meta">Your next session</div><div class="when">Tue 13 Oct, 07:00</div><div class="meta">Killiney · with Ryan</div></div>
+        <button class="btn" type="button" data-toast="In the live version this opens the Bo7 app to manage your bookings.">Bookings</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Announcements</h2></div>
+      <div class="card news" id="news"></div>
+    </div>
+
+    <div class="section">
+      <h2>Log something</h2>
+      <div class="quick">
+        <button type="button" data-open="pb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/></svg><b>New PB</b><span>A lift, a time, a rep count</span></button>
+        <button type="button" data-open="ms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><b>Milestone</b><span>First pull-up, a 5k, anything</span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- PBs -->
+  <main id="pbs" hidden>
+    <p class="eyebrow">Personal bests</p>
+    <h1>Your PBs</h1>
+    <p class="lede">Log a new best when you hit it. Your coach sees it too, if you let them.</p>
+    <div class="section">
+      <button class="btn primary block" type="button" data-open="pb">Log a new PB</button>
+      <div class="card pb-list" id="pb-list"></div>
+    </div>
+  </main>
+
+  <!-- Milestones -->
+  <main id="milestones" hidden>
+    <p class="eyebrow">Milestones</p>
+    <h1>Your Bo7 so far</h1>
+    <p class="lede">Session milestones are added for you. Add your own for anything that mattered.</p>
+    <div class="section">
+      <button class="btn primary block" type="button" data-open="ms">Add a milestone</button>
+      <div class="card"><ul class="timeline" id="timeline"></ul></div>
+    </div>
+  </main>
+
+  <!-- Me -->
+  <main id="me" hidden>
+    <p class="eyebrow">Your details</p>
+    <h1>Me</h1>
+    <div class="section">
+      <div class="list">
+        <div><b>Name</b><span>Clodagh Byrne</span></div>
+        <div><b>Mobile</b><span id="me-phone">085 123 4567</span></div>
+        <div><b>Gym</b><span>Killiney</span></div>
+        <div><b>Coach</b><span>Ryan</span></div>
+        <div><b>Member since</b><span>March 2026</span></div>
+      </div>
+      <p class="hint">To change your details or membership, ask at the front desk or in the Bo7 app.</p>
+    </div>
+    <div class="section">
+      <h2>Messages from Bo7</h2>
+      <div class="list">
+        <label><b>WhatsApp from your coach</b><span class="switch"><input type="checkbox" checked aria-label="WhatsApp from your coach"><i></i></span></label>
+        <label><b>Emails about Bo7 news</b><span class="switch"><input type="checkbox" checked aria-label="Emails about Bo7 news"><i></i></span></label>
+        <label><b>Share my PBs with the coaches</b><span class="switch"><input type="checkbox" checked aria-label="Share my PBs with the coaches"><i></i></span></label>
+      </div>
+    </div>
+    <div class="section"><button class="btn block" type="button" id="logout">Log out</button></div>
+  </main>
+</div>
+
+<nav class="tabbar" id="tabbar" hidden aria-label="Members area">
+  <div class="tabbar-in">
+    <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
+    <button type="button" data-tab="pbs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/></svg>PBs</button>
+    <button type="button" data-tab="milestones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>Milestones</button>
+    <button type="button" data-tab="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.2-6 8-6s7 2 8 6"/></svg>Me</button>
+  </div>
+</nav>
+
+<!-- Log a PB -->
+<div class="sheet" id="sheet-pb" hidden role="dialog" aria-modal="true" aria-labelledby="pb-h">
+  <form class="sheet-in" id="pb-form" novalidate>
+    <div class="sheet-head"><h2 id="pb-h">New PB</h2><button class="x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="field"><span>What</span><div class="chips" id="pb-what"></div></div>
+    <div class="field" id="pb-other-wrap" hidden><span>Name it</span><input class="input" id="pb-other" placeholder="For example: farmer's carry"></div>
+    <div class="row2">
+      <label class="field"><span>Your best</span><input class="input" id="pb-val" inputmode="decimal" placeholder="0"></label>
+      <label class="field"><span>Unit</span><select class="input" id="pb-unit"><option>kg</option><option>reps</option><option>min:sec</option><option>metres</option></select></label>
+    </div>
+    <label class="field"><span>When</span><input class="input" id="pb-date" type="date" value="2026-10-09"></label>
+    <label class="check"><input type="checkbox" id="pb-share" checked> Share with the coaches</label>
+    <button class="btn primary block" type="submit">Save PB</button>
+  </form>
+</div>
+
+<!-- Add a milestone -->
+<div class="sheet" id="sheet-ms" hidden role="dialog" aria-modal="true" aria-labelledby="ms-h">
+  <form class="sheet-in" id="ms-form" novalidate>
+    <div class="sheet-head"><h2 id="ms-h">Add a milestone</h2><button class="x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="field"><span>Ideas</span><div class="chips" id="ms-ideas"></div></div>
+    <label class="field"><span>What happened</span><input class="input" id="ms-text" placeholder="For example: first unassisted pull-up"></label>
+    <label class="field"><span>When</span><input class="input" id="ms-date" type="date" value="2026-10-09"></label>
+    <label class="check"><input type="checkbox" id="ms-share" checked> Share with the coaches</label>
+    <button class="btn primary block" type="submit">Add milestone</button>
+  </form>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  // ---------- Sample data ----------
+  var NEWS = [
+    { pin: true, gym: 'Both gyms', date: '8 Oct', title: 'Bring-a-friend session', body: 'Bring someone to train with you on [day and time]. One guest each, booked like any class in the app.' },
+    { gym: 'Killiney', date: '6 Oct', title: 'New early session', body: 'A 06:00 slot is now on the timetable on Tuesdays and Thursdays. Book it in the app.' },
+    { gym: 'Blackrock', date: '2 Oct', title: 'Welcome to our newest coach', body: '[Coach name] joins the Blackrock team this month. Say hello next time you’re in.' },
+    { gym: 'Both gyms', date: '28 Sep', title: 'Member story: [member]', body: 'Watch how [member] got back to running after a knee injury. On our Instagram.' }
+  ];
+  var PB_TYPES = ['Back squat', 'Deadlift', 'Bench press', 'Overhead press', 'Pull-ups', 'Row 500m', 'Plank', 'Other'];
+  var UNIT = { 'Back squat': 'kg', 'Deadlift': 'kg', 'Bench press': 'kg', 'Overhead press': 'kg', 'Pull-ups': 'reps', 'Row 500m': 'min:sec', 'Plank': 'min:sec', 'Other': 'kg' };
+  var PBS = [
+    { what: 'Deadlift', unit: 'kg', history: [60, 70, 75, 85, 90], date: '2 Oct' },
+    { what: 'Back squat', unit: 'kg', history: [40, 50, 55, 62.5], date: '24 Sep' },
+    { what: 'Pull-ups', unit: 'reps', history: [0, 1, 3, 5], date: '30 Sep' },
+    { what: 'Row 500m', unit: 'min:sec', history: ['2:21', '2:12', '2:05'], date: '15 Sep', lowerBetter: true }
+  ];
+  var MILESTONES = [
+    { auto: true, text: '50th session', when: 'Coming up: 3 sessions to go', next: true },
+    { text: 'First unassisted pull-up', when: '30 Sep 2026' },
+    { auto: true, text: '25th session', when: '1 Sep 2026' },
+    { text: 'Ran 5k without stopping', when: '12 Aug 2026' },
+    { auto: true, text: '10th session', when: '28 Apr 2026' },
+    { auto: true, text: 'Joined Bo7 Killiney', when: '17 Mar 2026' }
+  ];
+  var MS_IDEAS = ['First pull-up', 'Ran 5k', 'Back after injury', 'Touched my toes', 'Did a full session without stopping'];
+
+  // ---------- Helpers ----------
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var toastT;
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('show'); }, 3200); }
+  function secs(v) { if (typeof v === 'number') return v; var p = String(v).split(':'); return +p[0] * 60 + +p[1]; }
+
+  // ---------- Login (sample: any 6 digits) ----------
+  function signedIn() { try { return localStorage.getItem('bo7-member') === '1'; } catch (e) { return false; } }
+  function setSigned(v) { try { if (v) localStorage.setItem('bo7-member', '1'); else localStorage.removeItem('bo7-member'); } catch (e) {} }
+  $('phone-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var digits = $('phone').value.replace(/\D/g, '').replace(/^0/, '');
+    if (digits.length < 9) { $('phone-err').textContent = 'Enter your mobile number, for example 85 123 4567.'; return; }
+    $('phone-err').textContent = '';
+    $('sent-to').textContent = '+353 ' + digits.replace(/(\d{2})(\d{3})(\d+)/, '$1 $2 $3');
+    $('me-phone').textContent = '0' + digits.replace(/(\d{2})(\d{3})(\d+)/, '$1 $2 $3');
+    $('phone-form').hidden = true; $('code-form').hidden = false;
+    $('code').querySelector('input').focus();
+  });
+  var boxes = [].slice.call($('code').querySelectorAll('input'));
+  boxes.forEach(function (b, i) {
+    b.addEventListener('input', function () {
+      var v = b.value.replace(/\D/g, '');
+      if (v.length > 1) { v.split('').slice(0, 6 - i).forEach(function (d, k) { boxes[i + k].value = d; }); boxes[Math.min(5, i + v.length - 1)].focus(); return; }
+      b.value = v; if (v && i < 5) boxes[i + 1].focus();
+    });
+    b.addEventListener('keydown', function (e) { if (e.key === 'Backspace' && !b.value && i > 0) boxes[i - 1].focus(); });
+  });
+  $('code-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (boxes.some(function (b) { return !b.value; })) { toast('Enter all six digits.'); return; }
+    setSigned(true); enter();
+  });
+  $('resend').addEventListener('click', function () { toast('Sample: in the live version a new code is texted to you.'); });
+  $('change-number').addEventListener('click', function () { $('code-form').hidden = true; $('phone-form').hidden = false; boxes.forEach(function (b) { b.value = ''; }); });
+  $('logout').addEventListener('click', function () { setSigned(false); location.hash = ''; location.reload(); });
+
+  // ---------- Screens ----------
+  var SCREENS = ['home', 'pbs', 'milestones', 'me'];
+  function show(name) {
+    if (SCREENS.indexOf(name) === -1) name = 'home';
+    SCREENS.forEach(function (s) { $(s).hidden = s !== name; });
+    document.querySelectorAll('[data-tab]').forEach(function (b) { if (b.dataset.tab === name) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    try { history.replaceState(null, '', '#' + name); } catch (e) {}
+    window.scrollTo(0, 0);
+  }
+  function enter() { $('login').hidden = true; $('tabbar').hidden = false; renderAll(); show((location.hash || '#home').slice(1)); }
+  document.querySelectorAll('[data-tab]').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.tab); }); });
+
+  function renderNews() {
+    $('news').innerHTML = NEWS.map(function (n) {
+      return '<article class="post"><div class="post-meta">' + (n.pin ? '<span class="tag pin">Pinned</span>' : '') + '<span class="tag">' + esc(n.gym) + '</span><span>' + esc(n.date) + '</span></div><h3>' + esc(n.title) + '</h3><p>' + esc(n.body) + '</p></article>';
+    }).join('');
+  }
+  function trend(p) {
+    var vals = p.history.map(secs), lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), n = vals.length;
+    if (n < 2 || hi === lo) return '';
+    var pts = vals.map(function (v, i) { var y = p.lowerBetter ? (v - lo) / (hi - lo) : 1 - (v - lo) / (hi - lo); return (i / (n - 1) * 300).toFixed(1) + ',' + (4 + y * 20).toFixed(1); });
+    return '<svg class="trend" viewBox="0 0 300 28" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + pts.join(' ') + '" fill="none" stroke="var(--gold)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
+  }
+  function renderPBs() {
+    $('pb-list').innerHTML = PBS.map(function (p) {
+      var h = p.history, best = h[h.length - 1], prev = h.length > 1 ? h[h.length - 2] : null;
+      var up = '';
+      if (prev !== null) {
+        var d = p.lowerBetter ? secs(prev) - secs(best) : secs(best) - secs(prev);
+        up = p.unit === 'min:sec' ? d + 's faster' : '+' + d + ' ' + p.unit;
+      }
+      return '<div class="pb"><div><b>' + esc(p.what) + '</b><div class="sub">Best on ' + esc(p.date) + ' · ' + h.length + ' PBs logged</div></div><div><div class="val">' + esc(best) + '<small>' + (p.unit === 'min:sec' ? '' : esc(p.unit)) + '</small></div><div class="up">' + esc(up) + '</div></div>' + trend(p) + '</div>';
+    }).join('');
+    $('s-pbs').textContent = PBS.reduce(function (t, p) { return t + p.history.length - 1; }, 0);
+  }
+  function renderMilestones() {
+    $('timeline').innerHTML = MILESTONES.map(function (m) {
+      return '<li class="' + (m.auto ? 'auto' : '') + (m.next ? ' next-up' : '') + '"><b>' + esc(m.text) + '</b><span>' + esc(m.when) + (m.auto && !m.next ? ' · added for you' : '') + '</span></li>';
+    }).join('');
+  }
+  function renderAll() { renderNews(); renderPBs(); renderMilestones(); }
+
+  // ---------- Sheets ----------
+  var pbWhat = 'Deadlift';
+  function openSheet(id) { $('sheet-' + id).hidden = false; document.body.style.overflow = 'hidden'; var f = $('sheet-' + id).querySelector('input:not([type=checkbox]):not([type=date])'); }
+  function closeSheets() { ['pb', 'ms'].forEach(function (s) { $('sheet-' + s).hidden = true; }); document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-open]').forEach(function (b) { b.addEventListener('click', function () { openSheet(b.dataset.open); }); });
+  document.querySelectorAll('.sheet').forEach(function (s) {
+    s.addEventListener('click', function (e) { if (e.target === s || e.target.closest('[data-close]')) closeSheets(); });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheets(); });
+  function drawPbChips() {
+    $('pb-what').innerHTML = PB_TYPES.map(function (t) { return '<button type="button" class="chip" data-pbw="' + t + '" aria-pressed="' + (t === pbWhat) + '">' + t + '</button>'; }).join('');
+    $('pb-other-wrap').hidden = pbWhat !== 'Other';
+    $('pb-unit').value = UNIT[pbWhat];
+  }
+  $('pb-what').addEventListener('click', function (e) { var b = e.target.closest('[data-pbw]'); if (b) { pbWhat = b.dataset.pbw; drawPbChips(); } });
+  drawPbChips();
+  $('pb-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = $('pb-val').value.trim(), unit = $('pb-unit').value, name = pbWhat === 'Other' ? ($('pb-other').value.trim() || 'Other') : pbWhat;
+    if (!v) { $('pb-val').focus(); toast('Add your best first.'); return; }
+    var val = unit === 'min:sec' ? v : (+v || v);
+    var p = PBS.filter(function (x) { return x.what === name; })[0];
+    if (p) { p.history.push(val); p.date = '9 Oct'; PBS.splice(PBS.indexOf(p), 1); PBS.unshift(p); } else PBS.unshift({ what: name, unit: unit, history: [val], date: '9 Oct', lowerBetter: unit === 'min:sec' && name !== 'Plank' });
+    renderPBs(); closeSheets(); $('pb-val').value = '';
+    toast('New PB saved: ' + name + ' ' + v + (unit === 'min:sec' ? '' : ' ' + unit) + '.' + ($('pb-share').checked ? ' Your coach will see it.' : ''));
+    show('pbs');
+  });
+  $('ms-ideas').innerHTML = MS_IDEAS.map(function (t) { return '<button type="button" class="chip" data-msi="' + t + '">' + t + '</button>'; }).join('');
+  $('ms-ideas').addEventListener('click', function (e) { var b = e.target.closest('[data-msi]'); if (b) { $('ms-text').value = b.dataset.msi; $('ms-text').focus(); } });
+  $('ms-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var t = $('ms-text').value.trim();
+    if (!t) { $('ms-text').focus(); toast('Say what happened first.'); return; }
+    var d = new Date($('ms-date').value || '2026-10-09');
+    MILESTONES.splice(1, 0, { text: t, when: d.getDate() + ' ' + d.toLocaleString('en-IE', { month: 'short' }) + ' ' + d.getFullYear() });
+    renderMilestones(); closeSheets(); $('ms-text').value = '';
+    toast('Milestone added.' + ($('ms-share').checked ? ' Your coach will see it.' : ''));
+    show('milestones');
+  });
+  document.querySelectorAll('[data-toast]').forEach(function (b) { b.addEventListener('click', function () { toast(b.dataset.toast); }); });
+
+  if (signedIn()) enter();
+})();
+</script>
+</body>
+</html>

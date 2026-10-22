@@ -1,0 +1,16 @@
+Run this in Claude Code with the Meta Ads connector and Claude in Chrome connected.
+
+Check that Bo7's Meta accounts are ready for ads, and tell me what's missing. Don't create, change or spend anything in this prompt; this is a check.
+
+Rules: I sign in to every site myself; never type a password. If something needs fixing, explain the fix and wait for me to say go.
+
+Check, and report each as Ready, Missing or Needs fixing:
+
+1. Connector: the Meta Ads connector can see a Bo7 ad account. Give me its name, ID, currency and time zone (should be EUR and Dublin).
+2. Business account: the ad account, the Bo7 Facebook Page and the Instagram account @bo7_gym all belong to one Meta business account that Bo7 owns, not to someone's personal profile. Tell me who has admin access.
+3. Payment: the ad account has a payment method and no unpaid balance or restrictions.
+4. WhatsApp: a WhatsApp Business account on +353 85 241 3999 is connected to the Facebook Page, so ads can use the "Send WhatsApp message" button. If the number uses the ordinary WhatsApp app rather than WhatsApp Business, say so and explain what switching involves.
+5. Pixel: Meta's tracking (pixel or dataset) exists, and it is receiving visits from bo7.ie. Check the website code in this project for it too. If it isn't installed, explain how to add it through Google Tag Manager (container GTM-NJRHF7LZ) and whether a cookie banner affects it.
+6. Ad account health: any rejected ads, warnings or limits on the account.
+
+Finish with a short checklist of what to fix, in order, with who needs to do each one (me in a browser, or you).

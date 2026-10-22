@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B1914">
 <title>Bo7 Staff</title>
@@ -46,6 +46,7 @@
       <p class="err mt8" id="code-err"></p>
       <button class="btn primary block mt12" type="submit" id="verify">Log in</button>
     </form>
+    <div id="captcha" class="mt8"></div>
   </section>
 
   <!-- Overview -->
@@ -186,6 +187,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="config.js"></script>
+<script src="captcha.js"></script>
 <script src="vendor/supabase.min.js"></script>
 <script src="csv.js"></script>
 <script src="programme.js"></script>

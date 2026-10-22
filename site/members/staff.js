@@ -12,6 +12,7 @@
   function errText(e) {
     var m = (e && (e.message || e.error_description)) || String(e);
     if (!navigator.onLine || /failed to fetch|network/i.test(m)) return 'Can’t reach the server. Check your connection.';
+    if (/captcha/i.test(m)) return 'The security check didn’t go through. Please try again.';
     return m;
   }
   function ago(iso) {
@@ -41,7 +42,10 @@
     function ok(r) { if (r.error) throw r.error; return r.data; }
     return {
       session: function () { return sb.auth.getSession().then(function (r) { return !!r.data.session; }); },
-      sendCode: function (p) { return sb.auth.signInWithOtp({ phone: p }).then(ok); },
+      sendCode: function (p) {
+        return Promise.resolve(window.BO7_CAPTCHA && window.BO7_CAPTCHA.token())
+          .then(function (t) { return sb.auth.signInWithOtp({ phone: p, options: { captchaToken: t } }); }).then(ok);
+      },
       verify: function (p, c) { return sb.auth.verifyOtp({ phone: p, token: c, type: 'sms' }).then(ok); },
       signOut: function () { return sb.auth.signOut(); },
       me: async function () {

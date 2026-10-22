@@ -10,5 +10,7 @@ window.BO7_CONFIG = {
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lY2twYm1jdW55a3RrZXVwY2tlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5NzQzODUsImV4cCI6MjEwNzU1MDM4NX0.pOCv3FRpMshAeyQJ8CpJXXPm9z2sxMEikjpy6lWbL7o',
   demo: false,
   // Where the "Bookings" button goes (your Glofox booking link). Leave empty to hide the button.
-  bookingsUrl: ''
+  bookingsUrl: '',
+  // Cloudflare Turnstile site key (bot check before texting a code). Empty = off. See captcha.js for the switch-on order.
+  turnstileSiteKey: ''
 };

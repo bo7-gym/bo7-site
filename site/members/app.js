@@ -39,6 +39,7 @@
     var m = (e && (e.message || e.error_description)) || String(e);
     if (!navigator.onLine || /failed to fetch|network|load failed/i.test(m)) return 'Can’t reach Bo7 right now. Check your connection and try again.';
     if (/rate limit|too many|security purposes/i.test(m)) return 'Too many tries. Wait a minute and try again.';
+    if (/captcha/i.test(m)) return 'The security check didn’t go through. Please try again.';
     if (/invalid login credentials/i.test(m)) return 'That mobile and password don’t match. Check them, or text yourself a code instead.';
     if (/expired|invalid/i.test(m) && /token|otp|code/i.test(m)) return 'That code didn’t work. Check it, or send a new one.';
     if (/password/i.test(m) && /weak|short|characters|pwned|leaked/i.test(m)) return 'Pick a stronger password: at least 8 characters, and not a common one.';
@@ -120,6 +121,7 @@
       });
     }
     function ok(r) { if (r.error) throw r.error; return r.data; }
+    function captcha() { return window.BO7_CAPTCHA ? window.BO7_CAPTCHA.token() : undefined; }
     var MEMBER_COLS = 'id, first_name, last_name, phone, gym, coach, member_since, pref_whatsapp, pref_email, pref_share_pbs, pref_leaderboard';
     var PROG_COLS = 'id, name, subtitle, starts_on, weeks, gym, guide, programme_weeks(week_no, phase, phase_note, clock, label, focus, note, is_test, ' +
       'programme_sessions(sort, days, title, tag, warm_up, format, clock, programme_items(sort, block, kind, exercise, sets, reps, key_lift, guide_pct)))';
@@ -127,10 +129,12 @@
     var MS_COLS = 'id, title, achieved_on, shared';
     return {
       session: function () { return ready().then(function () { return sb.auth.getSession(); }).then(function (r) { var s = r.data.session; uid = s && s.user.id; return !!s; }); },
-      sendCode: function (phone) { return ready().then(function () { return sb.auth.signInWithOtp({ phone: phone }); }).then(ok); },
+      sendCode: function (phone) {
+        return ready().then(captcha).then(function (t) { return sb.auth.signInWithOtp({ phone: phone, options: { captchaToken: t } }); }).then(ok);
+      },
       verify: function (phone, code) { return sb.auth.verifyOtp({ phone: phone, token: code, type: 'sms' }).then(function (r) { ok(r); uid = r.data.user.id; }); },
       passwordLogin: function (phone, password) {
-        return ready().then(function () { return sb.auth.signInWithPassword({ phone: phone, password: password }); }).then(function (r) { ok(r); uid = r.data.user.id; });
+        return ready().then(captcha).then(function (t) { return sb.auth.signInWithPassword({ phone: phone, password: password, options: { captchaToken: t } }); }).then(function (r) { ok(r); uid = r.data.user.id; });
       },
       hasPassword: function () { return sb.auth.getUser().then(function (r) { var u = r.data && r.data.user; return !!(u && u.user_metadata && u.user_metadata.has_password); }); },
       setPassword: function (password) { return sb.auth.updateUser({ password: password, data: { has_password: true } }).then(ok); },
@@ -449,7 +453,10 @@
       try { W = JSON.parse(stored(DRAFT) || 'null'); } catch (e) { W = null; }
       if (W && !(W.exercises && W.exercises.length >= 0)) W = null;
       syncResume(); if (W) startTick();
-      if (viaCode) { viaCode = false; return api.hasPassword().then(function (has) { askForPassword(has); }).catch(function () {}); }
+      // A password is compulsory: after a texted code (first time or forgotten password), and for anyone
+      // still logged in without one. Each member then needs a text only once, which keeps SMS costs down.
+      var fromCode = viaCode; viaCode = false;
+      return api.hasPassword().then(function (has) { if (fromCode || !has) askForPassword(has, true); }).catch(function () {});
     }).catch(function (err) {
       showLogin(); $('code-form').hidden = true; $('phone-form').hidden = false;
       if (err && err.notMember) {
@@ -460,9 +467,10 @@
   }
   // After a texted code: create a password (or a new one) so next time is mobile + password, no code.
   var pwReturn = null;
-  function askForPassword(has) {
+  function askForPassword(has, required) {
     pwReturn = (location.hash || '#home').slice(1);
-    $('setpw-form').querySelector('h2').textContent = has ? 'Set a new password?' : 'Create your password';
+    $('setpw-form').querySelector('h2').textContent = has ? (required ? 'Set a new password' : 'Set a new password?') : 'Create your password';
+    $('setpw-skip').hidden = !!required;
     $('setpw-user').value = S && S.member && S.member.phone ? '+' + S.member.phone : phoneE164;
     $('setpw-1').value = ''; $('setpw-2').value = ''; $('setpw-err').textContent = '';
     SCREENS.forEach(function (x) { $(x).hidden = true; });
@@ -486,8 +494,8 @@
       .catch(function (err) { $('setpw-err').textContent = friendlyError(err); })
       .then(function () { busy($('setpw-save'), false, 'Save password'); });
   });
-  $('setpw-skip').addEventListener('click', function () { leavePassword(); toast('You can set a password any time on the Me tab.'); });
-  $('me-password').addEventListener('click', function () { api.hasPassword().then(askForPassword).catch(function () { askForPassword(false); }); });
+  $('setpw-skip').addEventListener('click', function () { leavePassword(); });
+  $('me-password').addEventListener('click', function () { api.hasPassword().then(function (has) { askForPassword(has, false); }).catch(function () { askForPassword(false, false); }); });
 
   // Refresh when someone comes back to the page after a while (new sessions, announcements).
   var hiddenAt = 0;

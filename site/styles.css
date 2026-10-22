@@ -564,3 +564,16 @@ p + p { margin-top: 1em; }
     translate: 0 12px;
   }
 }
+
+/* ---------- cookie choice (analytics.js) ---------- */
+.cookies {
+  position: fixed; z-index: 60; left: var(--gutter); right: var(--gutter); bottom: calc(1rem + env(safe-area-inset-bottom));
+  max-width: 34rem; margin-inline: auto; padding: 1rem 1.1rem;
+  background: var(--ink); color: var(--on-dark); border: 1px solid var(--line-dark);
+  display: grid; gap: .8rem; font-size: .9rem; line-height: 1.45;
+  box-shadow: 0 10px 30px rgb(0 0 0 / .25);
+}
+.cookies p { margin: 0; }
+.cookies__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.cookies .btn { min-height: 2.75rem; padding-block: .6rem; }
+.foot__cookies { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }

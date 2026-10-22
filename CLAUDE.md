@@ -66,4 +66,4 @@ A static rebuild of **bo7.ie**, a semi-private personal training gym with two gy
 
 ## Still needed from Ryan (as of 8 Oct 2026)
 
-Prices, coach names/bios/photos, Blackrock photos (all shots are Killiney), permission to show reviewers' first names, Google Places API key if the rating should stay live, a decision on a cookie notice (maps and YouTube set cookies), and GTM/GA4 tags before launch on bo7.ie (old site used GTM-NJRHF7LZ and G-Z20JQXCC3R).
+Prices, coach names/bios/photos, Blackrock photos (all shots are Killiney), permission to show reviewers' first names, Google Places API key if the rating should stay live, a decision on a cookie notice (maps and YouTube set cookies). GTM/GA4 are live since 22 Oct 2026 (`site/analytics.js`, behind a Consent Mode cookie choice; see HANDOVER-NOTES).

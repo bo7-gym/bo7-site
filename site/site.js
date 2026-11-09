@@ -26,7 +26,10 @@
     book.addEventListener('close', () => {
       document.documentElement.classList.remove('has-modal');
       if (lastFocus && lastFocus.focus) lastFocus.focus();
+      if (location.hash === '#trial') history.replaceState(null, '', location.pathname + location.search);
     });
+    // Links like bo7.ie/free-trial (Linktree, ads) land on /#trial and open the booking straight away.
+    if (location.hash === '#trial' && openBook() && window.bo7Track) window.bo7Track('book_consultation_click', { location: 'trial_link' });
   }
 
   // Ryan's message: play button on the portrait opens a lightbox player.

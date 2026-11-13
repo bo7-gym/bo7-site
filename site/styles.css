@@ -99,7 +99,12 @@ p + p { margin-top: 1em; }
   display: flex; align-items: center; gap: 1rem;
   min-height: var(--nav-h); padding-block: .5rem;
 }
-.nav__logo img { height: 34px; width: auto; }
+/* Logo file is 500x300 (5:3), sharp up to ~100px tall on 3x screens. Below ~40px the frame line turns into a hairline. */
+.nav__logo img { height: 44px; width: auto; display: block; }
+@media (min-width: 900px) {
+  .nav__logo img { height: 56px; }
+  .nav .in { padding-block: .25rem; } /* 56px logo + padding keeps the bar at --nav-h */
+}
 .nav__cta { display: none; min-height: 2.6rem; padding-inline: 1.1rem; font-size: .9rem; }
 
 /* Header CTA: a light sweep every 5 s to draw the eye. */
@@ -452,7 +457,7 @@ p + p { margin-top: 1em; }
 .foot { border-top: 1px solid var(--stone); font-size: .95rem; color: var(--muted); }
 .foot .in { padding-block: 3rem 6rem; display: grid; gap: 2rem; grid-template-columns: 1fr 1fr; }
 .foot__brand { grid-column: 1 / -1; }
-.foot__brand img { height: 34px; width: auto; margin-bottom: .75rem; }
+.foot__brand img { height: 48px; width: auto; margin-bottom: .75rem; }
 .foot h4 { font-family: var(--body); font-weight: 600; color: var(--ink); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
 .foot a { color: var(--ink); text-decoration-color: var(--stone); }
 .foot__ig { display: inline-flex; align-items: center; gap: .4rem; vertical-align: middle; }

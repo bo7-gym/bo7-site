@@ -365,6 +365,14 @@ p + p { margin-top: 1em; }
 .rating__stars { color: var(--gold); letter-spacing: .05em; font-size: 1rem; }
 .rating__item strong { color: var(--paper); font-family: var(--display); font-weight: 700; font-size: 1.25rem; }
 .rating__loc { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-left: .25rem; }
+/* Award seal under the rating line: round, transparent WebP, so it sits straight on the black. */
+.award { display: flex; align-items: center; gap: 1rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line-dark); max-width: 30rem; }
+.award img { width: 84px; height: 84px; flex: none; }
+.award p { font-size: .95rem; line-height: 1.45; color: var(--on-dark); }
+.award span { display: block; }
+.award span + span { color: var(--on-dark-2); font-size: .85rem; }
+.award strong { display: block; color: var(--gold); font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; margin-bottom: .25rem; }
+@media (min-width: 900px) { .award img { width: 104px; height: 104px; } }
 /* The member stories are vertical (Shorts), so the tiles are portrait. */
 .videos { display: grid; gap: .75rem; padding-top: 2.5rem; grid-template-columns: repeat(3, 1fr); }
 .video {
